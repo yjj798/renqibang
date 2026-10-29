@@ -1006,7 +1006,7 @@ def main():
     if not lb:
         fb = fetch_reasons(fb, {**pool, **hpool}, after_close)
     # 全池评分依据(页面查询用)
-    board_strength = F.fetch_55188_blocks(5)
+    # 板块强度数据已随页面「板块强度榜」一起下线(2026-10-30 用户令: 与概念总榜重复)。
     scores = [{"name": x["name"], "code": x["code"], "price": x.get("price"),
                "heat_rank": x.get("heat_rank"), "heat_growth": x.get("heat_growth"),
                "g_cross": x.get("g_cross"), "g_accel": x.get("g_accel"),
@@ -1033,7 +1033,6 @@ def main():
         "holidays": _upcoming_holidays(),
         "leaderboard": lb,
         "fallback": fb,
-        "board_strength": board_strength,
         "scores": scores,
         "lists": {
             "heat_top": top(sel_stocks, "heat"),
