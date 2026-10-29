@@ -377,11 +377,25 @@ def fetch_concepts(codes, pool, workers=8):
     # 硬动作(中标/签订/试制完成/取得注册证…) = 真催化; 纯远景(尚处拓展阶段/占比极小/未产生) = 蹭概念
     _strong = _re.compile(r"中标|签订|合同|订单|获批|取得|注册证|收购|试制完成|送样|揭幕|上线|开业|投产|交付|突破|首家|率先|荣获|独家|研发成功|批复|准产|揭牌|开通")
     _weak = _re.compile(r"尚处|尚未|未产生|拓展阶段|研究阶段|筹备|拟建|规划中|探索|较小|影响有限|占比")
+    _neg = _re.compile(r"未|尚|暂|拟|将|没有|或")
+    _punct = _re.compile(r"[，。；、：]")
 
     def _benefit(rsn, cs):
         if not rsn:
             return ""
-        s_n = len(_strong.findall(rsn))
+        # 否定/未然回看: 强词前9字内(无标点隔断)有否定词 → 作废("尚未取得注册证""拟签订")
+        def _alive(m):
+            ctx = rsn[max(0, m.start() - 9):m.start()]
+            tail = _punct.split(ctx)[-1]
+            return not _neg.search(tail)
+        hits = [m for m in _strong.finditer(rsn) if _alive(m)]
+        # 近邻去重: "取得…注册证"是同一事件, 6字内的连续命中只算一次
+        cnt, last = 0, -99
+        for m in hits:
+            if m.start() - last > 6:
+                cnt += 1
+            last = m.start()
+        s_n = cnt
         if s_n >= 2:
             return "强"
         if s_n == 1:
