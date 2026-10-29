@@ -1,16 +1,21 @@
 #!/bin/bash
-# 每天只跑3次: 9:00 / 10:00 / 13:00 (节流)
+# ⚠ 已被 GitHub Actions 接管（.github/workflows/update.yml：每天 4 次，跑完自动提交）。
+#   本脚本只在 Actions 不可用时做本地兜底。
+#   启用前必须先停掉 Actions 的 schedule，否则两边交替覆盖、commit 互相打架。
+#   兜底时跑完要自己提交：git add data.json index.html history.json && git commit && git push
+#
+# 时点与 Actions 对齐：10:05 / 12:05 / 15:05 / 16:35
 while true; do
   h=$(date +%H); m=$(date +%M); dow=$(date +%u)
   mins=$((10#$h*60+10#$m))
   run=0
   if [ "$dow" -le 5 ]; then
-    if [ "$mins" -ge 540 ] && [ "$mins" -lt 548 ]; then run=1; fi
-    if [ "$mins" -ge 600 ] && [ "$mins" -lt 608 ]; then run=1; fi
-    if [ "$mins" -ge 780 ] && [ "$mins" -lt 788 ]; then run=1; fi
+    for t in 605 725 905 995; do
+      if [ "$mins" -ge "$t" ] && [ "$mins" -lt $((t + 8)) ]; then run=1; fi
+    done
   fi
   if [ "$run" = "1" ]; then
-    cd "$(dirname "$0")" && python3.11 update_data.py >> loop.log 2>&1
+    cd "$(dirname "$0")" && python update_data.py >> loop.log 2>&1
   fi
   sleep 300
 done
