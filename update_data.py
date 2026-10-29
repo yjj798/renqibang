@@ -680,7 +680,7 @@ def add_composite(stocks, total=5580):
         M = max(0.0, min(1.0, x["heat_growth"] / 100.0))
         chg = x.get("chg") or 0
         x["limit_up"] = chg >= 9.8 or chg >= 19.5   # 主板/双创涨停
-        # 操作性只标注不降分: 高分=市场核心, 难买是执行问题不是逻辑问题
+        # 注: 可操作性因子(op_factor)在 assemble 阶段按"剩余空间"算好, rescore 统一乘
         x["L"], x["M"] = round(L, 3), round(M, 3)
         x["board_bonus"] = board_bonus(x.get("boards") or 0)
         x["lhb_factor"] = lhb_factor_of(x.get("lhb_org_net"), x.get("lhb_net"), chg)
