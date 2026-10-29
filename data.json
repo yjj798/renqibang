@@ -1,5 +1,5 @@
 {
- "updated_at": "2026-10-30 00:42:26",
+ "updated_at": "2026-10-30 00:47:53",
  "intraday": true,
  "quote_date": "2026-10-29",
  "holidays": [],
@@ -48,49 +48,6 @@
    "board_factor": 1.208,
    "reason": "据2026年8月22日公告，蓝星光域（上海）航天科技：公司使用自有资金3,000…；据2026年8月22日半年报，公司主要从事照明电器的研发、生产和销售，并为客户提…；…",
    "reason_detail": "1、据2026年8月22日公告，蓝星光域（上海）航天科技：公司使用自有资金 3,000万元参与蓝星光域（上海）航天科技有限公司融资，完成后阳光照明持有其1.0989%股权。蓝星光域成立于2021年 5月，专注于全场景激光通信解决方案，核心产品包括星载同轨/异轨激光通信终端、机载平流层激光通信终端等，主要应用于卫星间、星地间高速率通信，业务覆盖空天地海全场景空域。\n2、据2026年8月22日半年报，公司主要从事照明电器的研发、生产和销售，并为客户提供综合照明解决方案。主要产品涵盖LED照明产品、照明控制系统及电工器材等，广泛应用于商业、家居、办公、户外、轨道交通、工业及教育等通用照明领域，并覆盖应急照明以及空气开关、晾衣架、换气扇、浴霸等细分品类。 \n3、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。"
-  },
-  {
-   "code": "002086.SZ",
-   "name": "东方海洋",
-   "price": 2.57,
-   "chg": 9.83,
-   "float_mv": 40.63,
-   "attn": 10,
-   "attn_rank": 10,
-   "attn_growth": null,
-   "heat": 10,
-   "heat_rank": 10,
-   "heat_growth": 122.3,
-   "g_cross": 90.9,
-   "g_accel": 78.4,
-   "boards": 1,
-   "board_tag": "首板涨停",
-   "lhb_org_net": 0,
-   "lhb_net": 0,
-   "turnover": 21.83,
-   "turnover_ratio": -2.3,
-   "swap_down": false,
-   "launch": "",
-   "limit_up": true,
-   "pf": 1.169,
-   "pos60": 1.0,
-   "pos_factor": 1.0,
-   "score_final": 100.0,
-   "concept": "羊字辈",
-   "is_leader": false,
-   "concept_all": "“羊”字辈+体外诊断+海参养殖+水溶性维生素试剂",
-   "benefit_lv": "中",
-   "concept_pos": null,
-   "concept_factor": 1.0,
-   "L": 0.733,
-   "M": 1.0,
-   "board_bonus": 1.02,
-   "lhb_factor": 1.0,
-   "mv_factor": 1.0,
-   "composite": 85.6,
-   "rel_score": 87.4,
-   "reason": "据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027…；据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注…；…",
-   "reason_detail": "1、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。\n2、据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注册证，产品尚未投入生产。\n3、据2025年年报，公司以体外诊断产品为基础，持续推动免疫诊断、质谱诊断和分子诊断产品研发。\n4、据2026年8月26日半年报，公司拥有适合海参养殖的一类水质标准海域4.85万亩，并开展海水养殖及水产品加工业务。"
   },
   {
    "code": "600715.SH",
@@ -168,15 +125,15 @@
    "benefit_lv": "强",
    "concept_pos": 1,
    "cluster_factor": 1.0,
-   "concept_factor": 1.156,
+   "concept_factor": 1.155,
    "L": 0.694,
    "M": 1.0,
    "board_bonus": 1.05,
    "lhb_factor": 1.03,
    "mv_factor": 1.0,
-   "composite": 96.3,
-   "rel_score": 96.9,
-   "board_factor": 1.091,
+   "composite": 96.2,
+   "rel_score": 96.8,
+   "board_factor": 1.09,
    "reason": "据2026年5月10日公司官微，港城康复医院首家脑机接口智能康复病房于5月8日揭…；据2026年8月18日半年度报告，公司以医疗服务、医药流通为核心业务，拥有约32…；…",
    "reason_detail": "1、据2026年5月10日公司官微，港城康复医院首家脑机接口智能康复病房于5月8日揭牌启用，形成脑机接口与康复医疗结合的落地场景。 \n2、据2026年8月18日半年度报告，公司以医疗服务、医药流通为核心业务，拥有约32000平方米标准化药品库房。 \n3、据2026年5月12日公告，张家港悦升科技持有公司20%股份并成为控股股东，实际控制人为张家港经开区管委会。\n4、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。"
   },
@@ -206,22 +163,20 @@
    "pf": 1.085,
    "pos60": 0.362,
    "pos_factor": 1.04,
-   "score_final": 100.0,
-   "concept": "风能",
-   "is_leader": true,
+   "score_final": 96.6,
+   "concept": "海上风电",
+   "is_leader": false,
    "concept_all": "三季报增长+海上风电+油气船舶",
    "benefit_lv": "强",
-   "concept_pos": 1,
-   "cluster_factor": 1.0,
-   "concept_factor": 1.119,
+   "concept_pos": null,
+   "concept_factor": 1.06,
    "L": 0.627,
    "M": 1.0,
    "board_bonus": 1.02,
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
-   "composite": 88.6,
-   "rel_score": 80.8,
-   "board_factor": 1.056,
+   "composite": 83.9,
+   "rel_score": 76.5,
    "reason": "行业原因：；根据GWEC预测，全球风电新增装机2026年达178GW，2026至2030年年…；据证券时报10月28日报道，前三季度国内风电新增并网装机6066万千瓦，9月同比…；…",
    "reason_detail": "行业原因：\n1、根据GWEC预测，全球风电新增装机2026年达178GW，2026至2030年年均新增约194GW，复合年均增长率将达到5.2%。\n2、据证券时报10月28日报道，前三季度国内风电新增并网装机6066万千瓦，9月同比增长约128%；多家整机企业三季报显示盈利修复。\n公司原因：\n1、据2026年10月29日三季报，公司前三季度营收33亿元，同比下降11.36%；归母净利润2.04亿元，同比增长193.02%，其中第三季度归母净利润8823.15万元，同比增长455.45%。\n2、据2026年9月15日半年报，公司上半年签订多项海上风电装备及海工产品订单，涉及导管架、基础桩等，合同金额合计约29.3亿元。\n3、据2026年9月15日特定对象调研，公司在手船舶订单包括FSO、FPSO及阿芙拉型油轮，交付期集中于2027年至2029年。"
   },
@@ -439,6 +394,49 @@
    "rel_score": 62.2,
    "reason": "据2025年年报，旅游业务为公司核心主业，覆盖景区、度假及旅游服务，布局多个旅游…；据2025年1月27日互动易：公司旗下莽山五指峰景区在每年11月至次年2月容易形…；…",
    "reason_detail": "1、据2025年年报，旅游业务为公司核心主业，覆盖景区、度假及旅游服务，布局多个旅游目的地。\n2、据2025年1月27日互动易：公司旗下莽山五指峰景区在每年11月至次年2月容易形成云海、雾凇等自然景观，冰雪季期间景区内有欢乐雪人节，游客可以漫步栈道与雪人合影、参与冰雪花车巡游歌舞、体验冰雪主题游戏、观看剧场演绎等活动。\n3、据2026年半年度报告，祥源通航负责低空文旅业务，开展飞行基地运行、飞行业态运营及飞行项目开发，相关商业化运营尚待主管部门许可批复。"
+  },
+  {
+   "code": "600997.SH",
+   "name": "开滦股份",
+   "price": 5.39,
+   "chg": 10.0,
+   "float_mv": 85.58,
+   "attn": 58,
+   "attn_rank": 58,
+   "attn_growth": null,
+   "heat": 58,
+   "heat_rank": 58,
+   "heat_growth": 98.2,
+   "g_cross": 98.2,
+   "g_accel": null,
+   "boards": 1,
+   "board_tag": "首板涨停",
+   "lhb_org_net": 0,
+   "lhb_net": 0,
+   "turnover": 1.94,
+   "turnover_ratio": 240.4,
+   "swap_down": false,
+   "launch": "低位启动+首启放量+均线粘合",
+   "limit_up": true,
+   "pf": 1.116,
+   "pos60": 0.54,
+   "pos_factor": 1.04,
+   "score_final": 85.3,
+   "concept": "炼焦煤",
+   "is_leader": false,
+   "concept_all": "第三季度净利增长+炼焦煤+煤化工",
+   "benefit_lv": "中",
+   "concept_pos": null,
+   "concept_factor": 1.0,
+   "L": 0.529,
+   "M": 0.982,
+   "board_bonus": 1.02,
+   "lhb_factor": 1.0,
+   "mv_factor": 1.0,
+   "composite": 72.1,
+   "rel_score": 61.5,
+   "reason": "据财闻2026年10月28日报道，公司第三季度归母净利润1.59亿元，同比增长1…；据2026年8月27日半年报，公司具备900万吨/年原煤、660万吨/年焦炭产能…；…",
+   "reason_detail": "1、据财闻2026年10月28日报道，公司第三季度归母净利润1.59亿元，同比增长190.29%；据2026年10月29日三季报，前三季度营收150.26亿元，同比增长16.08%，归母净利润2051.16万元，同比下降88.91%。\n2、据2026年8月27日半年报，公司具备900万吨/年原煤、660万吨/年焦炭产能，并拥有甲醇、己二酸、聚甲醛等煤化工产能。\n3、据2025年年报，公司形成煤炭开采、洗选、焦炭及煤化工产品加工产业链，煤矿生产的炼焦煤为下游煤化工产业提供原料。"
   }
  ],
  "fallback": [
@@ -475,15 +473,15 @@
    "benefit_lv": "强",
    "concept_pos": 1,
    "cluster_factor": 1.0,
-   "concept_factor": 1.156,
+   "concept_factor": 1.155,
    "L": 0.694,
    "M": 1.0,
    "board_bonus": 1.05,
    "lhb_factor": 1.03,
    "mv_factor": 1.0,
-   "composite": 96.3,
-   "rel_score": 96.9,
-   "board_factor": 1.091,
+   "composite": 96.2,
+   "rel_score": 96.8,
+   "board_factor": 1.09,
    "reason": "据2026年5月10日公司官微，港城康复医院首家脑机接口智能康复病房于5月8日揭…；据2026年8月18日半年度报告，公司以医疗服务、医药流通为核心业务，拥有约32…；…",
    "reason_detail": "1、据2026年5月10日公司官微，港城康复医院首家脑机接口智能康复病房于5月8日揭牌启用，形成脑机接口与康复医疗结合的落地场景。 \n2、据2026年8月18日半年度报告，公司以医疗服务、医药流通为核心业务，拥有约32000平方米标准化药品库房。 \n3、据2026年5月12日公告，张家港悦升科技持有公司20%股份并成为控股股东，实际控制人为张家港经开区管委会。\n4、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。"
   },
@@ -576,49 +574,6 @@
    "reason_detail": "1、据2026年8月22日公告，蓝星光域（上海）航天科技：公司使用自有资金 3,000万元参与蓝星光域（上海）航天科技有限公司融资，完成后阳光照明持有其1.0989%股权。蓝星光域成立于2021年 5月，专注于全场景激光通信解决方案，核心产品包括星载同轨/异轨激光通信终端、机载平流层激光通信终端等，主要应用于卫星间、星地间高速率通信，业务覆盖空天地海全场景空域。\n2、据2026年8月22日半年报，公司主要从事照明电器的研发、生产和销售，并为客户提供综合照明解决方案。主要产品涵盖LED照明产品、照明控制系统及电工器材等，广泛应用于商业、家居、办公、户外、轨道交通、工业及教育等通用照明领域，并覆盖应急照明以及空气开关、晾衣架、换气扇、浴霸等细分品类。 \n3、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。"
   },
   {
-   "code": "002086.SZ",
-   "name": "东方海洋",
-   "price": 2.57,
-   "chg": 9.83,
-   "float_mv": 40.63,
-   "attn": 10,
-   "attn_rank": 10,
-   "attn_growth": null,
-   "heat": 10,
-   "heat_rank": 10,
-   "heat_growth": 122.3,
-   "g_cross": 90.9,
-   "g_accel": 78.4,
-   "boards": 1,
-   "board_tag": "首板涨停",
-   "lhb_org_net": 0,
-   "lhb_net": 0,
-   "turnover": 21.83,
-   "turnover_ratio": -2.3,
-   "swap_down": false,
-   "launch": "",
-   "limit_up": true,
-   "pf": 1.169,
-   "pos60": 1.0,
-   "pos_factor": 1.0,
-   "score_final": 100.0,
-   "concept": "羊字辈",
-   "is_leader": false,
-   "concept_all": "“羊”字辈+体外诊断+海参养殖+水溶性维生素试剂",
-   "benefit_lv": "中",
-   "concept_pos": null,
-   "concept_factor": 1.0,
-   "L": 0.733,
-   "M": 1.0,
-   "board_bonus": 1.02,
-   "lhb_factor": 1.0,
-   "mv_factor": 1.0,
-   "composite": 85.6,
-   "rel_score": 87.4,
-   "reason": "据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027…；据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注…；…",
-   "reason_detail": "1、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。\n2、据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注册证，产品尚未投入生产。\n3、据2025年年报，公司以体外诊断产品为基础，持续推动免疫诊断、质谱诊断和分子诊断产品研发。\n4、据2026年8月26日半年报，公司拥有适合海参养殖的一类水质标准海域4.85万亩，并开展海水养殖及水产品加工业务。"
-  },
-  {
    "code": "002531.SZ",
    "name": "天顺风能",
    "price": 7.06,
@@ -644,24 +599,65 @@
    "pf": 1.085,
    "pos60": 0.362,
    "pos_factor": 1.04,
-   "score_final": 100.0,
-   "concept": "风能",
-   "is_leader": true,
+   "score_final": 96.6,
+   "concept": "海上风电",
+   "is_leader": false,
    "concept_all": "三季报增长+海上风电+油气船舶",
    "benefit_lv": "强",
-   "concept_pos": 1,
-   "cluster_factor": 1.0,
-   "concept_factor": 1.119,
+   "concept_pos": null,
+   "concept_factor": 1.06,
    "L": 0.627,
    "M": 1.0,
    "board_bonus": 1.02,
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
-   "composite": 88.6,
-   "rel_score": 80.8,
-   "board_factor": 1.056,
+   "composite": 83.9,
+   "rel_score": 76.5,
    "reason": "行业原因：；根据GWEC预测，全球风电新增装机2026年达178GW，2026至2030年年…；据证券时报10月28日报道，前三季度国内风电新增并网装机6066万千瓦，9月同比…；…",
    "reason_detail": "行业原因：\n1、根据GWEC预测，全球风电新增装机2026年达178GW，2026至2030年年均新增约194GW，复合年均增长率将达到5.2%。\n2、据证券时报10月28日报道，前三季度国内风电新增并网装机6066万千瓦，9月同比增长约128%；多家整机企业三季报显示盈利修复。\n公司原因：\n1、据2026年10月29日三季报，公司前三季度营收33亿元，同比下降11.36%；归母净利润2.04亿元，同比增长193.02%，其中第三季度归母净利润8823.15万元，同比增长455.45%。\n2、据2026年9月15日半年报，公司上半年签订多项海上风电装备及海工产品订单，涉及导管架、基础桩等，合同金额合计约29.3亿元。\n3、据2026年9月15日特定对象调研，公司在手船舶订单包括FSO、FPSO及阿芙拉型油轮，交付期集中于2027年至2029年。"
+  },
+  {
+   "code": "000530.SZ",
+   "name": "冰山冷热",
+   "price": 8.23,
+   "chg": 10.03,
+   "float_mv": 49.39,
+   "attn": 6,
+   "attn_rank": 6,
+   "attn_growth": null,
+   "heat": 6,
+   "heat_rank": 6,
+   "heat_growth": 86.2,
+   "g_cross": 86.2,
+   "g_accel": -11.1,
+   "boards": 1,
+   "board_tag": "首板涨停",
+   "lhb_org_net": 10468606.0,
+   "lhb_net": 151288384.0,
+   "turnover": 37.92,
+   "turnover_ratio": -0.9,
+   "swap_down": false,
+   "launch": "",
+   "limit_up": true,
+   "pf": 1.063,
+   "pos60": 0.726,
+   "pos_factor": 1.0,
+   "score_final": 92.3,
+   "concept": "冰雪工程",
+   "is_leader": false,
+   "concept_all": "冰雪工程+数据中心液冷+船舶制冷",
+   "benefit_lv": "中",
+   "concept_pos": null,
+   "concept_factor": 1.0,
+   "L": 0.792,
+   "M": 0.862,
+   "board_bonus": 1.02,
+   "lhb_factor": 1.03,
+   "mv_factor": 1.0,
+   "composite": 82.6,
+   "rel_score": 76.2,
+   "reason": "据2026年9月18日投资者关系活动记录表，公司承接广州融创茂室内滑雪场、上海耀…；据2026年8月18日互动易，公司研发数据中心液冷冷源的干冷器、氟泵系统、冷水系…；…",
+   "reason_detail": "1、据2026年9月18日投资者关系活动记录表，公司承接广州融创茂室内滑雪场、上海耀雪冰雪世界等项目；据2026年10月23日异常波动公告，截至当时冰雪场馆业务尚未确认收入，对2026年度营收、利润影响较小。\n2、据2026年8月18日互动易，公司研发数据中心液冷冷源的干冷器、氟泵系统、冷水系统，部分产品已小批量交付；据2026年10月23日异常波动公告，液冷相关业务处于研发试制、初步推广阶段，2026年仅有零星收入。\n3、据2026年10月26日投资者关系管理信息，公司新造大型冷冻渔船制冷市场占有率持续领先，并成功签定船用二氧化碳压缩、液化及热泵项目。"
   }
  ],
  "board_strength": [
@@ -743,10 +739,10 @@
    "M": 1.0,
    "concept": "羊字辈",
    "concept_all": "“羊”字辈+体外诊断+海参养殖+水溶性维生素试剂",
-   "concept_pos": null,
+   "concept_pos": 4,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 1.0,
+   "concept_factor": 0.782,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -759,9 +755,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 40.63,
-   "composite": 85.6,
-   "score_final": 100.0,
-   "rel_score": 87.4
+   "composite": 67.0,
+   "score_final": 79.8,
+   "rel_score": 68.3
   },
   {
    "name": "文投控股",
@@ -818,7 +814,7 @@
    "concept_pos": 1,
    "benefit_lv": "强",
    "is_leader": true,
-   "concept_factor": 1.156,
+   "concept_factor": 1.155,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -831,9 +827,9 @@
    "lhb_factor": 1.03,
    "mv_factor": 1.0,
    "float_mv": 41.09,
-   "composite": 96.3,
+   "composite": 96.2,
    "score_final": 100.0,
-   "rel_score": 96.9
+   "rel_score": 96.8
   },
   {
    "name": "工商银行",
@@ -993,12 +989,12 @@
    "attn_growth": null,
    "L": 0.627,
    "M": 1.0,
-   "concept": "风能",
+   "concept": "海上风电",
    "concept_all": "三季报增长+海上风电+油气船舶",
-   "concept_pos": 1,
+   "concept_pos": null,
    "benefit_lv": "强",
-   "is_leader": true,
-   "concept_factor": 1.119,
+   "is_leader": false,
+   "concept_factor": 1.06,
    "t_factor": null,
    "launch": "低位启动+首启放量",
    "swap_down": false,
@@ -1011,9 +1007,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 126.15,
-   "composite": 88.6,
-   "score_final": 100.0,
-   "rel_score": 80.8
+   "composite": 83.9,
+   "score_final": 96.6,
+   "rel_score": 76.5
   },
   {
    "name": "东贝集团",
@@ -1250,7 +1246,7 @@
    "concept_pos": 5,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -1354,7 +1350,7 @@
    "L": 0.504,
    "M": 0.843,
    "concept": "机器人概念",
-   "concept_all": "机器人焊材+航空航天+三季报",
+   "concept_all": "机器人焊材+航空航天+三季报+羊字辈",
    "concept_pos": 20,
    "benefit_lv": "中",
    "is_leader": false,
@@ -1641,12 +1637,12 @@
    "attn_growth": null,
    "L": 0.438,
    "M": 0.68,
-   "concept": "风能",
+   "concept": "羊字辈",
    "concept_all": "电线电缆+海底电缆+海峡两岸+“羊”字辈",
-   "concept_pos": 14,
+   "concept_pos": 15,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.718,
+   "concept_factor": 0.782,
    "t_factor": null,
    "launch": "均线粘合",
    "swap_down": false,
@@ -1659,9 +1655,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 57.21,
-   "composite": 39.2,
-   "score_final": 43.6,
-   "rel_score": 23.8
+   "composite": 42.7,
+   "score_final": 47.4,
+   "rel_score": 25.9
   },
   {
    "name": "赛福天",
@@ -2290,7 +2286,7 @@
    "L": 0.637,
    "M": 1.0,
    "concept": "商业航天",
-   "concept_all": "航天+液压主业+三季报增长+生肖炒作",
+   "concept_all": "航天+液压主业+三季报增长+生肖炒作+羊字辈",
    "concept_pos": 9,
    "benefit_lv": "中",
    "is_leader": false,
@@ -2397,12 +2393,12 @@
    "attn_growth": null,
    "L": 0.61,
    "M": 0.0,
-   "concept": "专业照明",
+   "concept": "羊字辈",
    "concept_all": "三季报增长+专业照明+AI智慧照明+“羊”字辈",
-   "concept_pos": null,
+   "concept_pos": 8,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 1.0,
+   "concept_factor": 0.782,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -2417,7 +2413,7 @@
    "float_mv": 76.7,
    "composite": 0.0,
    "score_final": 0.0,
-   "rel_score": -47.8
+   "rel_score": -37.3
   },
   {
    "name": "中金公司",
@@ -2546,7 +2542,7 @@
    "concept_pos": 4,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -2559,7 +2555,7 @@
    "lhb_factor": 1.0,
    "mv_factor": 0.85,
    "float_mv": 1851.12,
-   "composite": 41.2,
+   "composite": 41.1,
    "score_final": 37.8,
    "rel_score": 21.0
   },
@@ -2578,7 +2574,7 @@
    "L": 0.588,
    "M": 0.34,
    "concept": "机器人概念",
-   "concept_all": "三季度业绩下滑+此前涨幅较大+家用电器板块下跌",
+   "concept_all": "三季度业绩下滑+此前涨幅较大+家用电器板块下跌+羊字辈",
    "concept_pos": 9,
    "benefit_lv": "中",
    "is_leader": false,
@@ -2780,10 +2776,46 @@
    "rel_score": -33.0
   },
   {
+   "name": "海阳科技",
+   "code": "603382.SH",
+   "price": 19.87,
+   "heat_rank": 44,
+   "heat_growth": 98.2,
+   "g_cross": 98.2,
+   "g_accel": null,
+   "boards": 1,
+   "board_tag": "首板涨停",
+   "lhb_org_net": 0,
+   "attn_growth": null,
+   "L": 0.561,
+   "M": 0.982,
+   "concept": "羊字辈",
+   "concept_all": "尼龙6+帘子布+涤纶工业丝+“羊”字辈",
+   "concept_pos": 11,
+   "benefit_lv": "中",
+   "is_leader": false,
+   "concept_factor": 0.782,
+   "t_factor": null,
+   "launch": "低位启动+首启放量",
+   "swap_down": false,
+   "turnover_ratio": 271.6,
+   "limit_up": true,
+   "pf": 1.0,
+   "pos60": 0.436,
+   "pos_factor": 1.04,
+   "board_bonus": 1.02,
+   "lhb_factor": 1.0,
+   "mv_factor": 1.0,
+   "float_mv": 22.95,
+   "composite": 58.0,
+   "score_final": 61.6,
+   "rel_score": 45.7
+  },
+  {
    "name": "横店影视",
    "code": "603103.SH",
    "price": 17.44,
-   "heat_rank": 44,
+   "heat_rank": 45,
    "heat_growth": 97.4,
    "g_cross": 97.4,
    "g_accel": null,
@@ -2791,7 +2823,7 @@
    "board_tag": "首板涨停",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.561,
+   "L": 0.559,
    "M": 0.974,
    "concept": "AI短剧",
    "concept_all": "AI短剧+影视全产业链+电影放映",
@@ -2811,45 +2843,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 110.6,
-   "composite": 73.9,
-   "score_final": 76.0,
-   "rel_score": 56.2
-  },
-  {
-   "name": "海阳科技",
-   "code": "603382.SH",
-   "price": 19.87,
-   "heat_rank": 45,
-   "heat_growth": 98.1,
-   "g_cross": 98.1,
-   "g_accel": null,
-   "boards": 1,
-   "board_tag": "首板涨停",
-   "lhb_org_net": 0,
-   "attn_growth": null,
-   "L": 0.559,
-   "M": 0.981,
-   "concept": "尼龙6",
-   "concept_all": "尼龙6+帘子布+涤纶工业丝+“羊”字辈",
-   "concept_pos": null,
-   "benefit_lv": "中",
-   "is_leader": false,
-   "concept_factor": 1.0,
-   "t_factor": null,
-   "launch": "低位启动+首启放量",
-   "swap_down": false,
-   "turnover_ratio": 271.6,
-   "limit_up": true,
-   "pf": 1.0,
-   "pos60": 0.436,
-   "pos_factor": 1.04,
-   "board_bonus": 1.02,
-   "lhb_factor": 1.0,
-   "mv_factor": 1.0,
-   "float_mv": 22.95,
-   "composite": 74.1,
-   "score_final": 78.6,
-   "rel_score": 58.2
+   "composite": 73.8,
+   "score_final": 75.9,
+   "rel_score": 56.0
   },
   {
    "name": "百洋股份",
@@ -2865,12 +2861,12 @@
    "attn_growth": null,
    "L": 0.551,
    "M": 0.063,
-   "concept": "水产加工",
+   "concept": "羊字辈",
    "concept_all": "水产加工+鱼粉鱼油+羊字辈",
-   "concept_pos": null,
+   "concept_pos": 12,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 1.0,
+   "concept_factor": 0.782,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -2883,9 +2879,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 41.28,
-   "composite": 18.6,
-   "score_final": 21.3,
-   "rel_score": 4.0
+   "composite": 14.6,
+   "score_final": 16.7,
+   "rel_score": 3.1
   },
   {
    "name": "桂林三金",
@@ -2924,40 +2920,40 @@
    "rel_score": 56.0
   },
   {
-   "name": "东方财富",
-   "code": "300059.SZ",
-   "price": 17.96,
+   "name": "实丰文化",
+   "code": "002862.SZ",
+   "price": 16.92,
    "heat_rank": 50,
-   "heat_growth": -5.5,
-   "g_cross": -5.5,
+   "heat_growth": 96.0,
+   "g_cross": 96.0,
    "g_accel": null,
-   "boards": 0,
-   "board_tag": "",
-   "lhb_org_net": 0,
+   "boards": 2,
+   "board_tag": "2天2板",
+   "lhb_org_net": 3095785.0,
    "attn_growth": null,
    "L": 0.547,
-   "M": 0.0,
+   "M": 0.96,
    "concept": "人工智能",
-   "concept_all": "互联网券商+一季报增长+AI金融",
+   "concept_all": "AI玩具+IP潮玩+玩具出海",
    "concept_pos": 6,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
-   "turnover_ratio": -14.3,
-   "limit_up": false,
-   "pf": 1.006,
-   "pos60": 0.234,
-   "pos_factor": 1.08,
-   "board_bonus": 1.0,
-   "lhb_factor": 1.0,
-   "mv_factor": 0.85,
-   "float_mv": 2405.27,
-   "composite": 0.0,
-   "score_final": 0.0,
-   "rel_score": -2.1
+   "turnover_ratio": -71.9,
+   "limit_up": true,
+   "pf": 1.009,
+   "pos60": 1.0,
+   "pos_factor": 1.0,
+   "board_bonus": 1.05,
+   "lhb_factor": 1.03,
+   "mv_factor": 1.0,
+   "float_mv": 21.76,
+   "composite": 53.7,
+   "score_final": 58.6,
+   "rel_score": 42.5
   },
   {
    "name": "贵州茅台",
@@ -2996,40 +2992,40 @@
    "rel_score": 4.1
   },
   {
-   "name": "实丰文化",
-   "code": "002862.SZ",
-   "price": 16.92,
+   "name": "东方财富",
+   "code": "300059.SZ",
+   "price": 17.96,
    "heat_rank": 52,
-   "heat_growth": 95.8,
-   "g_cross": 95.8,
+   "heat_growth": -9.7,
+   "g_cross": -9.7,
    "g_accel": null,
-   "boards": 2,
-   "board_tag": "2天2板",
-   "lhb_org_net": 3095785.0,
+   "boards": 0,
+   "board_tag": "",
+   "lhb_org_net": 0,
    "attn_growth": null,
    "L": 0.542,
-   "M": 0.958,
+   "M": 0.0,
    "concept": "人工智能",
-   "concept_all": "AI玩具+IP潮玩+玩具出海",
+   "concept_all": "互联网券商+一季报增长+AI金融",
    "concept_pos": 7,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
-   "turnover_ratio": -71.9,
-   "limit_up": true,
-   "pf": 1.009,
-   "pos60": 1.0,
-   "pos_factor": 1.0,
-   "board_bonus": 1.05,
-   "lhb_factor": 1.03,
-   "mv_factor": 1.0,
-   "float_mv": 21.76,
-   "composite": 53.5,
-   "score_final": 58.3,
-   "rel_score": 42.0
+   "turnover_ratio": -14.3,
+   "limit_up": false,
+   "pf": 1.006,
+   "pos60": 0.234,
+   "pos_factor": 1.08,
+   "board_bonus": 1.0,
+   "lhb_factor": 1.0,
+   "mv_factor": 0.85,
+   "float_mv": 2405.27,
+   "composite": 0.0,
+   "score_final": 0.0,
+   "rel_score": -3.6
   },
   {
    "name": "联明股份",
@@ -3338,7 +3334,7 @@
    "concept_pos": 9,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -3353,7 +3349,7 @@
    "float_mv": 504.56,
    "composite": 0.0,
    "score_final": 0.0,
-   "rel_score": -26.3
+   "rel_score": -26.2
   },
   {
    "name": "慈文传媒",
@@ -3752,40 +3748,40 @@
    "rel_score": 1.1
   },
   {
-   "name": "大金重工",
-   "code": "002487.SZ",
-   "price": 32.54,
+   "name": "和泰机电",
+   "code": "001225.SZ",
+   "price": 32.92,
    "heat_rank": 77,
-   "heat_growth": 67.5,
-   "g_cross": 67.5,
+   "heat_growth": 91.5,
+   "g_cross": 91.5,
    "g_accel": null,
-   "boards": 0,
-   "board_tag": "",
+   "boards": 1,
+   "board_tag": "首板涨停",
    "lhb_org_net": 0,
    "attn_growth": null,
    "L": 0.496,
-   "M": 0.675,
-   "concept": "风能",
-   "concept_all": "海工交付+自有船队+安装船",
-   "concept_pos": 8,
+   "M": 0.915,
+   "concept": "物料输送设备",
+   "concept_all": "物料输送设备+输送链+海外拓展",
+   "concept_pos": null,
    "benefit_lv": "强",
    "is_leader": false,
-   "concept_factor": 0.761,
+   "concept_factor": 1.06,
    "t_factor": null,
-   "launch": "",
+   "launch": "低位启动+首启放量",
    "swap_down": false,
-   "turnover_ratio": 44.5,
-   "limit_up": false,
+   "turnover_ratio": 93.9,
+   "limit_up": true,
    "pf": 1.0,
-   "pos60": 0.141,
+   "pos60": 0.27,
    "pos_factor": 1.08,
-   "board_bonus": 1.0,
+   "board_bonus": 1.02,
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
-   "float_mv": 205.3,
-   "composite": 44.0,
-   "score_final": 47.6,
-   "rel_score": 27.5
+   "float_mv": 29.63,
+   "composite": 71.4,
+   "score_final": 78.7,
+   "rel_score": 53.0
   },
   {
    "name": "莱美药业",
@@ -3824,18 +3820,54 @@
    "rel_score": 16.6
   },
   {
-   "name": "埃斯顿",
-   "code": "002747.SZ",
-   "price": 28.4,
+   "name": "大金重工",
+   "code": "002487.SZ",
+   "price": 32.54,
    "heat_rank": 79,
-   "heat_growth": -76.3,
-   "g_cross": -76.3,
+   "heat_growth": 66.6,
+   "g_cross": 66.6,
    "g_accel": null,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
    "L": 0.494,
+   "M": 0.666,
+   "concept": "海工交付",
+   "concept_all": "海工交付+自有船队+安装船",
+   "concept_pos": null,
+   "benefit_lv": "强",
+   "is_leader": false,
+   "concept_factor": 1.06,
+   "t_factor": null,
+   "launch": "",
+   "swap_down": false,
+   "turnover_ratio": 44.5,
+   "limit_up": false,
+   "pf": 1.0,
+   "pos60": 0.141,
+   "pos_factor": 1.08,
+   "board_bonus": 1.0,
+   "lhb_factor": 1.0,
+   "mv_factor": 1.0,
+   "float_mv": 205.3,
+   "composite": 60.8,
+   "score_final": 65.7,
+   "rel_score": 37.7
+  },
+  {
+   "name": "埃斯顿",
+   "code": "002747.SZ",
+   "price": 28.4,
+   "heat_rank": 80,
+   "heat_growth": -78.6,
+   "g_cross": -78.6,
+   "g_accel": null,
+   "boards": 0,
+   "board_tag": "",
+   "lhb_org_net": 0,
+   "attn_growth": null,
+   "L": 0.492,
    "M": 0.0,
    "concept": "机器人概念",
    "concept_all": "工业机器人+人形机器人+股权收购",
@@ -3857,43 +3889,7 @@
    "float_mv": 222.75,
    "composite": 0.0,
    "score_final": 0.0,
-   "rel_score": -33.7
-  },
-  {
-   "name": "和泰机电",
-   "code": "001225.SZ",
-   "price": 32.92,
-   "heat_rank": 80,
-   "heat_growth": 91.2,
-   "g_cross": 91.2,
-   "g_accel": null,
-   "boards": 1,
-   "board_tag": "首板涨停",
-   "lhb_org_net": 0,
-   "attn_growth": null,
-   "L": 0.492,
-   "M": 0.912,
-   "concept": "物料输送设备",
-   "concept_all": "物料输送设备+输送链+海外拓展",
-   "concept_pos": null,
-   "benefit_lv": "强",
-   "is_leader": false,
-   "concept_factor": 1.06,
-   "t_factor": null,
-   "launch": "低位启动+首启放量",
-   "swap_down": false,
-   "turnover_ratio": 93.9,
-   "limit_up": true,
-   "pf": 1.0,
-   "pos60": 0.27,
-   "pos_factor": 1.08,
-   "board_bonus": 1.02,
-   "lhb_factor": 1.0,
-   "mv_factor": 1.0,
-   "float_mv": 29.63,
-   "composite": 71.0,
-   "score_final": 78.2,
-   "rel_score": 52.4
+   "rel_score": -34.6
   },
   {
    "name": "中国平安",
@@ -3947,10 +3943,10 @@
    "M": 0.626,
    "concept": "羊字辈",
    "concept_all": "“羊”字辈+汽车物流+多式联运+三季报增长",
-   "concept_pos": null,
+   "concept_pos": 14,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 1.0,
+   "concept_factor": 0.782,
    "t_factor": null,
    "launch": "首启放量",
    "swap_down": false,
@@ -3963,60 +3959,24 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 49.66,
-   "composite": 55.2,
-   "score_final": 57.4,
-   "rel_score": 31.6
-  },
-  {
-   "name": "太极实业",
-   "code": "600667.SH",
-   "price": 13.79,
-   "heat_rank": 85,
-   "heat_growth": 37.7,
-   "g_cross": 37.7,
-   "g_accel": -89.2,
-   "boards": 0,
-   "board_tag": "",
-   "lhb_org_net": 0,
-   "attn_growth": null,
-   "L": 0.485,
-   "M": 0.377,
-   "concept": "国产芯片",
-   "concept_all": "存储芯片板块下跌+先进封装板块下跌",
-   "concept_pos": 11,
-   "benefit_lv": "中",
-   "is_leader": false,
-   "concept_factor": 0.717,
-   "t_factor": null,
-   "launch": "",
-   "swap_down": false,
-   "turnover_ratio": 18.5,
-   "limit_up": false,
-   "pf": 1.019,
-   "pos60": 0.046,
-   "pos_factor": 1.08,
-   "board_bonus": 1.0,
-   "lhb_factor": 1.0,
-   "mv_factor": 1.0,
-   "float_mv": 288.42,
-   "composite": 30.7,
-   "score_final": 33.7,
-   "rel_score": 14.4
+   "composite": 43.1,
+   "score_final": 44.9,
+   "rel_score": 24.7
   },
   {
    "name": "中国神华",
    "code": "601088.SH",
    "price": 51.62,
-   "heat_rank": 86,
-   "heat_growth": 66.0,
-   "g_cross": 66.0,
+   "heat_rank": 85,
+   "heat_growth": 66.4,
+   "g_cross": 66.4,
    "g_accel": null,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.484,
-   "M": 0.66,
+   "L": 0.485,
+   "M": 0.664,
    "concept": "煤炭开采",
    "concept_all": "煤炭+高股息",
    "concept_pos": null,
@@ -4035,9 +3995,45 @@
    "lhb_factor": 1.0,
    "mv_factor": 0.85,
    "float_mv": 8748.92,
-   "composite": 56.5,
-   "score_final": 48.0,
-   "rel_score": 27.2
+   "composite": 56.7,
+   "score_final": 48.2,
+   "rel_score": 27.4
+  },
+  {
+   "name": "太极实业",
+   "code": "600667.SH",
+   "price": 13.79,
+   "heat_rank": 86,
+   "heat_growth": 37.0,
+   "g_cross": 37.0,
+   "g_accel": -89.2,
+   "boards": 0,
+   "board_tag": "",
+   "lhb_org_net": 0,
+   "attn_growth": null,
+   "L": 0.484,
+   "M": 0.37,
+   "concept": "国产芯片",
+   "concept_all": "存储芯片板块下跌+先进封装板块下跌",
+   "concept_pos": 11,
+   "benefit_lv": "中",
+   "is_leader": false,
+   "concept_factor": 0.717,
+   "t_factor": null,
+   "launch": "",
+   "swap_down": false,
+   "turnover_ratio": 18.5,
+   "limit_up": false,
+   "pf": 1.019,
+   "pos60": 0.046,
+   "pos_factor": 1.08,
+   "board_bonus": 1.0,
+   "lhb_factor": 1.0,
+   "mv_factor": 1.0,
+   "float_mv": 288.42,
+   "composite": 30.3,
+   "score_final": 33.4,
+   "rel_score": 14.1
   },
   {
    "name": "铖昌科技",
@@ -4233,12 +4229,12 @@
    "attn_growth": null,
    "L": 0.473,
    "M": 0.597,
-   "concept": "风能",
+   "concept": "水力发电",
    "concept_all": "高位股、强势股补跌+或为市场调整趋近尾声信号",
-   "concept_pos": 11,
+   "concept_pos": null,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.718,
+   "concept_factor": 1.0,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -4251,9 +4247,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 0.85,
    "float_mv": 7338.02,
-   "composite": 38.2,
-   "score_final": 32.4,
-   "rel_score": 17.2
+   "composite": 53.1,
+   "score_final": 45.2,
+   "rel_score": 24.0
   },
   {
    "name": "电科蓝天",
@@ -4328,22 +4324,58 @@
    "rel_score": 16.5
   },
   {
-   "name": "德明利",
-   "code": "001309.SZ",
-   "price": 215.4,
+   "name": "美的集团",
+   "code": "000333.SZ",
+   "price": 87.48,
    "heat_rank": 98,
-   "heat_growth": -77.5,
-   "g_cross": -77.5,
-   "g_accel": -39.4,
+   "heat_growth": 71.9,
+   "g_cross": 71.9,
+   "g_accel": null,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
    "L": 0.469,
+   "M": 0.719,
+   "concept": "国产芯片",
+   "concept_all": "年报增长+分红回购+人形机器人",
+   "concept_pos": 13,
+   "benefit_lv": "中",
+   "is_leader": false,
+   "concept_factor": 0.717,
+   "t_factor": null,
+   "launch": "",
+   "swap_down": false,
+   "turnover_ratio": -10.9,
+   "limit_up": false,
+   "pf": 1.0,
+   "pos60": 0.82,
+   "pos_factor": 1.0,
+   "board_bonus": 1.0,
+   "lhb_factor": 1.0,
+   "mv_factor": 0.85,
+   "float_mv": 6024.19,
+   "composite": 41.6,
+   "score_final": 35.4,
+   "rel_score": 20.6
+  },
+  {
+   "name": "德明利",
+   "code": "001309.SZ",
+   "price": 215.4,
+   "heat_rank": 99,
+   "heat_growth": -79.3,
+   "g_cross": -79.3,
+   "g_accel": -39.4,
+   "boards": 0,
+   "board_tag": "",
+   "lhb_org_net": 0,
+   "attn_growth": null,
+   "L": 0.467,
    "M": 0.0,
    "concept": "国产芯片",
    "concept_all": "半导体板块下跌",
-   "concept_pos": 13,
+   "concept_pos": 14,
    "benefit_lv": "中",
    "is_leader": false,
    "concept_factor": 0.717,
@@ -4361,43 +4393,7 @@
    "float_mv": 500.63,
    "composite": 0.0,
    "score_final": 0.0,
-   "rel_score": -25.9
-  },
-  {
-   "name": "美的集团",
-   "code": "000333.SZ",
-   "price": 87.48,
-   "heat_rank": 99,
-   "heat_growth": 71.6,
-   "g_cross": 71.6,
-   "g_accel": null,
-   "boards": 0,
-   "board_tag": "",
-   "lhb_org_net": 0,
-   "attn_growth": null,
-   "L": 0.467,
-   "M": 0.716,
-   "concept": "国产芯片",
-   "concept_all": "年报增长+分红回购+人形机器人",
-   "concept_pos": 14,
-   "benefit_lv": "中",
-   "is_leader": false,
-   "concept_factor": 0.717,
-   "t_factor": null,
-   "launch": "",
-   "swap_down": false,
-   "turnover_ratio": -10.9,
-   "limit_up": false,
-   "pf": 1.0,
-   "pos60": 0.82,
-   "pos_factor": 1.0,
-   "board_bonus": 1.0,
-   "lhb_factor": 1.0,
-   "mv_factor": 0.85,
-   "float_mv": 6024.19,
-   "composite": 41.5,
-   "score_final": 35.2,
-   "rel_score": 20.4
+   "rel_score": -26.4
   },
   {
    "name": "中国卫通",
@@ -4449,12 +4445,12 @@
    "attn_growth": null,
    "L": 0.424,
    "M": 0.434,
-   "concept": "乳制品",
+   "concept": "羊字辈",
    "concept_all": "乳制品+三季报下滑+羊字辈",
-   "concept_pos": null,
+   "concept_pos": 17,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 1.0,
+   "concept_factor": 0.782,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -4467,23 +4463,23 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 38.41,
-   "composite": 42.9,
-   "score_final": 47.7,
-   "rel_score": 20.5
+   "composite": 33.5,
+   "score_final": 37.3,
+   "rel_score": 16.0
   },
   {
    "name": "华瓷股份",
    "code": "001216.SZ",
    "price": 18.45,
-   "heat_rank": 175,
-   "heat_growth": -29.9,
-   "g_cross": -40.0,
+   "heat_rank": 173,
+   "heat_growth": -28.3,
+   "g_cross": -38.4,
    "g_accel": 25.3,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.401,
+   "L": 0.403,
    "M": 0.0,
    "concept": "牙科医疗",
    "concept_all": "MLCC概念板块下跌+三季度业绩同比下滑+科技陶瓷业务规模尚小",
@@ -4505,7 +4501,7 @@
    "float_mv": 45.54,
    "composite": 0.0,
    "score_final": 0.0,
-   "rel_score": -13.0
+   "rel_score": -12.4
   },
   {
    "name": "圣阳股份",
@@ -4521,12 +4517,12 @@
    "attn_growth": null,
    "L": 0.422,
    "M": 0.631,
-   "concept": "钠离子电池",
-   "concept_all": "电池板块下跌+固态电池板块下跌",
-   "concept_pos": null,
+   "concept": "羊字辈",
+   "concept_all": "电池板块下跌+固态电池板块下跌+羊字辈",
+   "concept_pos": 18,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 1.0,
+   "concept_factor": 0.782,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -4539,9 +4535,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 75.9,
-   "composite": 51.6,
-   "score_final": 56.3,
-   "rel_score": 29.0
+   "composite": 40.4,
+   "score_final": 44.0,
+   "rel_score": 22.7
   },
   {
    "name": "华正新材",
@@ -4619,16 +4615,16 @@
    "name": "平潭发展",
    "code": "000592.SZ",
    "price": 6.74,
-   "heat_rank": 150,
-   "heat_growth": 12.4,
-   "g_cross": 12.4,
+   "heat_rank": 151,
+   "heat_growth": 11.8,
+   "g_cross": 11.8,
    "g_accel": -10.8,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.419,
-   "M": 0.124,
+   "L": 0.418,
+   "M": 0.118,
    "concept": "海峡两岸",
    "concept_all": "海峡两岸+平潭开发+林板一体化+化肥贸易",
    "concept_pos": null,
@@ -4647,23 +4643,23 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 129.08,
-   "composite": 22.8,
-   "score_final": 26.9,
-   "rel_score": 6.1
+   "composite": 22.2,
+   "score_final": 26.2,
+   "rel_score": 5.8
   },
   {
    "name": "金健米业",
    "code": "600127.SH",
    "price": 9.68,
-   "heat_rank": 190,
-   "heat_growth": -5.8,
-   "g_cross": -12.6,
+   "heat_rank": 191,
+   "heat_growth": -6.4,
+   "g_cross": -13.2,
    "g_accel": 17.0,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.392,
+   "L": 0.391,
    "M": 0.0,
    "concept": "玉米",
    "concept_all": "粮油加工板块下跌+玉米板块下跌",
@@ -4685,7 +4681,7 @@
    "float_mv": 62.12,
    "composite": 0.0,
    "score_final": 0.0,
-   "rel_score": -2.4
+   "rel_score": -2.7
   },
   {
    "name": "黄河旋风",
@@ -4774,7 +4770,7 @@
    "L": 0.376,
    "M": 0.278,
    "concept": "新能源车",
-   "concept_all": "业绩下滑+海外政策+资金流出",
+   "concept_all": "业绩下滑+海外政策+资金流出+羊字辈",
    "concept_pos": 19,
    "benefit_lv": "中",
    "is_leader": false,
@@ -4871,16 +4867,16 @@
    "name": "比亚迪",
    "code": "002594.SZ",
    "price": 82.5,
-   "heat_rank": 139,
-   "heat_growth": 52.4,
-   "g_cross": 52.4,
+   "heat_rank": 138,
+   "heat_growth": 52.7,
+   "g_cross": 52.7,
    "g_accel": null,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.428,
-   "M": 0.524,
+   "L": 0.429,
+   "M": 0.527,
    "concept": "机器人概念",
    "concept_all": "海外销量新高+闪充技术+储能大单",
    "concept_pos": 34,
@@ -4899,9 +4895,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 0.85,
    "float_mv": 2876.83,
-   "composite": 37.0,
-   "score_final": 34.0,
-   "rel_score": 16.1
+   "composite": 37.2,
+   "score_final": 34.1,
+   "rel_score": 16.2
   },
   {
    "name": "紫金矿业",
@@ -4954,7 +4950,7 @@
    "L": 0.43,
    "M": 0.263,
    "concept": "半导体概念",
-   "concept_all": "CPO板块下跌+此前涨幅较大",
+   "concept_all": "CPO板块下跌+此前涨幅较大+羊字辈",
    "concept_pos": 13,
    "benefit_lv": "中",
    "is_leader": false,
@@ -5030,7 +5026,7 @@
    "concept_pos": 13,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -5195,16 +5191,16 @@
    "name": "君正股份",
    "code": "300223.SZ",
    "price": 111.65,
-   "heat_rank": 116,
-   "heat_growth": 49.6,
-   "g_cross": 49.6,
+   "heat_rank": 117,
+   "heat_growth": 49.2,
+   "g_cross": 49.2,
    "g_accel": null,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.449,
-   "M": 0.496,
+   "L": 0.448,
+   "M": 0.492,
    "concept": "机器人概念",
    "concept_all": "三季报高增+存储芯片+AI服务器",
    "concept_pos": 31,
@@ -5223,9 +5219,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 472.14,
-   "composite": 36.9,
-   "score_final": 39.9,
-   "rel_score": 18.8
+   "composite": 36.7,
+   "score_final": 39.7,
+   "rel_score": 18.6
   },
   {
    "name": "方正科技",
@@ -5318,7 +5314,7 @@
    "concept_pos": 16,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": true,
@@ -5331,7 +5327,7 @@
    "lhb_factor": 1.0,
    "mv_factor": 1.0,
    "float_mv": 118.46,
-   "composite": 26.9,
+   "composite": 26.8,
    "score_final": 28.5,
    "rel_score": 10.3
   },
@@ -5390,7 +5386,7 @@
    "concept_pos": 14,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -5493,12 +5489,12 @@
    "attn_growth": null,
    "L": 0.414,
    "M": 0.06,
-   "concept": "风能",
+   "concept": "PCB概念",
    "concept_all": "PCB概念板块下跌+近20日累计下跌",
-   "concept_pos": 16,
+   "concept_pos": null,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.718,
+   "concept_factor": 1.0,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -5511,23 +5507,23 @@
    "lhb_factor": 1.0,
    "mv_factor": 0.92,
    "float_mv": 1164.47,
-   "composite": 11.3,
-   "score_final": 11.2,
-   "rel_score": 1.8
+   "composite": 15.8,
+   "score_final": 15.7,
+   "rel_score": 2.5
   },
   {
    "name": "蓝色光标",
    "code": "300058.SZ",
    "price": 11.85,
-   "heat_rank": 204,
-   "heat_growth": -13.6,
-   "g_cross": -13.6,
+   "heat_rank": 205,
+   "heat_growth": -14.1,
+   "g_cross": -14.1,
    "g_accel": null,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.384,
+   "L": 0.383,
    "M": 0.0,
    "concept": "机器人概念",
    "concept_all": "AI营销+出海广告+半年报增长",
@@ -5549,28 +5545,28 @@
    "float_mv": 412.13,
    "composite": 0.0,
    "score_final": 0.0,
-   "rel_score": -4.5
+   "rel_score": -4.7
   },
   {
    "name": "浪潮信息",
    "code": "000977.SZ",
    "price": 56.18,
-   "heat_rank": 170,
-   "heat_growth": 23.4,
-   "g_cross": 23.4,
+   "heat_rank": 171,
+   "heat_growth": 22.9,
+   "g_cross": 22.9,
    "g_accel": null,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.405,
-   "M": 0.234,
+   "L": 0.404,
+   "M": 0.229,
    "concept": "人工智能",
    "concept_all": "三季报环比下滑+AI算力板块回调+科技股估值承压",
    "concept_pos": 19,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "低位启动",
    "swap_down": false,
@@ -5583,9 +5579,9 @@
    "lhb_factor": 1.0,
    "mv_factor": 0.92,
    "float_mv": 824.11,
-   "composite": 22.8,
-   "score_final": 22.7,
-   "rel_score": 7.0
+   "composite": 22.5,
+   "score_final": 22.4,
+   "rel_score": 6.8
   },
   {
    "name": "杭电股份",
@@ -5699,22 +5695,22 @@
    "name": "中文在线",
    "code": "300364.SZ",
    "price": 24.52,
-   "heat_rank": 242,
-   "heat_growth": -31.0,
-   "g_cross": -31.0,
+   "heat_rank": 243,
+   "heat_growth": -31.5,
+   "g_cross": -31.5,
    "g_accel": null,
    "boards": 0,
    "board_tag": "",
    "lhb_org_net": 0,
    "attn_growth": null,
-   "L": 0.364,
+   "L": 0.363,
    "M": 0.0,
    "concept": "人工智能",
    "concept_all": "AI短剧+AI制片+短剧出海",
    "concept_pos": 23,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -5729,7 +5725,7 @@
    "float_mv": 162.1,
    "composite": 0.0,
    "score_final": 0.0,
-   "rel_score": -8.7
+   "rel_score": -8.8
   },
   {
    "name": "东方嘉盛",
@@ -5822,7 +5818,7 @@
    "concept_pos": 21,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -5858,7 +5854,7 @@
    "concept_pos": 17,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -5871,7 +5867,7 @@
    "lhb_factor": 1.0,
    "mv_factor": 0.85,
    "float_mv": 3101.47,
-   "composite": 18.8,
+   "composite": 18.7,
    "score_final": 16.6,
    "rel_score": 4.2
   },
@@ -5894,7 +5890,7 @@
    "concept_pos": 24,
    "benefit_lv": "中",
    "is_leader": false,
-   "concept_factor": 0.742,
+   "concept_factor": 0.741,
    "t_factor": null,
    "launch": "",
    "swap_down": false,
@@ -6019,22 +6015,22 @@
     "pf": 1.069,
     "pos60": 0.558,
     "pos_factor": 1.04,
-    "score_final": 43.6,
-    "concept": "风能",
+    "score_final": 47.4,
+    "concept": "羊字辈",
     "is_leader": false,
     "concept_all": "电线电缆+海底电缆+海峡两岸+“羊”字辈",
     "benefit_lv": "中",
-    "concept_pos": 14,
+    "concept_pos": 15,
     "cluster_factor": 1.0,
-    "concept_factor": 0.718,
+    "concept_factor": 0.782,
     "L": 0.438,
     "M": 0.68,
     "board_bonus": 1.0,
     "lhb_factor": 1.0,
     "mv_factor": 1.0,
-    "composite": 39.2,
-    "rel_score": 23.8,
-    "board_factor": 1.056
+    "composite": 42.7,
+    "rel_score": 25.9,
+    "board_factor": 1.15
    },
    {
     "code": "601288.SH",
@@ -6189,22 +6185,22 @@
     "pf": 1.169,
     "pos60": 1.0,
     "pos_factor": 1.0,
-    "score_final": 100.0,
+    "score_final": 79.8,
     "concept": "羊字辈",
     "is_leader": false,
     "concept_all": "“羊”字辈+体外诊断+海参养殖+水溶性维生素试剂",
     "benefit_lv": "中",
-    "concept_pos": null,
-    "concept_factor": 1.0,
+    "concept_pos": 4,
+    "cluster_factor": 1.0,
+    "concept_factor": 0.782,
     "L": 0.733,
     "M": 1.0,
     "board_bonus": 1.02,
     "lhb_factor": 1.0,
     "mv_factor": 1.0,
-    "composite": 85.6,
-    "rel_score": 87.4,
-    "reason": "据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027…；据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注…；…",
-    "reason_detail": "1、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。\n2、据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注册证，产品尚未投入生产。\n3、据2025年年报，公司以体外诊断产品为基础，持续推动免疫诊断、质谱诊断和分子诊断产品研发。\n4、据2026年8月26日半年报，公司拥有适合海参养殖的一类水质标准海域4.85万亩，并开展海水养殖及水产品加工业务。"
+    "composite": 67.0,
+    "rel_score": 68.3,
+    "board_factor": 1.15
    },
    {
     "code": "002565.SZ",
@@ -6629,15 +6625,15 @@
     "benefit_lv": "强",
     "concept_pos": 1,
     "cluster_factor": 1.0,
-    "concept_factor": 1.156,
+    "concept_factor": 1.155,
     "L": 0.694,
     "M": 1.0,
     "board_bonus": 1.05,
     "lhb_factor": 1.03,
     "mv_factor": 1.0,
-    "composite": 96.3,
-    "rel_score": 96.9,
-    "board_factor": 1.091,
+    "composite": 96.2,
+    "rel_score": 96.8,
+    "board_factor": 1.09,
     "reason": "据2026年5月10日公司官微，港城康复医院首家脑机接口智能康复病房于5月8日揭…；据2026年8月18日半年度报告，公司以医疗服务、医药流通为核心业务，拥有约32…；…",
     "reason_detail": "1、据2026年5月10日公司官微，港城康复医院首家脑机接口智能康复病房于5月8日揭牌启用，形成脑机接口与康复医疗结合的落地场景。 \n2、据2026年8月18日半年度报告，公司以医疗服务、医药流通为核心业务，拥有约32000平方米标准化药品库房。 \n3、据2026年5月12日公告，张家港悦升科技持有公司20%股份并成为控股股东，实际控制人为张家港经开区管委会。\n4、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。"
    },
@@ -6755,67 +6751,65 @@
     "pf": 1.085,
     "pos60": 0.362,
     "pos_factor": 1.04,
-    "score_final": 100.0,
-    "concept": "风能",
-    "is_leader": true,
+    "score_final": 96.6,
+    "concept": "海上风电",
+    "is_leader": false,
     "concept_all": "三季报增长+海上风电+油气船舶",
     "benefit_lv": "强",
-    "concept_pos": 1,
-    "cluster_factor": 1.0,
-    "concept_factor": 1.119,
+    "concept_pos": null,
+    "concept_factor": 1.06,
     "L": 0.627,
     "M": 1.0,
     "board_bonus": 1.02,
     "lhb_factor": 1.0,
     "mv_factor": 1.0,
-    "composite": 88.6,
-    "rel_score": 80.8,
-    "board_factor": 1.056,
+    "composite": 83.9,
+    "rel_score": 76.5,
     "reason": "行业原因：；根据GWEC预测，全球风电新增装机2026年达178GW，2026至2030年年…；据证券时报10月28日报道，前三季度国内风电新增并网装机6066万千瓦，9月同比…；…",
     "reason_detail": "行业原因：\n1、根据GWEC预测，全球风电新增装机2026年达178GW，2026至2030年年均新增约194GW，复合年均增长率将达到5.2%。\n2、据证券时报10月28日报道，前三季度国内风电新增并网装机6066万千瓦，9月同比增长约128%；多家整机企业三季报显示盈利修复。\n公司原因：\n1、据2026年10月29日三季报，公司前三季度营收33亿元，同比下降11.36%；归母净利润2.04亿元，同比增长193.02%，其中第三季度归母净利润8823.15万元，同比增长455.45%。\n2、据2026年9月15日半年报，公司上半年签订多项海上风电装备及海工产品订单，涉及导管架、基础桩等，合同金额合计约29.3亿元。\n3、据2026年9月15日特定对象调研，公司在手船舶订单包括FSO、FPSO及阿芙拉型油轮，交付期集中于2027年至2029年。"
    },
    {
-    "code": "002086.SZ",
-    "name": "东方海洋",
-    "price": 2.57,
-    "chg": 9.83,
-    "float_mv": 40.63,
-    "attn": 10,
-    "attn_rank": 10,
+    "code": "601956.SH",
+    "name": "东贝集团",
+    "price": 6.7,
+    "chg": 10.02,
+    "float_mv": 41.65,
+    "attn": 26,
+    "attn_rank": 26,
     "attn_growth": null,
-    "heat": 10,
-    "heat_rank": 10,
-    "heat_growth": 122.3,
-    "g_cross": 90.9,
-    "g_accel": 78.4,
-    "boards": 1,
-    "board_tag": "首板涨停",
+    "heat": 26,
+    "heat_rank": 26,
+    "heat_growth": 112.6,
+    "g_cross": 95.7,
+    "g_accel": 42.2,
+    "boards": 3,
+    "board_tag": "3天3板",
     "lhb_org_net": 0,
     "lhb_net": 0,
-    "turnover": 21.83,
-    "turnover_ratio": -2.3,
+    "turnover": 2.53,
+    "turnover_ratio": -23.1,
     "swap_down": false,
     "launch": "",
     "limit_up": true,
-    "pf": 1.169,
+    "pf": 1.092,
     "pos60": 1.0,
     "pos_factor": 1.0,
-    "score_final": 100.0,
-    "concept": "羊字辈",
+    "score_final": 92.2,
+    "concept": "机器人电机",
     "is_leader": false,
-    "concept_all": "“羊”字辈+体外诊断+海参养殖+水溶性维生素试剂",
+    "concept_all": "机器人电机+制冷压缩机+商用制冷",
     "benefit_lv": "中",
     "concept_pos": null,
     "concept_factor": 1.0,
-    "L": 0.733,
+    "L": 0.622,
     "M": 1.0,
-    "board_bonus": 1.02,
+    "board_bonus": 1.07,
     "lhb_factor": 1.0,
     "mv_factor": 1.0,
-    "composite": 85.6,
-    "rel_score": 87.4,
-    "reason": "据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027…；据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注…；…",
-    "reason_detail": "1、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。\n2、据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注册证，产品尚未投入生产。\n3、据2025年年报，公司以体外诊断产品为基础，持续推动免疫诊断、质谱诊断和分子诊断产品研发。\n4、据2026年8月26日半年报，公司拥有适合海参养殖的一类水质标准海域4.85万亩，并开展海水养殖及水产品加工业务。"
+    "composite": 78.9,
+    "rel_score": 72.7,
+    "reason": "据2025年4月15日官微，公司人形机器人关节电机及转子式压缩机电机处于客户匹配…；据2025年年报，公司生产15大系列400余个品种制冷压缩机，产品远销60多个国…；…",
+    "reason_detail": "1、据2025年4月15日官微，公司人形机器人关节电机及转子式压缩机电机处于客户匹配测试阶段。\n2、据2025年年报，公司生产15大系列400余个品种制冷压缩机，产品远销60多个国家和地区，是海尔、海信、美的等品牌的战略供应商。\n3、据2026年8月22日半年报，公司商用制冷产品涵盖冰淇淋机、制冰机、展示柜等，合作伙伴包括雀巢、肯德基、麦当劳等。"
    }
   ]
  },
@@ -6854,7 +6848,7 @@
     "benefit_lv": "中",
     "concept_pos": 24,
     "cluster_factor": 1.0,
-    "concept_factor": 0.742,
+    "concept_factor": 0.741,
     "L": 0.322,
     "M": 0.145,
     "board_bonus": 1.0,
@@ -6862,7 +6856,7 @@
     "mv_factor": 0.92,
     "composite": 16.0,
     "rel_score": 3.4,
-    "board_factor": 1.091
+    "board_factor": 1.09
    },
    {
     "code": "300364.SZ",
@@ -6873,10 +6867,10 @@
     "attn": 89,
     "attn_rank": 89,
     "attn_growth": null,
-    "heat": 242,
-    "heat_rank": 242,
-    "heat_growth": -31.0,
-    "g_cross": -31.0,
+    "heat": 243,
+    "heat_rank": 243,
+    "heat_growth": -31.5,
+    "g_cross": -31.5,
     "g_accel": null,
     "boards": 0,
     "board_tag": "",
@@ -6897,15 +6891,15 @@
     "benefit_lv": "中",
     "concept_pos": 23,
     "cluster_factor": 1.0,
-    "concept_factor": 0.742,
-    "L": 0.364,
+    "concept_factor": 0.741,
+    "L": 0.363,
     "M": 0.0,
     "board_bonus": 1.0,
     "lhb_factor": 1.0,
     "mv_factor": 1.0,
     "composite": 0.0,
-    "rel_score": -8.7,
-    "board_factor": 1.091
+    "rel_score": -8.8,
+    "board_factor": 1.09
    },
    {
     "code": "002050.SZ",
@@ -6979,7 +6973,7 @@
     "score_final": 23.1,
     "concept": "新能源车",
     "is_leader": false,
-    "concept_all": "业绩下滑+海外政策+资金流出",
+    "concept_all": "业绩下滑+海外政策+资金流出+羊字辈",
     "benefit_lv": "中",
     "concept_pos": 19,
     "cluster_factor": 1.0,
@@ -7002,10 +6996,10 @@
     "attn": 80,
     "attn_rank": 80,
     "attn_growth": null,
-    "heat": 204,
-    "heat_rank": 204,
-    "heat_growth": -13.6,
-    "g_cross": -13.6,
+    "heat": 205,
+    "heat_rank": 205,
+    "heat_growth": -14.1,
+    "g_cross": -14.1,
     "g_accel": null,
     "boards": 0,
     "board_tag": "",
@@ -7027,13 +7021,13 @@
     "concept_pos": 37,
     "cluster_factor": 1.0,
     "concept_factor": 0.782,
-    "L": 0.384,
+    "L": 0.383,
     "M": 0.0,
     "board_bonus": 1.0,
     "lhb_factor": 1.0,
     "mv_factor": 1.0,
     "composite": 0.0,
-    "rel_score": -4.5,
+    "rel_score": -4.7,
     "board_factor": 1.15
    }
   ],
@@ -7150,22 +7144,22 @@
     "pf": 1.169,
     "pos60": 1.0,
     "pos_factor": 1.0,
-    "score_final": 100.0,
+    "score_final": 79.8,
     "concept": "羊字辈",
     "is_leader": false,
     "concept_all": "“羊”字辈+体外诊断+海参养殖+水溶性维生素试剂",
     "benefit_lv": "中",
-    "concept_pos": null,
-    "concept_factor": 1.0,
+    "concept_pos": 4,
+    "cluster_factor": 1.0,
+    "concept_factor": 0.782,
     "L": 0.733,
     "M": 1.0,
     "board_bonus": 1.02,
     "lhb_factor": 1.0,
     "mv_factor": 1.0,
-    "composite": 85.6,
-    "rel_score": 87.4,
-    "reason": "据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027…；据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注…；…",
-    "reason_detail": "1、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。\n2、据2026年10月9日公告，子公司自主研发的水溶性维生素测定试剂盒取得医疗器械注册证，产品尚未投入生产。\n3、据2025年年报，公司以体外诊断产品为基础，持续推动免疫诊断、质谱诊断和分子诊断产品研发。\n4、据2026年8月26日半年报，公司拥有适合海参养殖的一类水质标准海域4.85万亩，并开展海水养殖及水产品加工业务。"
+    "composite": 67.0,
+    "rel_score": 68.3,
+    "board_factor": 1.15
    },
    {
     "code": "301079.SZ",
@@ -7196,7 +7190,7 @@
     "score_final": 67.5,
     "concept": "商业航天",
     "is_leader": false,
-    "concept_all": "航天+液压主业+三季报增长+生肖炒作",
+    "concept_all": "航天+液压主业+三季报增长+生肖炒作+羊字辈",
     "benefit_lv": "中",
     "concept_pos": 9,
     "cluster_factor": 1.0,
@@ -7342,46 +7336,46 @@
     "board_factor": 1.054
    },
    {
-    "code": "000333.SZ",
-    "name": "美的集团",
-    "price": 87.48,
-    "chg": 1.83,
-    "float_mv": 6024.19,
+    "code": "001309.SZ",
+    "name": "德明利",
+    "price": 215.4,
+    "chg": -6.58,
+    "float_mv": 500.63,
     "attn": 99,
     "attn_rank": 99,
     "attn_growth": null,
     "heat": 99,
     "heat_rank": 99,
-    "heat_growth": 71.6,
-    "g_cross": 71.6,
-    "g_accel": null,
+    "heat_growth": -79.3,
+    "g_cross": -79.3,
+    "g_accel": -39.4,
     "boards": 0,
     "board_tag": "",
     "lhb_org_net": 0,
     "lhb_net": 0,
-    "turnover": 0.41,
-    "turnover_ratio": -10.9,
+    "turnover": 7.94,
+    "turnover_ratio": -32.0,
     "swap_down": false,
     "launch": "",
     "limit_up": false,
     "pf": 1.0,
-    "pos60": 0.82,
-    "pos_factor": 1.0,
-    "score_final": 35.2,
+    "pos60": 0.044,
+    "pos_factor": 1.08,
+    "score_final": 0.0,
     "concept": "国产芯片",
     "is_leader": false,
-    "concept_all": "年报增长+分红回购+人形机器人",
+    "concept_all": "半导体板块下跌",
     "benefit_lv": "中",
     "concept_pos": 14,
     "cluster_factor": 1.0,
     "concept_factor": 0.717,
     "L": 0.467,
-    "M": 0.716,
+    "M": 0.0,
     "board_bonus": 1.0,
     "lhb_factor": 1.0,
-    "mv_factor": 0.85,
-    "composite": 41.5,
-    "rel_score": 20.4,
+    "mv_factor": 0.92,
+    "composite": 0.0,
+    "rel_score": -26.4,
     "board_factor": 1.054
    },
    {
@@ -7428,46 +7422,46 @@
     "board_factor": 1.15
    },
    {
-    "code": "001309.SZ",
-    "name": "德明利",
-    "price": 215.4,
-    "chg": -6.58,
-    "float_mv": 500.63,
+    "code": "000333.SZ",
+    "name": "美的集团",
+    "price": 87.48,
+    "chg": 1.83,
+    "float_mv": 6024.19,
     "attn": 98,
     "attn_rank": 98,
     "attn_growth": null,
     "heat": 98,
     "heat_rank": 98,
-    "heat_growth": -77.5,
-    "g_cross": -77.5,
-    "g_accel": -39.4,
+    "heat_growth": 71.9,
+    "g_cross": 71.9,
+    "g_accel": null,
     "boards": 0,
     "board_tag": "",
     "lhb_org_net": 0,
     "lhb_net": 0,
-    "turnover": 7.94,
-    "turnover_ratio": -32.0,
+    "turnover": 0.41,
+    "turnover_ratio": -10.9,
     "swap_down": false,
     "launch": "",
     "limit_up": false,
     "pf": 1.0,
-    "pos60": 0.044,
-    "pos_factor": 1.08,
-    "score_final": 0.0,
+    "pos60": 0.82,
+    "pos_factor": 1.0,
+    "score_final": 35.4,
     "concept": "国产芯片",
     "is_leader": false,
-    "concept_all": "半导体板块下跌",
+    "concept_all": "年报增长+分红回购+人形机器人",
     "benefit_lv": "中",
     "concept_pos": 13,
     "cluster_factor": 1.0,
     "concept_factor": 0.717,
     "L": 0.469,
-    "M": 0.0,
+    "M": 0.719,
     "board_bonus": 1.0,
     "lhb_factor": 1.0,
-    "mv_factor": 0.92,
-    "composite": 0.0,
-    "rel_score": -25.9,
+    "mv_factor": 0.85,
+    "composite": 41.6,
+    "rel_score": 20.6,
     "board_factor": 1.054
    }
   ],
@@ -7592,15 +7586,15 @@
     "benefit_lv": "强",
     "concept_pos": 1,
     "cluster_factor": 1.0,
-    "concept_factor": 1.156,
+    "concept_factor": 1.155,
     "L": 0.694,
     "M": 1.0,
     "board_bonus": 1.05,
     "lhb_factor": 1.03,
     "mv_factor": 1.0,
-    "composite": 96.3,
-    "rel_score": 96.9,
-    "board_factor": 1.091,
+    "composite": 96.2,
+    "rel_score": 96.8,
+    "board_factor": 1.09,
     "reason": "据2026年5月10日公司官微，港城康复医院首家脑机接口智能康复病房于5月8日揭…；据2026年8月18日半年度报告，公司以医疗服务、医药流通为核心业务，拥有约32…；…",
     "reason_detail": "1、据2026年5月10日公司官微，港城康复医院首家脑机接口智能康复病房于5月8日揭牌启用，形成脑机接口与康复医疗结合的落地场景。 \n2、据2026年8月18日半年度报告，公司以医疗服务、医药流通为核心业务，拥有约32000平方米标准化药品库房。 \n3、据2026年5月12日公告，张家港悦升科技持有公司20%股份并成为控股股东，实际控制人为张家港经开区管委会。\n4、据中证报10月27日报道，近几年，每到四季度，市场经常掀起一波生肖行情。2027年为羊年，最近部分A股名称中带有“羊、洋、阳”的个股频频异动。"
    },
@@ -7698,7 +7692,7 @@
   {
    "concept": "机器人概念",
    "n": 38,
-   "heat": 2950,
+   "heat": 2952,
    "best_rank": 4,
    "leader": "襄阳轴承",
    "members": [
@@ -7795,7 +7789,7 @@
      "飞沃科技"
     ],
     [
-     79,
+     80,
      "埃斯顿"
     ],
     [
@@ -7819,7 +7813,7 @@
      "福莱新材"
     ],
     [
-     139,
+     138,
      "比亚迪"
     ],
     [
@@ -7827,7 +7821,7 @@
      "赛福天"
     ],
     [
-     116,
+     117,
      "君正股份"
     ],
     [
@@ -7839,7 +7833,7 @@
      "三花智控"
     ],
     [
-     204,
+     205,
      "蓝色光标"
     ],
     [
@@ -7859,12 +7853,12 @@
    "weak": 10,
    "net": 8,
    "limit_up": 10,
-   "avg_chg": 0.1,
+   "avg_chg": 0.0,
    "shadow_of": null,
    "prev_n": null,
    "delta": null,
    "lu_delta": 10,
-   "mom": 30.1,
+   "mom": 30.0,
    "bf": 1.15,
    "ci": 84,
    "traj": [
@@ -7879,7 +7873,7 @@
   {
    "concept": "人工智能",
    "n": 24,
-   "heat": 2770,
+   "heat": 2775,
    "best_rank": 14,
    "leader": "澳洋健康",
    "members": [
@@ -7905,11 +7899,11 @@
     ],
     [
      50,
-     "东方财富"
+     "实丰文化"
     ],
     [
      52,
-     "实丰文化"
+     "东方财富"
     ],
     [
      60,
@@ -7920,7 +7914,7 @@
      "华天科技"
     ],
     [
-     79,
+     80,
      "埃斯顿"
     ],
     [
@@ -7936,7 +7930,7 @@
      "凡拓数创"
     ],
     [
-     116,
+     117,
      "君正股份"
     ],
     [
@@ -7948,15 +7942,15 @@
      "京东方Ａ"
     ],
     [
-     204,
+     205,
      "蓝色光标"
     ],
     [
-     170,
+     171,
      "浪潮信息"
     ],
     [
-     242,
+     243,
      "中文在线"
     ],
     [
@@ -7984,13 +7978,13 @@
    "weak": 9,
    "net": -2,
    "limit_up": 3,
-   "avg_chg": 0.1,
+   "avg_chg": -0.0,
    "shadow_of": null,
    "prev_n": null,
    "delta": null,
    "lu_delta": 3,
-   "mom": 9.1,
-   "bf": 1.091,
+   "mom": 9.0,
+   "bf": 1.09,
    "ci": 29,
    "traj": [
     {
@@ -8131,7 +8125,7 @@
   {
    "concept": "国产芯片",
    "n": 22,
-   "heat": 1994,
+   "heat": 1995,
    "best_rank": 1,
    "leader": "中国卫星",
    "members": [
@@ -8176,7 +8170,7 @@
      "中海达"
     ],
     [
-     85,
+     86,
      "太极实业"
     ],
     [
@@ -8185,11 +8179,11 @@
     ],
     [
      98,
-     "德明利"
+     "美的集团"
     ],
     [
      99,
-     "美的集团"
+     "德明利"
     ],
     [
      104,
@@ -8200,7 +8194,7 @@
      "航天发展"
     ],
     [
-     139,
+     138,
      "比亚迪"
     ],
     [
@@ -8208,7 +8202,7 @@
      "长电科技"
     ],
     [
-     116,
+     117,
      "君正股份"
     ],
     [
@@ -8248,7 +8242,7 @@
   {
    "concept": "新能源车",
    "n": 20,
-   "heat": 1668,
+   "heat": 1666,
    "best_rank": 4,
    "leader": "襄阳轴承",
    "members": [
@@ -8301,7 +8295,7 @@
      "江顺科技"
     ],
     [
-     99,
+     98,
      "美的集团"
     ],
     [
@@ -8313,7 +8307,7 @@
      "阳光电源"
     ],
     [
-     139,
+     138,
      "比亚迪"
     ],
     [
@@ -8337,7 +8331,7 @@
    "weak": 3,
    "net": 4,
    "limit_up": 2,
-   "avg_chg": -0.5,
+   "avg_chg": -0.4,
    "shadow_of": null,
    "prev_n": null,
    "delta": null,
@@ -8357,7 +8351,7 @@
   {
    "concept": "5G概念",
    "n": 20,
-   "heat": 1525,
+   "heat": 1526,
    "best_rank": 2,
    "leader": "天孚通信",
    "members": [
@@ -8410,7 +8404,7 @@
      "生益科技"
     ],
     [
-     98,
+     99,
      "德明利"
     ],
     [
@@ -8466,7 +8460,7 @@
   {
    "concept": "半导体概念",
    "n": 19,
-   "heat": 2087,
+   "heat": 2089,
    "best_rank": 33,
    "leader": "兆易创新",
    "members": [
@@ -8495,11 +8489,11 @@
      "江波龙"
     ],
     [
-     85,
+     86,
      "太极实业"
     ],
     [
-     98,
+     99,
      "德明利"
     ],
     [
@@ -8507,7 +8501,7 @@
      "华正新材"
     ],
     [
-     139,
+     138,
      "比亚迪"
     ],
     [
@@ -8519,7 +8513,7 @@
      "长电科技"
     ],
     [
-     116,
+     117,
      "君正股份"
     ],
     [
@@ -8551,7 +8545,7 @@
    "weak": 9,
    "net": -6,
    "limit_up": 1,
-   "avg_chg": -0.4,
+   "avg_chg": -0.5,
    "shadow_of": null,
    "prev_n": null,
    "delta": null,
@@ -8571,55 +8565,75 @@
    "streak": 1
   },
   {
-   "concept": "风能",
-   "n": 17,
-   "heat": 1554,
-   "best_rank": 25,
-   "leader": "天顺风能",
+   "concept": "羊字辈",
+   "n": 19,
+   "heat": 1197,
+   "best_rank": 4,
+   "leader": "襄阳轴承",
    "members": [
     [
-     25,
-     "天顺风能"
+     4,
+     "襄阳轴承"
     ],
     [
-     31,
-     "五洲新春"
+     7,
+     "光洋股份"
+    ],
+    [
+     9,
+     "阳光照明"
+    ],
+    [
+     10,
+     "东方海洋"
+    ],
+    [
+     11,
+     "盛洋科技"
+    ],
+    [
+     14,
+     "澳洋健康"
+    ],
+    [
+     23,
+     "邵阳液压"
+    ],
+    [
+     29,
+     "海洋王"
     ],
     [
      34,
      "大洋电机"
     ],
     [
-     42,
-     "大业股份"
+     35,
+     "九阳股份"
     ],
     [
-     68,
-     "亨通光电"
+     44,
+     "海阳科技"
     ],
     [
-     74,
-     "宁波东力"
+     48,
+     "百洋股份"
     ],
     [
-     75,
-     "飞沃科技"
+     72,
+     "大西洋"
     ],
     [
-     77,
-     "大金重工"
+     84,
+     "三羊马"
     ],
     [
-     90,
-     "金风科技"
+     144,
+     "阳光乳业"
     ],
     [
-     92,
-     "江顺科技"
-    ],
-    [
-     94,
-     "长江电力"
+     147,
+     "圣阳股份"
     ],
     [
      217,
@@ -8630,41 +8644,33 @@
      "太阳电缆"
     ],
     [
-     113,
-     "国轩高科"
-    ],
-    [
-     157,
-     "中国巨石"
-    ],
-    [
-     135,
-     "杭电股份"
-    ],
-    [
-     102,
-     "中天科技"
+     137,
+     "天洋新材"
     ]
    ],
-   "strong": 10,
-   "weak": 1,
-   "net": 9,
-   "limit_up": 2,
-   "avg_chg": -0.8,
+   "strong": 16,
+   "weak": 0,
+   "net": 16,
+   "limit_up": 7,
+   "avg_chg": 0.2,
    "shadow_of": null,
-   "prev_n": null,
-   "delta": null,
-   "lu_delta": 2,
-   "mom": 5.6,
-   "bf": 1.056,
-   "ci": 41,
+   "prev_n": 12,
+   "delta": 7,
+   "lu_delta": 1,
+   "mom": 17.1,
+   "bf": 1.15,
+   "ci": 124,
    "traj": [
     {
+     "date": "20261029",
+     "net": 11
+    },
+    {
      "date": "20261030",
-     "net": 9
+     "net": 16
     }
    ],
-   "takeover": false,
+   "takeover": true,
    "streak": 1
   }
  ],
@@ -8672,7 +8678,7 @@
   {
    "concept": "机器人概念",
    "n": 38,
-   "heat": 2950,
+   "heat": 2952,
    "best_rank": 4,
    "leader": "襄阳轴承",
    "members": [
@@ -8769,7 +8775,7 @@
      "飞沃科技"
     ],
     [
-     79,
+     80,
      "埃斯顿"
     ],
     [
@@ -8793,7 +8799,7 @@
      "福莱新材"
     ],
     [
-     139,
+     138,
      "比亚迪"
     ],
     [
@@ -8801,7 +8807,7 @@
      "赛福天"
     ],
     [
-     116,
+     117,
      "君正股份"
     ],
     [
@@ -8813,7 +8819,7 @@
      "三花智控"
     ],
     [
-     204,
+     205,
      "蓝色光标"
     ],
     [
@@ -8833,12 +8839,12 @@
    "weak": 10,
    "net": 8,
    "limit_up": 10,
-   "avg_chg": 0.1,
+   "avg_chg": 0.0,
    "shadow_of": null,
    "prev_n": null,
    "delta": null,
    "lu_delta": 10,
-   "mom": 30.1,
+   "mom": 30.0,
    "bf": 1.15,
    "ci": 84,
    "traj": [
@@ -8853,7 +8859,7 @@
   {
    "concept": "人工智能",
    "n": 24,
-   "heat": 2770,
+   "heat": 2775,
    "best_rank": 14,
    "leader": "澳洋健康",
    "members": [
@@ -8879,11 +8885,11 @@
     ],
     [
      50,
-     "东方财富"
+     "实丰文化"
     ],
     [
      52,
-     "实丰文化"
+     "东方财富"
     ],
     [
      60,
@@ -8894,7 +8900,7 @@
      "华天科技"
     ],
     [
-     79,
+     80,
      "埃斯顿"
     ],
     [
@@ -8910,7 +8916,7 @@
      "凡拓数创"
     ],
     [
-     116,
+     117,
      "君正股份"
     ],
     [
@@ -8922,15 +8928,15 @@
      "京东方Ａ"
     ],
     [
-     204,
+     205,
      "蓝色光标"
     ],
     [
-     170,
+     171,
      "浪潮信息"
     ],
     [
-     242,
+     243,
      "中文在线"
     ],
     [
@@ -8958,13 +8964,13 @@
    "weak": 9,
    "net": -2,
    "limit_up": 3,
-   "avg_chg": 0.1,
+   "avg_chg": -0.0,
    "shadow_of": null,
    "prev_n": null,
    "delta": null,
    "lu_delta": 3,
-   "mom": 9.1,
-   "bf": 1.091,
+   "mom": 9.0,
+   "bf": 1.09,
    "ci": 29,
    "traj": [
     {
@@ -9105,7 +9111,7 @@
   {
    "concept": "国产芯片",
    "n": 22,
-   "heat": 1994,
+   "heat": 1995,
    "best_rank": 1,
    "leader": "中国卫星",
    "members": [
@@ -9150,7 +9156,7 @@
      "中海达"
     ],
     [
-     85,
+     86,
      "太极实业"
     ],
     [
@@ -9159,11 +9165,11 @@
     ],
     [
      98,
-     "德明利"
+     "美的集团"
     ],
     [
      99,
-     "美的集团"
+     "德明利"
     ],
     [
      104,
@@ -9174,7 +9180,7 @@
      "航天发展"
     ],
     [
-     139,
+     138,
      "比亚迪"
     ],
     [
@@ -9182,7 +9188,7 @@
      "长电科技"
     ],
     [
-     116,
+     117,
      "君正股份"
     ],
     [
@@ -9222,7 +9228,7 @@
   {
    "concept": "新能源车",
    "n": 20,
-   "heat": 1668,
+   "heat": 1666,
    "best_rank": 4,
    "leader": "襄阳轴承",
    "members": [
@@ -9275,7 +9281,7 @@
      "江顺科技"
     ],
     [
-     99,
+     98,
      "美的集团"
     ],
     [
@@ -9287,7 +9293,7 @@
      "阳光电源"
     ],
     [
-     139,
+     138,
      "比亚迪"
     ],
     [
@@ -9311,7 +9317,7 @@
    "weak": 3,
    "net": 4,
    "limit_up": 2,
-   "avg_chg": -0.5,
+   "avg_chg": -0.4,
    "shadow_of": null,
    "prev_n": null,
    "delta": null,
@@ -9331,7 +9337,7 @@
   {
    "concept": "5G概念",
    "n": 20,
-   "heat": 1525,
+   "heat": 1526,
    "best_rank": 2,
    "leader": "天孚通信",
    "members": [
@@ -9384,7 +9390,7 @@
      "生益科技"
     ],
     [
-     98,
+     99,
      "德明利"
     ],
     [
@@ -9440,7 +9446,7 @@
   {
    "concept": "半导体概念",
    "n": 19,
-   "heat": 2087,
+   "heat": 2089,
    "best_rank": 33,
    "leader": "兆易创新",
    "members": [
@@ -9469,11 +9475,11 @@
      "江波龙"
     ],
     [
-     85,
+     86,
      "太极实业"
     ],
     [
-     98,
+     99,
      "德明利"
     ],
     [
@@ -9481,7 +9487,7 @@
      "华正新材"
     ],
     [
-     139,
+     138,
      "比亚迪"
     ],
     [
@@ -9493,7 +9499,7 @@
      "长电科技"
     ],
     [
-     116,
+     117,
      "君正股份"
     ],
     [
@@ -9525,7 +9531,7 @@
    "weak": 9,
    "net": -6,
    "limit_up": 1,
-   "avg_chg": -0.4,
+   "avg_chg": -0.5,
    "shadow_of": null,
    "prev_n": null,
    "delta": null,
@@ -9545,55 +9551,75 @@
    "streak": 1
   },
   {
-   "concept": "风能",
-   "n": 17,
-   "heat": 1554,
-   "best_rank": 25,
-   "leader": "天顺风能",
+   "concept": "羊字辈",
+   "n": 19,
+   "heat": 1197,
+   "best_rank": 4,
+   "leader": "襄阳轴承",
    "members": [
     [
-     25,
-     "天顺风能"
+     4,
+     "襄阳轴承"
     ],
     [
-     31,
-     "五洲新春"
+     7,
+     "光洋股份"
+    ],
+    [
+     9,
+     "阳光照明"
+    ],
+    [
+     10,
+     "东方海洋"
+    ],
+    [
+     11,
+     "盛洋科技"
+    ],
+    [
+     14,
+     "澳洋健康"
+    ],
+    [
+     23,
+     "邵阳液压"
+    ],
+    [
+     29,
+     "海洋王"
     ],
     [
      34,
      "大洋电机"
     ],
     [
-     42,
-     "大业股份"
+     35,
+     "九阳股份"
     ],
     [
-     68,
-     "亨通光电"
+     44,
+     "海阳科技"
     ],
     [
-     74,
-     "宁波东力"
+     48,
+     "百洋股份"
     ],
     [
-     75,
-     "飞沃科技"
+     72,
+     "大西洋"
     ],
     [
-     77,
-     "大金重工"
+     84,
+     "三羊马"
     ],
     [
-     90,
-     "金风科技"
+     144,
+     "阳光乳业"
     ],
     [
-     92,
-     "江顺科技"
-    ],
-    [
-     94,
-     "长江电力"
+     147,
+     "圣阳股份"
     ],
     [
      217,
@@ -9604,41 +9630,33 @@
      "太阳电缆"
     ],
     [
-     113,
-     "国轩高科"
-    ],
-    [
-     157,
-     "中国巨石"
-    ],
-    [
-     135,
-     "杭电股份"
-    ],
-    [
-     102,
-     "中天科技"
+     137,
+     "天洋新材"
     ]
    ],
-   "strong": 10,
-   "weak": 1,
-   "net": 9,
-   "limit_up": 2,
-   "avg_chg": -0.8,
+   "strong": 16,
+   "weak": 0,
+   "net": 16,
+   "limit_up": 7,
+   "avg_chg": 0.2,
    "shadow_of": null,
-   "prev_n": null,
-   "delta": null,
-   "lu_delta": 2,
-   "mom": 5.6,
-   "bf": 1.056,
-   "ci": 41,
+   "prev_n": 12,
+   "delta": 7,
+   "lu_delta": 1,
+   "mom": 17.1,
+   "bf": 1.15,
+   "ci": 124,
    "traj": [
     {
+     "date": "20261029",
+     "net": 11
+    },
+    {
      "date": "20261030",
-     "net": 9
+     "net": 16
     }
    ],
-   "takeover": false,
+   "takeover": true,
    "streak": 1
   }
  ],
@@ -9647,6 +9665,10 @@
    {
     "date": "20261029",
     "net": 11
+   },
+   {
+    "date": "20261030",
+    "net": 16
    }
   ],
   "商业航天": [
@@ -9729,12 +9751,6 @@
    {
     "date": "20261030",
     "net": -6
-   }
-  ],
-  "风能": [
-   {
-    "date": "20261030",
-    "net": 9
    }
   ]
  },
