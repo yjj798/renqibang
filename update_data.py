@@ -20,6 +20,8 @@ _KLINE_CACHE = {}
 HIST_FILE = os.path.join(HERE, "history.json")
 # 输出文件: 默认与本脚本同目录(本地部署可直接用), 可用环境变量 OUTPUT_DIR 覆盖
 OUT_FILE = os.path.join(os.environ.get("OUTPUT_DIR", HERE), "data.json")
+# 页面里的 EMBEDDED 兜底常量要跟着每次结果刷新, 否则首屏永远是上一次手工写入的旧快照
+INDEX_FILE = os.path.join(os.path.dirname(os.path.abspath(OUT_FILE)), "index.html")
 
 # ---- 价格因子（2026-10-29 20:24 用户令：低价股容易成妖，10 元以下优先给分）----
 PF_MAX_BONUS = 0.18      # 2 元处总加成上限 +18%
@@ -663,6 +665,34 @@ def top(stocks, key, n=5):
     s.sort(key=lambda x: x[key], reverse=True)
     return s[:n]
 
+
+def inject_embedded(data):
+    """把本次结果写进 index.html 的 `EMBEDDED=` 常量。
+
+    前端首屏就是 render(EMBEDDED)，fetch data.json 成功后才覆盖；所以这个常量一旦陈旧，
+    打开页面第一眼看到的就是上一次手工写入的旧榜（实测曾停在 17:20 快照，涨停/连板列全空，
+    分数还是旧公式算的 55.4）。这里按 data 原样注入，不做裁剪，避免兜底与 data.json 口径分叉。
+    """
+    try:
+        html = open(INDEX_FILE, encoding="utf-8").read()
+    except FileNotFoundError:
+        return False
+    key = "EMBEDDED="
+    try:
+        start = html.index(key) + len(key)
+    except ValueError:
+        return False
+    try:
+        _, end = json.JSONDecoder().raw_decode(html, start)
+    except ValueError:
+        return False
+    blob = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    if html[start:end] == blob:
+        return False
+    open(INDEX_FILE, "w", encoding="utf-8").write(html[:start] + blob + html[end:])
+    return True
+
+
 def main():
     global FRY
     hist = load_hist()
@@ -890,7 +920,9 @@ def main():
         hist["cpt"].pop(d, None)
     json.dump(hist, open(HIST_FILE, "w", encoding="utf-8"), ensure_ascii=False)
     json.dump(data, open(OUT_FILE, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
-    print("OK", data["updated_at"], "原始:", len(raw_stocks), "精选:", len(sel_stocks), "盘中折算:", round(frac, 2))
+    embed = inject_embedded(data)
+    print("OK", data["updated_at"], "原始:", len(raw_stocks), "精选:", len(sel_stocks),
+          "盘中折算:", round(frac, 2), "| EMBEDDED", "已刷新" if embed else "无变化")
 
 if __name__ == "__main__":
     main()
