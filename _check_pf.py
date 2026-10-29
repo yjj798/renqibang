@@ -44,7 +44,8 @@ for s in sc:
         errs.append(("posf 不符", s.get("name"), pos, s["pos_factor"], posf_exp(pos)))
     if s.get("composite") is not None and s.get("score_final") is not None:
         mult = ((s.get("pos_factor") or 1.0) * (s.get("board_bonus") or 1.0)
-                * (s.get("lhb_factor") or 1.0) * (s.get("mv_factor") or 1.0))
+                * (s.get("lhb_factor") or 1.0) * (s.get("mv_factor") or 1.0)
+                * (s.get("op_factor") or 1.0))
         exp = round(min(CAP_SCORE, s["composite"] * pf * mult), 1)
         if abs(exp - s["score_final"]) > 0.15:
             errs.append(("score_final 不符", s.get("name"), s["composite"], pf,
