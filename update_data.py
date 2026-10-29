@@ -479,6 +479,51 @@ EXCLUDE_GLOBAL = {"融资融券","转融券标的","沪股通","深股通","同�
                "家用电器","农林牧渔","房地产","建筑装饰","交通运输","纺织服装","公用事业",
                "商业贸易","建筑材料","国防军工","综合","轻工制造","美容护理","环保","石油石化"}
 
+def name_resonance(codes, pool):
+    """名称共振(用户令 2026-10-30 00:45「如何让程序也这么聪明」——
+    「祥 contains 羊 → 祥源文旅踩中羊字辈」这类洞察的程序化):
+
+    异动解读正文里同花顺 AI 常把题材规则直接说出来(如「名称中带有"羊、洋、阳"的
+    个股频频异动」← 生肖行情)。把这句规则解析出来, 全池套用 —— THS 只给它逐股
+    解读过的票打"羊"字辈标签, 热榜里同名但没被解读的票会漏, 这里补齐。
+
+    只认两种明确信号(宁缺勿编): 正文提「生肖行情」、或「名称/名字…带」后跟
+    引号包的单字列表。命中者并入 X字辈 集群(X=第一个字, 羊年即"羊字辈")。"""
+    import re as _re
+    chars = set()
+    for c in codes:
+        rsn = ((pool[c].get("anomaly") or {}).get("reason") or "")
+        if "生肖" not in rsn and not _re.search(r"名称中?带|名字[带含]", rsn):
+            continue
+        for m in _re.finditer(r"[“\"']([一-龥](?:[、,，]\s*[一-龥])+)[”\"']", rsn):
+            for ch in _re.split(r"[、,，]\s*", m.group(1)):
+                if len(ch) == 1:
+                    chars.add(ch)
+    if not chars:
+        return None
+    # 主题名: 优先复用 THS 已打出的「X字辈」标签(否则羊字辈会被劈成"洋字辈"两个集群);
+    # 没有就取名下池内股票名命中最多的那个字
+    import collections
+    theme = next((k for c in codes for k in (pool[c].get("concepts") or [])
+                  if _re.fullmatch(r"[一-龥]字辈", k) and k[0] in chars), None)
+    if not theme:
+        cnt = collections.Counter(ch for c in codes
+                                  for ch in set(pool[c].get("name") or "") if ch in chars)
+        theme = (cnt.most_common(1)[0][0] if cnt else sorted(chars)[0]) + "字辈"
+    added = []
+    for c in codes:
+        pc = pool[c]
+        nm = pc.get("name") or ""
+        if nm and any(ch in nm for ch in chars) and theme not in (pc.get("concepts") or []):
+            pc.setdefault("concepts", []).append(theme)
+            if pc.get("kw_all"):
+                pc["kw_all"] += "+" + theme
+            else:
+                pc["kw_all"] = theme
+            added.append(nm)
+    return {"theme": theme, "chars": sorted(chars), "added": added}
+
+
 def add_concept_stats(stocks, pool):
     """概念集群统计 + 影子概念合并 + 龙头/杂毛判定 + 概念系数"""
     groups = {}
@@ -853,6 +898,10 @@ def main():
     #    keywordList 才是真炒作题材, 原 F10/新闻/免费标签体系当轮下线。
     #    静态 txt 无风控, 8路并发一遍; 当日无异动的票概念留空(没异动=没题材, 不硬编)。
     fetch_concepts(codes, pool)
+    _reso = name_resonance(codes, pool)
+    if _reso and _reso["added"]:
+        print("  名称共振[%s] %s: +%d 只(%s)" % (_reso["theme"], "/".join(_reso["chars"]),
+                                                len(_reso["added"]), "、".join(_reso["added"][:8])))
     concept_stats, attn_counts = add_concept_stats(raw_stocks, pool)
     add_composite(raw_stocks)
 
