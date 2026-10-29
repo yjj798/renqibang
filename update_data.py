@@ -382,12 +382,14 @@ def _fry_for(cpt):
     return None
 
 
-def fetch_concepts(codes, pool, workers=8):
-    """概念归属：东财F10核心题材 ∪ 同花顺热榜 concept_tag ∪ 55188 龙虎榜 topics
-    —— 三个源都过同一道泛词闸。单用东财会漏掉同花顺才标的炒作标签(如'减速器'),
-    单用同花顺又只有前100只有标签, 合并才不漏。
+def fetch_concepts(codes, pool, workers=8, f10=True):
+    """概念归属：同花顺热榜 concept_tag ∪ 55188 龙虎榜 topics ∪(仅展示集) 东财F10核心题材
+    —— 三个源都过同一道泛词闸。单用同花顺会漏掉东财才有的标签,
+    单用东财又只有前100只有标签, 合并才不漏。
 
-    ⚡ 并发 8 路（原串行 151 只 + sleep 0.15 ⇒ ~25s，现 ~4s）"""
+    ⚡ 用户令(2026-10-29 23:18): 逐股拉 F10 全池(~151请求)不现实 —— 同花顺/龙虎榜标签
+    是热榜响应自带的, 全池零请求; 东财 F10 只给最终会上榜/进页面列表的展示集补拉。
+    f10=False 时只拼免费来源, 供第一遍初评圈定展示集用。"""
     def _one(c):
         cs = []
         # 同花顺 concept_tag / 55188 龙虎榜 topics 才是"当下在炒的标签", 放前面；
@@ -396,14 +398,15 @@ def fetch_concepts(codes, pool, workers=8):
             nb = F.norm_concept(extra)
             if nb and nb not in cs and not F.is_generic_concept(nb):
                 cs.append(nb)
-        try:
-            raw = F.fetch_concepts_em(c)
-        except Exception:
-            raw = []
-        for nb in raw:
-            nb = F.norm_concept(nb)
-            if nb and nb not in cs and not F.is_generic_concept(nb):
-                cs.append(nb)
+        if f10:
+            try:
+                raw = F.fetch_concepts_em(c)
+            except Exception:
+                raw = []
+            for nb in raw:
+                nb = F.norm_concept(nb)
+                if nb and nb not in cs and not F.is_generic_concept(nb):
+                    cs.append(nb)
         return c, cs
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
@@ -814,7 +817,30 @@ def main():
     raw_stocks = assemble(codes, pool, hist, today, frac)
     _by_code = {x["code"]: x for x in raw_stocks}
     sel_stocks = [_by_code[c] for c in fcodes if c in _by_code]
-    fetch_concepts(codes, pool)
+    # 6a) 第一遍: 概念只用免费标签(同花顺/龙虎榜, 随热榜响应自带, 全池零请求)
+    #     → 初版聚类+评分, 用来圈定"最终会在页面出现的展示集"。
+    fetch_concepts(codes, pool, f10=False)
+    add_concept_stats(raw_stocks, pool)
+    add_composite(raw_stocks)
+    # 展示集 = 五张分榜(sel/raw 各前6) ∪ 榜首候选前25 ∪ 相对分候选前8(留余量,
+    # 第二遍 F10 概念并进来后排名可能微调, 候选比实际展示多留几个才不会漏)。
+    _bucket = lambda x: 0 if (x.get("price") or 99) < PF_SWEET_PRICE else 1
+    display = set()
+    for k in ("heat", "heat_growth", "attn", "attn_growth", "composite"):
+        display |= {x["code"] for x in top(sel_stocks, k, 6)}
+        display |= {x["code"] for x in top(raw_stocks, k, 6)}
+    display |= {x["code"] for x in sorted(
+        [x for x in raw_stocks
+         if (x.get("score_final") or 0) > 0 and (x.get("price") or 99) < MAX_PRICE],
+        key=lambda x: (_bucket(x), -x["score_final"]))[:25]}
+    display |= {x["code"] for x in sorted(
+        [x for x in raw_stocks
+         if (x.get("price") or 99) < MAX_PRICE and x.get("rel_score") is not None],
+        key=lambda x: (_bucket(x), -x["rel_score"]))[:8]}
+    # 6b) 第二遍: 只给展示集补拉东财 F10(用户令 2026-10-29 23:18: 全池逐股拉F10不现实),
+    #     再重新聚类+评分定稿。免费标签的票没进 F10 集群不受影响, 集群统计依旧全池覆盖。
+    print("  展示集 %d / 全池 %d 只补拉 F10" % (len(display), len(codes)))
+    fetch_concepts(sorted(display), pool, f10=True)
     concept_stats, attn_counts = add_concept_stats(raw_stocks, pool)
     add_composite(raw_stocks)
 
@@ -841,23 +867,33 @@ def main():
     pdates = sorted([d for d in hist.get("cpt", {}) if d < today])
     prev_d = pdates[-1] if pdates else None
     prev = hist.get("cpt", {}).get(prev_d, {}) if prev_d else {}
+    # 口径闸(20261029 用户令: F10 只拉展示集): 概念集群成员数/涨停数从此系统性变小,
+    # 跨口径对比会把"口径切换"误显示成"全板块退潮"并错误压分 —— 旧口径日一律不比。
+    _CROSS = bool(prev_d and prev_d < "20261029")
     for st in concept_stats:
         st["prev_n"] = prev.get("attn", {}).get(st["concept"])
         st["delta"] = (st["n"] - st["prev_n"]) if st.get("prev_n") is not None else None
     for st in heat_stats:
         st["prev_n"] = prev.get("heat", {}).get(st["concept"])
         st["delta"] = (st["n"] - st["prev_n"]) if st.get("prev_n") is not None else None
+    if _CROSS:
+        for st in concept_stats + heat_stats:
+            st["prev_n"] = None
+            st["delta"] = None
     # 写入今日快照(每次运行覆盖, 13:00定稿) + 涨停数入档
     hist.setdefault("cpt", {})[today] = {"heat": heat_counts, "attn": attn_counts,
         "trend": {st["concept"]: {"strong": st["strong"], "weak": st["weak"],
                                   "lu": st.get("limit_up", 0)} for st in heat_stats}}
-    # 板块动量因子: 上升加分/下降减分
-    prev_trend = (hist.get("cpt", {}).get(prev_d, {}) or {}).get("trend", {}) if prev_d else {}
+    # 板块动量因子: 上升加分/下降减分(跨口径日不比涨停数)
+    prev_trend = {} if _CROSS else ((hist.get("cpt", {}).get(prev_d, {}) or {}).get("trend", {}) if prev_d else {})
     concept_stats = apply_board_momentum(raw_stocks, concept_stats, prev_trend)   # sel 同上
     # heat_stats 与 concept_stats 已是同一份, 不需要再 apply 一次(会重复乘概念系数)
     # 概念10日综合指数 = Σ(进榜数 + 2×净强弱 + 3×涨停), 兼顾梯队容量与攻击性
+    # (口径闸: 只累计 20261029 之后的新口径日, 旧口径日数值偏大会污染排名)
     ci = {}
     for d in sorted(hist.get("cpt", {}).keys())[-10:]:
+        if d < "20261029":
+            continue
         day = hist["cpt"][d]
         for cpt, n in (day.get("heat") or {}).items():
             t = (day.get("trend") or {}).get(cpt) or {}
@@ -868,9 +904,11 @@ def main():
         st["ci"] = ci.get(st["concept"])
     for st in heat_stats:
         st["ci"] = ci.get(st["concept"])
-    # 近5日概念轨迹(净强弱)
+    # 近5日概念轨迹(净强弱, 同样只取新口径日)
     traj = {}
     for d in sorted(hist.get("cpt", {}).keys())[-6:]:
+        if d < "20261029":
+            continue
         for cpt, t in hist["cpt"][d].get("trend", {}).items():
             traj.setdefault(cpt, []).append({"date": d, "net": t["strong"] - t["weak"]})
     for st in heat_stats:
@@ -879,7 +917,7 @@ def main():
     for st in heat_stats:
         st["takeover"] = bool(prev_d and st.get("delta") is not None and st["delta"] >= 3
                               and (st.get("net") or 0) > 0 and st["n"] >= 5)
-        p2 = [d for d in pdates[-2:]]
+        p2 = [] if _CROSS else [d for d in pdates[-2:]]
         st["streak"] = sum(1 for d in p2
                           if (st["n"] - (hist["cpt"].get(d, {}).get("heat", {}).get(st["concept"]) or 0)) >= 3)
 
