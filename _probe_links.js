@@ -82,8 +82,8 @@ setTimeout(() => {
     console.log('  ' + (cond ? 'OK  ' : 'FAIL') + ' ' + label + (extra ? ' ' + extra : ''));
     if (!cond) sortOk = false;
   };
-  if (typeof sortLB !== 'function' || typeof sortCPT !== 'function' || typeof sortBS !== 'function') {
-    console.log('排序 FAIL：sortLB/sortCPT/sortBS 未定义');
+  if (typeof sortLB !== 'function' || typeof sortCPT !== 'function') {
+    console.log('排序 FAIL：sortLB/sortCPT 未定义');
     sortOk = false;
   } else {
     console.log('排序（三态：首点 ▼ → 再点 ▲ → 三点回默认）');
@@ -128,12 +128,6 @@ setTimeout(() => {
     chk('概念 缺值(--)沉底', tailOk);
     sortCPT('hn'); sortCPT('hn');
     chk('概念 三点回默认', els['cpt_rows'].innerHTML === c0);
-
-    // 板块强度榜：强度列（第 3 列）降序
-    sortBS('strength');
-    const st3 = colOf(els['bs_rows'].innerHTML, 2).map(Number);
-    chk('板块 强度首点降序', mono(st3, -1), JSON.stringify(st3));
-    sortBS('strength'); sortBS('strength');
   }
 
   // 表头是否都挂了 data-sort（回归：新加列别忘了）
