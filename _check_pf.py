@@ -43,11 +43,14 @@ for s in sc:
     if s.get("pos_factor") is not None and abs(s["pos_factor"] - posf_exp(pos)) > 6e-4:
         errs.append(("posf 不符", s.get("name"), pos, s["pos_factor"], posf_exp(pos)))
     if s.get("composite") is not None and s.get("score_final") is not None:
+        # composite 是被 SCORE_CAP 封顶后的值; 封顶股(综合>=CAP)的真实未封顶综合分
+        # 无法从输出反推, score_final 按未封顶值计算 —— 封顶股跳过乘积复算, 只查不超满分。
+        capped = s["composite"] >= CAP_SCORE - 0.05
         mult = ((s.get("pos_factor") or 1.0) * (s.get("board_bonus") or 1.0)
                 * (s.get("lhb_factor") or 1.0) * (s.get("mv_factor") or 1.0)
                 * (s.get("op_factor") or 1.0))
         exp = round(min(CAP_SCORE, s["composite"] * pf * mult), 1)
-        if abs(exp - s["score_final"]) > 0.15:
+        if not capped and abs(exp - s["score_final"]) > 0.15:
             errs.append(("score_final 不符", s.get("name"), s["composite"], pf,
                          s.get("pos_factor"), s.get("board_bonus"), s["score_final"], exp))
         if s["score_final"] > CAP_SCORE + 1e-6:
