@@ -37,29 +37,6 @@ MAX_PRICE = 20.0
 # 评分封顶：100 分制。各因子是乘性叠加的，不封顶会算出 117 分这种数字
 SCORE_CAP = 100.0
 
-_NEWS_CACHE = {}
-
-
-def news(code, n=6):
-    """个股资讯(带缓存)。fetch_reasons 与 validate_concept_logic 会反复要同一只票的新闻,
-    原来各抓一遍 —— 缓存后一只票只打一次接口。"""
-    if code not in _NEWS_CACHE:
-        try:
-            _NEWS_CACHE[code] = F.fetch_stock_news(code, 6) or []
-        except Exception:
-            _NEWS_CACHE[code] = []
-    return _NEWS_CACHE[code][:n]
-
-
-def prefetch_news(codes, workers=6):
-    """并发预热新闻缓存（只抓没缓存过的票）"""
-    todo = [c for c in codes if c and c not in _NEWS_CACHE]
-    if not todo:
-        return
-    with ThreadPoolExecutor(max_workers=workers) as ex:
-        list(ex.map(news, todo))
-
-
 def prev_trade_dates(n):
     d = datetime.date.today()
     out = []
@@ -382,36 +359,50 @@ def _fry_for(cpt):
     return None
 
 
-def fetch_concepts(codes, pool, workers=8, f10=True):
-    """概念归属：同花顺热榜 concept_tag ∪ 55188 龙虎榜 topics ∪(仅展示集) 东财F10核心题材
-    —— 三个源都过同一道泛词闸。单用同花顺会漏掉东财才有的标签,
-    单用东财又只有前100只有标签, 合并才不漏。
+def fetch_concepts(codes, pool, workers=8):
+    """题材归属 = 同花顺热股解析「异动解读」keywordList(用户令 2026-10-29 23:29:
+    「页面有异动解读, 下面有概念名和炒作逻辑、羊字辈这些词, 这才是真正的炒作题材,
+    top100 每个股都有这个, 按这个才做题材风口的评测, 去掉原来的题材」)。
 
-    ⚡ 用户令(2026-10-29 23:18): 逐股拉 F10 全池(~151请求)不现实 —— 同花顺/龙虎榜标签
-    是热榜响应自带的, 全池零请求; 东财 F10 只给最终会上榜/进页面列表的展示集补拉。
-    f10=False 时只拼免费来源, 供第一遍初评圈定展示集用。"""
+    原三源体系(东财F10 ∪ 同花顺concept_tag ∪ 55188龙虎榜topics)当轮下线 ——
+    它们标的是"所属板块"(死标签), 异动解读标的是"当下在炒什么"(活题材)。
+    取数是 dq.10jqka 的路径式静态 txt, 无风控, 8路并发全池一遍。
+    财报类关键词(单季营收增长/扭亏这种每家都有)不算题材, 过滤掉。"""
+    import re as _re
+    _fund = _re.compile(r"增长|扭亏|营收|净利|盈利|亏损|预增|预减|增速|业绩")
+    # 下跌解读的关键词是"为什么跌"(如「元件板块下跌」), 不是题材风口;
+    # 风险提示类短语(此前涨幅较大)同理 —— 都不配进题材池。
+    _fall = _re.compile(r"下跌|大跌|跌停|回调|下挫|走弱|调整")
+    _risk = _re.compile(r"此前|涨幅较大|风险|警示|波动|异动|减持|质押")
+
     def _one(c):
-        cs = []
-        # 同花顺 concept_tag / 55188 龙虎榜 topics 才是"当下在炒的标签", 放前面；
-        # 东财 F10 概念更全但常混进行业/属性标签, 放后面兜底。
-        for extra in ((pool[c].get("ths_tags") or []) + ((pool[c].get("lhb") or {}).get("topics") or [])):
-            nb = F.norm_concept(extra)
-            if nb and nb not in cs and not F.is_generic_concept(nb):
-                cs.append(nb)
-        if f10:
-            try:
-                raw = F.fetch_concepts_em(c)
-            except Exception:
-                raw = []
-            for nb in raw:
-                nb = F.norm_concept(nb)
-                if nb and nb not in cs and not F.is_generic_concept(nb):
-                    cs.append(nb)
-        return c, cs
+        try:
+            return c, F.fetch_ths_anomaly(c)
+        except Exception:
+            return c, None
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        for c, cs in ex.map(_one, codes):
-            pool[c]["concepts"] = cs
+        for c, a in ex.map(_one, codes):
+            pc = pool[c]
+            if a:
+                tag = a.get("tag") or ""
+                kws = []
+                if not _fall.search(tag):
+                    for k in a.get("keywords") or []:
+                        nb = F.norm_concept(k)
+                        # 同一题材的引号形态(“羊”字辈 / 羊字辈)要并成一家, 否则集群被劈开
+                        if nb:
+                            nb = nb.replace("“", "").replace("”", "").replace('"', "").strip()
+                        if (nb and nb not in kws and not F.is_generic_concept(nb)
+                                and not _fund.search(nb) and not _fall.search(nb)
+                                and not _risk.search(nb)):
+                            kws.append(nb)
+                pc["concepts"] = kws
+                pc["anomaly"] = {"tag": tag, "date": a.get("date") or "",
+                                 "reason": a.get("reason") or ""}
+            else:
+                pc["concepts"] = []
+                pc["anomaly"] = None
 
 # 交易/指数属性 + 泛概念 + 年报/预增类伪概念(东财口径补充)
 EXCLUDE_GLOBAL = {"融资融券","转融券标的","沪股通","深股通","同花顺漂亮100","MSCI中国",
@@ -578,50 +569,20 @@ def add_composite(stocks, total=5580):
         rescore(x)
 
 def fetch_reasons(lb, pool, after_close):
-    """新闻归因: 概念标签≠上涨原因。抓取榜单股近期报道,
-    提取反复出现的真正炒作题材, 校正概念归属"""
-    import re as _re
-    from collections import Counter
-    prefetch_news([x["code"] for x in lb])
+    """上涨归因 = 同花顺「异动解读」本身(用户令 2026-10-29 23:29: 不用看F10和新闻,
+    异动解读的 tagName + 概念名就是官方提炼的炒作逻辑)。
+    reason = 短版(tag·题材串, 行内显示); reason_detail = 完整炒作逻辑(悬浮显示)。"""
     for x in lb:
-        try:
-            items = news(x["code"], 6)
-            text = json.dumps(items, ensure_ascii=False)
-            kws = Counter(w[:-2] for w in _re.findall(r"[\u4e00-\u9fa5A-Za-z0-9/（）()]{2,10}概念", text)
-                          if w[:-2] and w[:-2] not in EXCLUDE_GLOBAL
-                          and not F.is_generic_concept(w[:-2])
-                          and not any(b in w for b in ("公司","所属","纳入","属于","该股","报告","年报","季度","交易所","板块")))
-            top = [w for w, c in kws.most_common(3) if c >= 1][:2]
-            x["reason"] = "/".join(top)
-            pconcepts = pool.get(x["code"], {}).get("concepts", [])
-            for w in top:
-                for cand in (w, w + "概念"):
-                    if cand in pconcepts and cand not in EXCLUDE_GLOBAL and not F.is_generic_concept(cand):
-                        x["concept"] = cand
-                        break
-        except Exception:
+        a = (pool.get(x["code"]) or {}).get("anomaly")
+        if a:
+            kws = (pool[x["code"]].get("concepts") or [])[:3]
+            x["reason"] = "·".join(v for v in (a.get("tag"), "/".join(kws)) if v)
+            x["reason_detail"] = a.get("reason") or ""
+        else:
             x["reason"] = ""
+            x["reason_detail"] = ""
     return lb
 
-def validate_concept_logic(names, leaders):
-    """概念炒作逻辑验证: 概念龙头近期新闻里必须出现催化证据,
-    否则视为无当前炒作逻辑的'死标签'(如比亚迪概念), 降权0.82并标记"""
-    out = {}
-    codes = {leaders.get(c) for c in names if leaders.get(c)}
-    prefetch_news(codes)
-    for cpt in names:
-        code = leaders.get(cpt)
-        text = ""
-        if code:
-            try:
-                text = json.dumps(news(code, 5), ensure_ascii=False)
-            except Exception:
-                text = ""
-        import re as _re2
-        pat = _re2.compile(_re2.escape(cpt) + r"[^。]{0,40}(涨停|领涨|大涨|概念上涨|涨幅居前|走强|引爆|催化)")
-        hit = bool(pat.search(text)) or (cpt in text and any(k in text for k in ("涨停潮", "领涨", "大涨")))
-        out[cpt] = hit
-    return out
 
 def apply_board_momentum(stocks, stats, prev_trend):
     """板块动量因子(用户提炼的四维度):
@@ -654,14 +615,6 @@ def apply_board_momentum(stocks, stats, prev_trend):
             rescore(x)
     return stats
 
-def apply_concept_logic(stocks, logic, stats):
-    """无炒作逻辑的概念: 成员股概念系数打0.82折, 重算综合分"""
-    for st in stats:
-        st["logic_ok"] = logic.get(st["concept"], True)
-    for x in stocks:
-        if x.get("concept") and logic.get(x["concept"]) is False:
-            x["concept_factor"] = round(x.get("concept_factor", 1.0) * 0.82, 3)
-            rescore(x)
 
 def _quote_date():
     """行情自报的最新交易日(YYYY-MM-DD)，给前端判断"今天到底有没有开市"。
@@ -817,30 +770,10 @@ def main():
     raw_stocks = assemble(codes, pool, hist, today, frac)
     _by_code = {x["code"]: x for x in raw_stocks}
     sel_stocks = [_by_code[c] for c in fcodes if c in _by_code]
-    # 6a) 第一遍: 概念只用免费标签(同花顺/龙虎榜, 随热榜响应自带, 全池零请求)
-    #     → 初版聚类+评分, 用来圈定"最终会在页面出现的展示集"。
-    fetch_concepts(codes, pool, f10=False)
-    add_concept_stats(raw_stocks, pool)
-    add_composite(raw_stocks)
-    # 展示集 = 五张分榜(sel/raw 各前6) ∪ 榜首候选前25 ∪ 相对分候选前8(留余量,
-    # 第二遍 F10 概念并进来后排名可能微调, 候选比实际展示多留几个才不会漏)。
-    _bucket = lambda x: 0 if (x.get("price") or 99) < PF_SWEET_PRICE else 1
-    display = set()
-    for k in ("heat", "heat_growth", "attn", "attn_growth", "composite"):
-        display |= {x["code"] for x in top(sel_stocks, k, 6)}
-        display |= {x["code"] for x in top(raw_stocks, k, 6)}
-    display |= {x["code"] for x in sorted(
-        [x for x in raw_stocks
-         if (x.get("score_final") or 0) > 0 and (x.get("price") or 99) < MAX_PRICE],
-        key=lambda x: (_bucket(x), -x["score_final"]))[:25]}
-    display |= {x["code"] for x in sorted(
-        [x for x in raw_stocks
-         if (x.get("price") or 99) < MAX_PRICE and x.get("rel_score") is not None],
-        key=lambda x: (_bucket(x), -x["rel_score"]))[:8]}
-    # 6b) 第二遍: 只给展示集补拉东财 F10(用户令 2026-10-29 23:18: 全池逐股拉F10不现实),
-    #     再重新聚类+评分定稿。免费标签的票没进 F10 集群不受影响, 集群统计依旧全池覆盖。
-    print("  展示集 %d / 全池 %d 只补拉 F10" % (len(display), len(codes)))
-    fetch_concepts(sorted(display), pool, f10=True)
+    # 6) 题材归属(用户令 2026-10-29 23:29): 全池逐股拉同花顺「异动解读」——
+    #    keywordList 才是真炒作题材, 原 F10/新闻/免费标签体系当轮下线。
+    #    静态 txt 无风控, 8路并发一遍; 当日无异动的票概念留空(没异动=没题材, 不硬编)。
+    fetch_concepts(codes, pool)
     concept_stats, attn_counts = add_concept_stats(raw_stocks, pool)
     add_composite(raw_stocks)
 
@@ -851,24 +784,15 @@ def main():
     hpool = pool
     heat_stats, heat_counts = concept_stats, attn_counts
 
-    # 概念炒作逻辑验证: 无近期催化的概念降权
-    _all_cpts = [st["concept"] for st in concept_stats[:8]] + [st["concept"] for st in heat_stats[:8]]
-    _leaders = {}
-    for st in concept_stats + heat_stats:
-        for x in raw_stocks:
-            if x["name"] == st["leader"]:
-                _leaders[st["concept"]] = x["code"]
-    _logic = validate_concept_logic(sorted(set(_all_cpts)), _leaders)
-    apply_concept_logic(raw_stocks, _logic, concept_stats)   # sel 共用同一份对象, 不必再跑
-    for st in heat_stats:
-        st["logic_ok"] = _logic.get(st["concept"], True)
+    # (原「概念炒作逻辑验证」已随新闻管道下线: 异动解读的概念自带当日催化,
+    #  再拿新闻反查"有没有催化"是无意义的循环 —— 每个概念都天然 logic_ok。)
 
     # 与前一交易日对比
     pdates = sorted([d for d in hist.get("cpt", {}) if d < today])
     prev_d = pdates[-1] if pdates else None
     prev = hist.get("cpt", {}).get(prev_d, {}) if prev_d else {}
-    # 口径闸(20261029 用户令: F10 只拉展示集): 概念集群成员数/涨停数从此系统性变小,
-    # 跨口径对比会把"口径切换"误显示成"全板块退潮"并错误压分 —— 旧口径日一律不比。
+    # 口径闸(20261029 用户令: 题材改用异动解读 keywordList): 概念集群成员数/涨停数
+    # 从此系统性变小, 跨口径对比会把"口径切换"误显示成"全板块退潮" —— 旧口径日一律不比。
     _CROSS = bool(prev_d and prev_d < "20261029")
     for st in concept_stats:
         st["prev_n"] = prev.get("attn", {}).get(st["concept"])
