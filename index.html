@@ -63,7 +63,7 @@ td .wrap-cell{white-space:normal;max-width:160px;display:inline-block}
 
 <h2>🏆 评分榜</h2>
 <table id="lb_tbl">
-<thead><tr><th>#</th><th data-sort="name" onclick="sortLB('name')">股票<span class="sar"></span></th><th data-sort="score" onclick="sortLB('score')">评分<span class="sar"></span></th><th data-sort="rank" onclick="sortLB('rank')">人气排名<span class="sar"></span></th><th data-sort="growth" onclick="sortLB('growth')">热度增长<span class="sar"></span></th><th data-sort="concept" onclick="sortLB('concept')">概念<span class="sar"></span></th><th data-sort="board" onclick="sortLB('board')">连板<span class="sar"></span></th><th data-sort="turn" onclick="sortLB('turn')">换手启动<span class="sar"></span></th></tr></thead>
+<thead><tr><th>#</th><th data-sort="name" onclick="sortLB('name')">股票<span class="sar"></span></th><th data-sort="price" onclick="sortLB('price')">股价<span class="sar"></span></th><th data-sort="score" onclick="sortLB('score')">评分<span class="sar"></span></th><th data-sort="rank" onclick="sortLB('rank')">人气排名<span class="sar"></span></th><th data-sort="growth" onclick="sortLB('growth')">热度增长<span class="sar"></span></th><th data-sort="concept" onclick="sortLB('concept')">概念<span class="sar"></span></th><th data-sort="board" onclick="sortLB('board')">连板<span class="sar"></span></th><th data-sort="turn" onclick="sortLB('turn')">换手启动<span class="sar"></span></th></tr></thead>
 <tbody id="lb_rows"><tr><td colspan="9" class="loading">加载中…</td></tr></tbody>
 </table>
 
@@ -201,7 +201,8 @@ function lbRow(s,dimmed,i,first){
   const board=s.boards?`<span class="up">${s.board_tag||(s.boards+'板')}</span>`:'<span class="dim">--</span>';
   return `<tr${first?' class="r1"':''}${dimmed?' style="opacity:.55"':''}><td class="dim num">${i+1}</td>
      <td><b>${skName(s.name,s.code)}</b></td>
-     <td class="score num"${dimmed?' style="color:var(--dim)"':''}>${s.score_final??s.composite??'--'}${s.price!=null?`<br><span class="dim" style="font-size:11px">¥${s.price.toFixed(2)}</span>`:''}</td>
+     <td class="dim num">${s.price!=null?"¥"+s.price.toFixed(2):'--'}</td>
+     <td class="score num"${dimmed?' style="color:var(--dim)"':''}>${s.score_final??s.composite??'--'}</td>
      <td class="num">${s.heat_rank?('第'+s.heat_rank+'名'):'--'}</td>
      <td>${pct(s.heat_growth)}</td>
      <td>${concept}</td><td>${board}</td><td>${turn}</td></tr>`;
@@ -216,11 +217,11 @@ function renderLB(el,L,fb){
 function paintLB(){
   const st=SORTS.lb, el=document.getElementById('lb_rows'); if(!el) return;
   if(!st.src.length){
-    el.innerHTML='<tr><td colspan="8" class="empty">今日暂无正分标的：全市场热度较5日均值回落。收盘后自动重算。</td></tr>';
+    el.innerHTML='<tr><td colspan="9" class="empty">今日暂无正分标的：全市场热度较5日均值回落。收盘后自动重算。</td></tr>';
     paintArrows('lb_tbl',st); return;
   }
   const arr=sortBy(st.src,LBF[st.key],st.dir);
-  let html=st.dimmed?'<tr><td colspan="8" class="empty" style="padding:10px">今日暂无正分标的（全市场热度较5日均值回落）。<br>以下为<b>相对分参考榜</b>，按热度回落最小排序，仅供观察：</td></tr>':'';
+  let html=st.dimmed?'<tr><td colspan="9" class="empty" style="padding:10px">今日暂无正分标的（全市场热度较5日均值回落）。<br>以下为<b>相对分参考榜</b>，按热度回落最小排序，仅供观察：</td></tr>':'';
   for(let i=0;i<arr.length;i++) html+=lbRow(arr[i],st.dimmed,i,!st.dimmed&&i===0);
   el.innerHTML=html;
   paintArrows('lb_tbl',st);
