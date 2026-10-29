@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+
+# 运行日志
+run-*.log
+
+# 取数脚本的探测残留（抓下来看的原始响应，不是源码）
+_*.log
+_*.json
+_*.html
+
+# 展示用截图
+leaderboard-*.png
+
+# 本地临时标记
+_last_run
