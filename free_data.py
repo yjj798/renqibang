@@ -426,3 +426,39 @@ def fetch_55188_blocks(topn=30):
         return out
     except Exception:
         return []
+
+
+_THS_MKT = {"SH": "17", "SZ": "33"}
+
+
+def fetch_ths_anomaly(code):
+    """同花顺热股解析「异动解读」(ms.10jqka.com.cn/thsHotDetail 页背后的数据源):
+    dq.10jqka.com.cn/fuyao/transaction_history/service/v1/get/{市场}_{代码}.txt
+    —— 路径式静态文件, 无风控无 cookie, 沪=17 深=33。
+
+    返回当日(最新一条)异动解读:
+      {"keywords": [...], "reason": "...", "tag": "涨停/大涨/...", "date": "YYYY-MM-DD"}
+    当日没有异动记录 → None。
+
+    这是「真正的炒作题材」(用户令 2026-10-29 23:29): keywordList 是同花顺 AI
+    从公开信息里提炼的当下炒作战场词(如「羊字辈」「机器人轴承」), 原来的
+    东财F10 概念/同花顺标签/新闻归因与之相比全是死标签, 已同轮下线。"""
+    mkt = _THS_MKT.get((code or "")[-2:].upper())
+    if not mkt:
+        return None
+    try:
+        r = requests.get("https://dq.10jqka.com.cn/fuyao/transaction_history/service/v1/get/%s_%s.txt"
+                         % (mkt, code[:6]),
+                         headers={"User-Agent": UA["User-Agent"],
+                                  "Referer": "https://ms.10jqka.com.cn/"}, timeout=10)
+        r.raise_for_status()
+        lst = ((r.json().get("data") or {}).get("anomalyAnalysisList") or [])
+        if not lst:
+            return None
+        a = max(lst, key=lambda e: e.get("date") or "")
+        return {"keywords": a.get("keywordList") or [],
+                                # 样板免责声明每条都带, 剪掉免得糊满悬浮框
+                "reason": ((a.get("reason") or "").split("（免责声明")[0]).strip(),
+                "tag": a.get("tagName") or "", "date": a.get("date") or ""}
+    except Exception:
+        return None
