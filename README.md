@@ -53,6 +53,34 @@ python3 -m http.server 8000
 
 **改成自己的端口/路径**：编辑 HTML 末尾的 `fetch("data.json?t="+Date.now())`，把 `data.json` 换成你的实际 URL 也行（比如放到内网服务器上）。
 
+## 数据自动更新（2026-10-29 起由 GitHub Actions 接管）
+
+线上 `https://1.legaga.top` 的数据不需要本机开机，由 `.github/workflows/update.yml` 在 GitHub 的机器上跑：
+
+| 项 | 值 |
+|---|---|
+| 时点 | 每天 4 次：**10:05 / 12:05 / 15:05 / 16:35**（北京时间） |
+| cron | `5 2 * * 1-5` / `5 4 * * 1-5` / `5 7 * * 1-5` / `35 8 * * 1-5`（UTC，周一至周五） |
+| 流程 | checkout → `python update_data.py` → 完整性守卫 → commit `data.json`+`index.html`+`history.json` → Pages 重建 |
+| 手动触发 | Actions → `update-data` → Run workflow（勾 `force` 可在数据无变化时也提交） |
+| 耗时 | 约 70 秒（本地 14 秒，海外网络往返更慢） |
+
+**三条必须满足的前提（缺一条就会静默出错）**：
+
+1. **必须设 `TZ: Asia/Shanghai`**。`elapsed_frac()` 和 `date.today()` 都读本机时区；runner 默认 UTC，
+   会让盘中折算 `frac` 恒为 1.0（把 10:05 的盘中和收盘后当成一样），跨日边界也会错。
+2. **`history.json` 必须入库并跟着提交**。它存跨日排名基线、`rate` 快照、概念轨迹、`prev_trend`；
+   不入库就等于每天从零开始，热度增长的基数和概念动量全部失真。
+3. **完整性守卫不许绕过**：`leaderboard < 5`、`scores < 50`、缺 `updated_at` 任一成立就 `exit 1`，
+   **宁可不提交，也不能用空榜覆盖线上**。数据源在境外 runner 上偶发限流是常态，已加一次 60 秒重试。
+
+**其他要知道的**：
+
+- `GITHUB_TOKEN` 推送的 commit **不会触发** 自身 workflow（防递归），但**会**触发 Pages 重建，所以线上会自动刷新。
+- 定时任务有 5~20 分钟调度延迟，属 GitHub 正常行为，不是 bug。
+- 仓库连续 60 天无活动会停用 schedule —— 本 workflow 每天自己产生 commit，不会触发这条。
+- `loop.sh` 已降级为兜底：启用前先停掉 Actions 的 schedule，否则两边交替覆盖。
+
 ## 性能（2026-10-29 优化：约 90s → 14s）
 
 | 原来 | 耗时 | 改法 | 现在 |
