@@ -291,6 +291,13 @@ def assemble(codes, pool, hist, today, frac):
         p["turnover_ratio"] = t_ratio
         p["t_factor"] = round(t_factor, 3)
         p["limit_up"] = limit_up
+        # 首板兜底(用户令 2026-10-30 00:39: 「1板也是板」): 同花顺只给进它榜单的票打
+        # 「首板/连板」标签, 没进榜但 K 线判定今日涨停的票 boards=0 会显示 '--'。
+        # 今日涨停 ⇒ 至少 1 板; tag 缺失就补「首板涨停」。已带连板 tag 的以 tag 为准。
+        if limit_up and not (p.get("boards") or 0):
+            p["boards"] = 1
+            if not p.get("board_tag"):
+                p["board_tag"] = "首板涨停"
         price = p.get("price")
         # 价格因子（用户令 2026-10-29 20:24：低价股容易成妖，10 元以下优先）
         #   ≥ 20 元   1.00        贵不等于差，不罚
