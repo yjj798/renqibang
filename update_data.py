@@ -398,10 +398,14 @@ def fetch_concepts(codes, pool, workers=8):
                                 and not _risk.search(nb)):
                             kws.append(nb)
                 pc["concepts"] = kws
+                # 页面展示用全量题材串(用户令 2026-10-30 00:03): 机器人轴承+单季营收增长+“羊”字辈
+                # —— 财报词等过滤只作用于集群/风口统计, 个股题材串按 THS 原样给全
+                pc["kw_all"] = "+".join(k.strip() for k in (a.get("keywords") or []) if k.strip())
                 pc["anomaly"] = {"tag": tag, "date": a.get("date") or "",
                                  "reason": a.get("reason") or ""}
             else:
                 pc["concepts"] = []
+                pc["kw_all"] = ""
                 pc["anomaly"] = None
 
 # 交易/指数属性 + 泛概念 + 年报/预增类伪概念(东财口径补充)
@@ -475,6 +479,8 @@ def add_concept_stats(stocks, pool):
     g_counts = {k: v["n"] for k, v in groups.items() if v["n"] >= 2}
     # 个股概念归属 + 龙头/杂毛系数
     for x in stocks:
+        # 全量题材串(THS 异动解读原样, 用户令 2026-10-30): 展示用, 与集群归属解耦
+        x["concept_all"] = pool[x["code"]].get("kw_all") or ""
         my = [cpt for cpt in pool[x["code"]].get("concepts", []) if cpt in hot_concepts]
         if not my:
             # 没进热门集群, 但概念列不该空着: 用它自己的第一个标签(同花顺/龙虎榜优先),
@@ -575,8 +581,8 @@ def fetch_reasons(lb, pool, after_close):
     for x in lb:
         a = (pool.get(x["code"]) or {}).get("anomaly")
         if a:
-            kws = (pool[x["code"]].get("concepts") or [])[:3]
-            x["reason"] = "·".join(v for v in (a.get("tag"), "/".join(kws)) if v)
+            kwall = x.get("concept_all") or "/".join((pool.get(x["code"]) or {}).get("concepts") or [])
+            x["reason"] = "·".join(v for v in (a.get("tag"), kwall) if v)
             x["reason_detail"] = a.get("reason") or ""
         else:
             x["reason"] = ""
@@ -870,7 +876,8 @@ def main():
                "boards": x.get("boards"), "board_tag": x.get("board_tag"),
                "lhb_org_net": x.get("lhb_org_net"),
                "attn_growth": x.get("attn_growth"), "L": x.get("L"), "M": x.get("M"),
-               "concept": x.get("concept"), "concept_pos": x.get("concept_pos"),
+               "concept": x.get("concept"), "concept_all": x.get("concept_all"),
+               "concept_pos": x.get("concept_pos"),
                "is_leader": x.get("is_leader"), "concept_factor": x.get("concept_factor"),
                "t_factor": x.get("t_factor"), "launch": x.get("launch"),
                "swap_down": x.get("swap_down"), "turnover_ratio": x.get("turnover_ratio"),
