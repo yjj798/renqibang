@@ -660,6 +660,41 @@ def apply_concept_logic(stocks, logic, stats):
             x["concept_factor"] = round(x.get("concept_factor", 1.0) * 0.82, 3)
             rescore(x)
 
+def _quote_date():
+    """行情自报的最新交易日(YYYY-MM-DD)，给前端判断"今天到底有没有开市"。
+
+    为什么不让前端猜：页面是静态的，明天打开还是这份数据，靠 `updated_at` 的日期
+    只能看出"数据旧"，看不出"今天休市"还是"今天还没更新"。带上行情侧的日期后，
+    前端只要比一下本地日期就能说清是哪一种 —— 休市日标"今日休市"，交易日上午标"今日未开盘"。
+    """
+    try:
+        import trading_day as T
+        days = {k: v for k, v in T.quote_day(verbose=False).items() if v}
+        if days:
+            return "%s-%s-%s" % (next(iter(days.values()))[0:4],
+                                 next(iter(days.values()))[4:6],
+                                 next(iter(days.values()))[6:8])
+    except Exception:
+        pass
+    return None
+
+
+def _upcoming_holidays(days=60):
+    """未来 N 天内的法定休市日(YYYY-MM-DD)，随数据一起下发给前端。
+
+    前端是静态页，第二天打开还是这份数据；把日历传过去，页面才能自己说清
+    "今天是休市"而不是只能含糊地说"数据有点旧"。周末不用传，前端算得出来。
+    """
+    try:
+        import trading_day as T
+        base = datetime.date.today()
+        return [(base + datetime.timedelta(days=i)).strftime("%Y-%m-%d")
+                for i in range(days)
+                if (base + datetime.timedelta(days=i)).strftime("%Y%m%d") in T.HOLIDAYS]
+    except Exception:
+        return []
+
+
 def top(stocks, key, n=5):
     s = [x for x in stocks if x.get(key) is not None]
     s.sort(key=lambda x: x[key], reverse=True)
@@ -886,6 +921,8 @@ def main():
     data = {
         "updated_at": now.strftime("%Y-%m-%d %H:%M:%S"),
         "intraday": not after_close,
+        "quote_date": _quote_date(),
+        "holidays": _upcoming_holidays(),
         "leaderboard": lb,
         "fallback": fb,
         "board_strength": board_strength,
