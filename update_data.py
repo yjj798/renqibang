@@ -223,21 +223,60 @@ def ma5up_filter(codes, pool):
     return keep
 
 
-def fetch_turnover_avg(codes, pool, d1, d2):
-    """从缓存 K 线算历史换手均值, 不再单独请求"""
+def fetch_ths_turnover(codes, pool, workers=8):
+    """真实历史换手率: 同花顺 K线 v6 接口(d.10jqka.com.cn, 免登录无风控)。
+
+    last.js = 当年全部日K, 行格式 `日期,开,高,低,收,量(股),额,换手率,,备用,备用`。
+    col7(换手率) 已与腾讯实时行情 field38 逐票对表(600000/601127/002249/300015 全一致)。
+    产出 pool[c]["turn_hist"] = {"20261029": 0.226, ...}, 供 5日均换手 / 10日均换手比
+    用真实值(替换原来的 vol×close/今日流通市值 近似)。失败/无数据的票没有 turn_hist。"""
+    import re as _re
+
+    def _one(c):
+        try:
+            r = requests.get(
+                "https://d.10jqka.com.cn/v6/line/hs_%s/01/last.js" % c,
+                headers={**F.UA, "Referer": "https://stockpage.10jqka.com.cn/"},
+                timeout=12)
+            th = {}
+            for m in _re.finditer(
+                    r'(\d{8}),(\d+(?:\.\d+)?),(\d+(?:\.\d+)?),(\d+(?:\.\d+)?),'
+                    r'(\d+(?:\.\d+)?),(\d+),(\d+(?:\.\d+)?),(\d+(?:\.\d+)?)', r.text):
+                th[m.group(1)] = float(m.group(8))
+            return c, th
+        except Exception:
+            return c, {}
+
+    ok = 0
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        for c, th in ex.map(_one, codes):
+            if th:
+                pool[c]["turn_hist"] = th
+                ok += 1
+    print("  同花顺真实换手: %d/%d 只" % (ok, len(codes)))
+
+
+def fetch_turnover_avg(codes, pool, today):
+    """5日均换手: 优先用同花顺真实换手历史; 缺失才退回 K线缓存近似"""
     for c in codes:
+        p = pool[c]
+        th = p.get("turn_hist") or {}
+        prev = [th[d] for d in sorted(th) if d < today][-5:]
+        if len(prev) == 5 and sum(prev) > 0:
+            p["turnover_avg"] = round(sum(prev) / len(prev), 2)
+            continue
+        # ---- 兜底: K线近似(换手_i ≈ vol_i×close_i/今日流通市值) ----
         vols = _get_kline(c, 21)
         if len(vols) < 7:
             continue
-        t = pool[c].get("turnover")
+        t = p.get("turnover")
         if not t:
             continue
-        today_iso = vols[-1]["day"]
         vt = float(vols[-1]["volume"])
         if not vt:
             continue
         hist_v = [float(x["volume"]) for x in vols[-6:-1]]
-        pool[c]["turnover_avg"] = round(sum(t * v / vt for v in hist_v) / len(hist_v), 2)
+        p["turnover_avg"] = round(sum(t * v / vt for v in hist_v) / len(hist_v), 2)
 
 
 def fetch_ma_stick(codes, pool):
@@ -301,8 +340,9 @@ def assemble(codes, pool, hist, today, frac):
             t_factor *= 0.9
         # 热度变化10日(用户令 2026-10-30 01:19: 「通过换手率看热度变化, 综合热度因子
         # 出累计10日, 映射到概念」)。各维度归一到 [-1,1](正=升温)后取可用维度均值:
-        #   ① 换手10日比 = 今日换手(盘中折算) / 前10日均换手 —— K线缓存近似
-        #     (换手_i ≈ vol_i×close_i/今日流通市值, 股本短期不变), 永远可用, 主分量;
+        #   ① 换手10日比 = 今日换手(盘中折算) / 前10日均换手 —— 首选同花顺真实换手
+        #     (turn_hist, d.10jqka.com.cn K线 col8), 缺失才退回 K线缓存近似
+        #     (换手_i ≈ vol_i×close_i/今日流通市值);
         #   ② 人气排名10日变化(hist.heat, 排名降=升温);
         #   ③ 热度值10日变化(hist.rate, 同花顺绝对热度);
         #   ④ 观点10日变化(hist.vp)。
@@ -310,7 +350,11 @@ def assemble(codes, pool, hist, today, frac):
         rows_k = _get_kline(c, 16)
         fm_y = p.get("float_mv")
         turn10_ratio = None
-        if len(rows_k) >= 12 and fm_y and t_eff:
+        th = p.get("turn_hist") or {}
+        prev10 = [th[d] for d in sorted(th) if d < today][-10:]
+        if len(prev10) == 10 and t_eff and sum(prev10) > 0:
+            turn10_ratio = round((t_eff / (sum(prev10) / 10) - 1) * 100, 1)
+        elif len(rows_k) >= 12 and fm_y and t_eff:
             tr10 = [float(x["volume"]) * float(x["close"]) / (fm_y * 1e8) * 100
                     for x in rows_k[-11:-1]]
             t10 = sum(tr10) / len(tr10)
@@ -965,8 +1009,8 @@ def main():
     # 3) 位置分(近60日区间位置), 供位置因子使用
     fetch_position(codes, pool)
 
-    pd5 = prev_trade_dates(6)
-    fetch_turnover_avg(codes, pool, pd5[-1], pd5[0])
+    fetch_ths_turnover(codes, pool)          # 真实历史换手(同花顺 K线 col8)
+    fetch_turnover_avg(codes, pool, today)
 
     # 4) 精选池: 实时价<10 -> MA5向上
     fcodes = [c for c in codes if pool[c].get("price") is not None and pool[c]["price"] < 10]
