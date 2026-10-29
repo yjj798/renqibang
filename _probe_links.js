@@ -19,9 +19,9 @@ try { eval(code); } catch (e) { console.error('FAIL 执行抛错:', e.message); 
 
 const mono = (a, dir) => a.length > 1 && a.every((v, i) => i === 0 || (dir < 0 ? a[i - 1] >= v : a[i - 1] <= v));
 const nums = (h, re) => [...h.matchAll(re)].map(m => parseFloat(m[1]));
-const scoresOf = h => nums(h, /<td class="score num"[^>]*>([\d.]+)/g);
+const scoresOf = h => nums(h, /<td class="score num"[^>]*>([\d.]+)<\/td>/g);
 const ranksOf = h => nums(h, /<td class="num">第(\d+)名<\/td>/g);
-const pricesOf = h => nums(h, /font-size:11px">¥([\d.]+)</g);
+const pricesOf = h => nums(h, /<td class="dim num">¥([\d.]+)<\/td>/g);
 // 取每行第 idx 列的纯文本（用于概念表/板块表）
 const colOf = (h, idx) => [...h.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map(m => {
   const tds = [...m[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map(x => x[1].replace(/<[^>]+>/g, '').trim());
@@ -104,10 +104,10 @@ setTimeout(() => {
     chk('股价 首点降序(贵→便宜)', mono(pr, -1), JSON.stringify(pr));
     sortLB('price'); sortLB('price');   // 复位
 
-    // 连板列（第 7 列）：首点降序，无连板的 -- 沉底
+    // 连板列（第 8 列）：首点降序，无连板的 -- 沉底
     const b0 = els['lb_rows'].innerHTML;
     sortLB('board');
-    const bd = colOf(els['lb_rows'].innerHTML, 6);
+    const bd = colOf(els['lb_rows'].innerHTML, 7);
     const bdNum = bd.map(v => {
       const m = v.match(/(\d+)板/);
       return m ? parseInt(m[1], 10) : (v.indexOf('首板') >= 0 ? 1 : null);
