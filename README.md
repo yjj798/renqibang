@@ -53,6 +53,30 @@ python3 -m http.server 8000
 
 **改成自己的端口/路径**：编辑 HTML 末尾的 `fetch("data.json?t="+Date.now())`，把 `data.json` 换成你的实际 URL 也行（比如放到内网服务器上）。
 
+## 性能（2026-10-29 优化：约 90s → 14s）
+
+| 原来 | 耗时 | 改法 | 现在 |
+|---|---|---|---|
+| `fetch_ma_stick` 调 iFinD AI API | ~30s | 删掉 MCP 调用，MA5/10/20 直接从 K 线缓存算 | 0s（纯本地计算） |
+| K 线取 3 次（位置/换手/MA5 各一次） | ~55s | `_get_kline()` 全程缓存，`fetch_klines_concurrent()` 一次并发预取 75 日 | ~4s |
+| `fetch_pop_hist_all` 串行 153 只 + sleep 0.08 | ~20s | 线程池 8 路并发 | ~4s |
+| `fetch_position` 串行 + sleep 0.12 | ~20s | 吃缓存，零请求 | 0s |
+| `fetch_turnover_avg` 串行 + sleep 0.1 | ~15s | 吃缓存，零请求 | 0s |
+| `fetch_concepts` 串行 153 只 + sleep 0.15 | ~25s | 线程池 8 路并发 | ~4s |
+| `assemble()` 跑两遍（raw / sel） | — | sel 是 raw 子集 ⇒ 直接引用同一批 dict，只算一遍 | — |
+| `add_concept_stats()` 跑三遍 | — | raw 算一次，sel 共用对象；heat 直接复用 raw 的统计 | 一遍 |
+| 新闻抓两遍（`validate_concept_logic` / `fetch_reasons`） | ~8s | `news()` 缓存 + `prefetch_news()` 并发预热 | ~2s |
+
+**三条不能改回去的约束**（改之前先读这段）：
+
+1. **`sel_stocks` 必须是 `raw_stocks` 里同一份 dict 的引用**，不能 `assemble()` 再生成一遍。
+   否则 `apply_board_momentum()` 会对同一只票的概念系数乘两次。
+2. **`_KLINE_CACHE` 只按 code 缓存、不按 n 缓存**：先取 75 日，后面要 8 日/21 日都从这 75 日里切。
+   如果反过来先取 8 日，位置分就只有 8 根 K 线，`pos60` 会大面积缺失。
+3. **`heat_stats` 必须复用 `concept_stats`**。原来为概念总榜另造了一份轻量对象（只有 heat_rank/chg/price），
+   没有 `limit_up` / `heat_growth` ⇒ 概念总榜的「涨停」恒为 0、「净趋势」也算错
+   （实测 机器人概念 net -1，真实是 +7）。合并后这两个数才恢复正确。
+
 ## 评分公式（方便你改参数）
 
 ```
