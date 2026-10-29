@@ -37,6 +37,31 @@ MAX_PRICE = 20.0
 # 评分封顶：100 分制。各因子是乘性叠加的，不封顶会算出 117 分这种数字
 SCORE_CAP = 100.0
 
+def fetch_viewpoints(codes, pool, workers=8):
+    """大咖观点热度(用户令 2026-10-30 01:05): 同花顺热股解析页的投顾观点面板。
+    用户原想用「N位老师在线/N人热聊中」当热度因子 —— 实测那是全站固定营销数字
+    (4 只冷热不同票全 25/2500, 零区分度), 不能用; 真有区分度的是同一页面背后的
+    「大咖观点」计数接口(近30天观点条数+多空方向), 冷门票也有数据, 无风控。
+
+    vp_factor = 1 + min(0.06, 0.01×观点数) × 多空净倾向(±1), 范围 0.94~1.06:
+    观点多且一致看多加分, 多且一致看空减分, 观点少/无观点中性。"""
+    def _one(c):
+        try:
+            return c, F.fetch_ths_viewpoints(c)
+        except Exception:
+            return c, None
+
+    with ThreadPoolExecutor(max_workers=workers) as ex:
+        for c, v in ex.map(_one, codes):
+            if v:
+                pool[c].update(v)
+                vp, u, d = v["vp30"], v["vp_up"], v["vp_down"]
+                bull = (u - d) / max(1, u + d)          # 多空净倾向 ∈ [-1, 1]
+                pool[c]["vp_factor"] = round(1 + min(0.06, 0.01 * vp) * bull, 3)
+            else:
+                pool[c]["vp_factor"] = 1.0
+
+
 def prev_trade_dates(n):
     d = datetime.date.today()
     out = []
@@ -93,8 +118,9 @@ def load_hist():
         return {"heat": {d: v for d, v in raw.get("heat", {}).items() if d >= "20261029"},
                 "attn": {d: v for d, v in raw.get("attn", {}).items() if d >= "20261029"},
                 "rate": raw.get("rate", {}),
+                "vp": raw.get("vp", {}),
                 "cpt": raw.get("cpt", {})}
-    return {"heat": {}, "attn": {}, "rate": {}}
+    return {"heat": {}, "attn": {}, "rate": {}, "vp": {}}
 
 def avg_prev(hist, kind, code, today, n=4):
     ds = sorted([d for d in hist[kind] if d < today and code in hist[kind][d]])[-n:]
@@ -349,6 +375,8 @@ def assemble(codes, pool, hist, today, frac):
             "g_cross": g_cross, "g_accel": g_accel,
             "boards": p.get("boards") or 0, "board_tag": p.get("board_tag") or "",
             "op_factor": p.get("op_factor", 1.0),
+            "vp30": p.get("vp30"), "vp_up": p.get("vp_up"), "vp_down": p.get("vp_down"),
+            "vp_factor": p.get("vp_factor", 1.0),
             "lhb_org_net": (p.get("lhb") or {}).get("org_net") or 0,
             "lhb_net": (p.get("lhb") or {}).get("net") or 0,
             "turnover": p.get("turnover"), "turnover_ratio": p.get("turnover_ratio"),
@@ -654,11 +682,12 @@ def rescore(x):
     bb, lf = x.get("board_bonus", 1.0), x.get("lhb_factor", 1.0)
     mf = x.get("mv_factor", 1.0)
     op = x.get("op_factor", 1.0)
+    vp = x.get("vp_factor", 1.0)
     comp = 100 * max(0.0, L * M) ** 0.5 * cf * tf
     x["composite"] = round(min(SCORE_CAP, comp), 1)
-    x["score_final"] = round(min(SCORE_CAP, comp * pf * posf * bb * lf * mf * op), 1)
+    x["score_final"] = round(min(SCORE_CAP, comp * pf * posf * bb * lf * mf * op * vp), 1)
     M_rel = max(-1.0, min(1.0, (x.get("heat_growth") or 0) / 100.0))
-    x["rel_score"] = round(min(SCORE_CAP, 100 * L * M_rel * cf * tf * pf * posf * bb * lf * mf * op), 1)
+    x["rel_score"] = round(min(SCORE_CAP, 100 * L * M_rel * cf * tf * pf * posf * bb * lf * mf * op * vp), 1)
 
 
 def add_composite(stocks, total=5580):
@@ -873,6 +902,8 @@ def main():
     # 1b) K 线一次并发预取(75 日) —— 位置分/换手均值/MA5方向/均线粘合 四件事全吃这一份缓存，
     #     原来是各取一次、各 151 次请求串行 + sleep，光 K 线就占掉一半时间。
     fetch_klines_concurrent(codes, POS_WINDOW + 15, workers=10)
+    fetch_viewpoints(codes, pool)
+    print("  大咖观点: %d/%d 只有观点" % (sum(1 for c in codes if pool[c].get("vp30")), len(codes)))
     # 1c) 逐日人气排名历史 → 今日排名 + 前5日均排名(热度增长的基数)
     fetch_pop_hist_all(codes, pool, today)
 
@@ -895,12 +926,15 @@ def main():
     hist["heat"].setdefault(today, {})
     hist["attn"].setdefault(today, {})
     hist.setdefault("rate", {}).setdefault(today, {})
+    hist.setdefault("vp", {}).setdefault(today, {})
     for c in codes:
         if pool[c].get("heat_rank"):
             hist["heat"][today][c] = pool[c]["heat_rank"]
             hist["attn"][today][c] = pool[c]["heat_rank"]
         if pool[c].get("ths_heat"):
             hist["rate"][today][c] = pool[c]["ths_heat"]
+        if pool[c].get("vp30") is not None:
+            hist["vp"][today][c] = pool[c]["vp30"]
 
     # 6) 组装榜单 + 综合评分(当前排名 x 热度增长)
     #    精选池是原始池的子集 ⇒ 直接引用同一批对象, 不再跑第二遍 assemble。
@@ -1012,6 +1046,8 @@ def main():
                "g_cross": x.get("g_cross"), "g_accel": x.get("g_accel"),
                "boards": x.get("boards"), "board_tag": x.get("board_tag"),
                "op_factor": x.get("op_factor"),
+               "vp30": x.get("vp30"), "vp_up": x.get("vp_up"), "vp_down": x.get("vp_down"),
+               "vp_factor": x.get("vp_factor"),
                "lhb_org_net": x.get("lhb_org_net"),
                "attn_growth": x.get("attn_growth"), "L": x.get("L"), "M": x.get("M"),
                "concept": x.get("concept"), "concept_all": x.get("concept_all"),
