@@ -19,9 +19,9 @@ try { eval(code); } catch (e) { console.error('FAIL 执行抛错:', e.message); 
 
 const mono = (a, dir) => a.length > 1 && a.every((v, i) => i === 0 || (dir < 0 ? a[i - 1] >= v : a[i - 1] <= v));
 const nums = (h, re) => [...h.matchAll(re)].map(m => parseFloat(m[1]));
-const scoresOf = h => nums(h, /<td class="score num"[^>]*>([\d.]+)<\/td>/g);
+const scoresOf = h => nums(h, /<td class="score num"[^>]*>([\d.]+)/g);
 const ranksOf = h => nums(h, /<td class="num">第(\d+)名<\/td>/g);
-const pricesOf = h => nums(h, /<td class="dim num">¥([\d.]+)<\/td>/g);
+const pricesOf = h => nums(h, /font-size:11px">¥([\d.]+)</g);
 // 取每行第 idx 列的纯文本（用于概念表/板块表）
 const colOf = (h, idx) => [...h.matchAll(/<tr[^>]*>([\s\S]*?)<\/tr>/g)].map(m => {
   const tds = [...m[1].matchAll(/<td[^>]*>([\s\S]*?)<\/td>/g)].map(x => x[1].replace(/<[^>]+>/g, '').trim());
