@@ -298,6 +298,19 @@ def assemble(codes, pool, hist, today, frac):
             p["boards"] = 1
             if not p.get("board_tag"):
                 p["board_tag"] = "首板涨停"
+        # 可操作性因子(用户令 2026-10-30 00:45: 「评分表全是涨停股太不好买了,
+        # 开7个点就算涨停也才3个点」): 按"剩余空间"连续计算 —— 明天高开幅度≈今日涨幅,
+        # 到明天的剩余涨停空间 = (limit-chg)/limit, 空间越小分越低。
+        # 涨停票 0.72, +7% → 0.83, +5% → 0.86, +2% → 0.95, 平盘/低开 → 1.08(低吸位)。
+        # 注意单位: chg 是百分数(10.04=+10.04%), lim 也用百分数(主板10/双创20)。
+        lim = 20.0 if c[:2] in ("30", "68") else 10.0
+        if chg >= lim * 0.98:
+            op = 0.72
+        else:
+            op = 0.72 + 0.36 * max(0.0, (lim - chg) / lim)
+        if chg < 0:
+            op = 1.08
+        p["op_factor"] = op
         price = p.get("price")
         # 价格因子（用户令 2026-10-29 20:24：低价股容易成妖，10 元以下优先）
         #   ≥ 20 元   1.00        贵不等于差，不罚
@@ -335,6 +348,7 @@ def assemble(codes, pool, hist, today, frac):
             "heat": h, "heat_rank": p.get("heat_rank"), "heat_growth": heat_g,
             "g_cross": g_cross, "g_accel": g_accel,
             "boards": p.get("boards") or 0, "board_tag": p.get("board_tag") or "",
+            "op_factor": p.get("op_factor", 1.0),
             "lhb_org_net": (p.get("lhb") or {}).get("org_net") or 0,
             "lhb_net": (p.get("lhb") or {}).get("net") or 0,
             "turnover": p.get("turnover"), "turnover_ratio": p.get("turnover_ratio"),
@@ -639,11 +653,12 @@ def rescore(x):
     pf, posf = x.get("pf") or 1.0, x.get("pos_factor", 1.0)
     bb, lf = x.get("board_bonus", 1.0), x.get("lhb_factor", 1.0)
     mf = x.get("mv_factor", 1.0)
+    op = x.get("op_factor", 1.0)
     comp = 100 * max(0.0, L * M) ** 0.5 * cf * tf
     x["composite"] = round(min(SCORE_CAP, comp), 1)
-    x["score_final"] = round(min(SCORE_CAP, comp * pf * posf * bb * lf * mf), 1)
+    x["score_final"] = round(min(SCORE_CAP, comp * pf * posf * bb * lf * mf * op), 1)
     M_rel = max(-1.0, min(1.0, (x.get("heat_growth") or 0) / 100.0))
-    x["rel_score"] = round(min(SCORE_CAP, 100 * L * M_rel * cf * tf * pf * posf * bb * lf * mf), 1)
+    x["rel_score"] = round(min(SCORE_CAP, 100 * L * M_rel * cf * tf * pf * posf * bb * lf * mf * op), 1)
 
 
 def add_composite(stocks, total=5580):
@@ -996,6 +1011,7 @@ def main():
                "heat_rank": x.get("heat_rank"), "heat_growth": x.get("heat_growth"),
                "g_cross": x.get("g_cross"), "g_accel": x.get("g_accel"),
                "boards": x.get("boards"), "board_tag": x.get("board_tag"),
+               "op_factor": x.get("op_factor"),
                "lhb_org_net": x.get("lhb_org_net"),
                "attn_growth": x.get("attn_growth"), "L": x.get("L"), "M": x.get("M"),
                "concept": x.get("concept"), "concept_all": x.get("concept_all"),
