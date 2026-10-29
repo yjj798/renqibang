@@ -48,7 +48,7 @@ for s in sc:
         capped = s["composite"] >= CAP_SCORE - 0.05
         mult = ((s.get("pos_factor") or 1.0) * (s.get("board_bonus") or 1.0)
                 * (s.get("lhb_factor") or 1.0) * (s.get("mv_factor") or 1.0)
-                * (s.get("op_factor") or 1.0))
+                * (s.get("op_factor") or 1.0) * (s.get("vp_factor") or 1.0))
         exp = round(min(CAP_SCORE, s["composite"] * pf * mult), 1)
         if not capped and abs(exp - s["score_final"]) > 0.15:
             errs.append(("score_final 不符", s.get("name"), s["composite"], pf,
