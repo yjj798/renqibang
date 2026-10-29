@@ -6,14 +6,24 @@
 
 | 文件 | 作用 |
 |---|---|
-| `update_data.py` | 主程序：抓数据 → 算概念 → 评分 → 输出 `data.json` |
+| `update_data.py` | 主程序：抓数据 → 算概念 → 评分 → 输出 `data.json`，并回写 `index.html` 的首屏快照 |
 | `free_data.py` | 免费数据层（热榜/行情/K线/概念/新闻/板块强度），无第三方依赖 |
-| `loop.sh` | 定时器：每交易日 9:00 / 10:00 / 13:00 各跑一次 |
-| `history.json` | 10 日历史快照，用于算概念增量、板块动量、10 日综合指数 |
+| `trading_day.py` | 交易日闸：周末 / 法定休市日 / 双源行情日期，非开市日直接跳过 |
 | `index.html` | 展示页面（内嵌一份快照，无数据时不会白屏） |
 | `data.json` | 最新一次运行结果 |
-| `score_stock.py` | 单只股票评分明细查询（调试用） |
-| `call.py` | 旧版 iFinD 调用脚本（**已停用**，额度耗尽，保留仅供参考） |
+| `history.json` | 历史排名基线（增长基数、概念轨迹、`rate` 快照），**必须入库**，否则每天从零开始 |
+| `loop.sh` | 本机兜底定时器（Actions 正常时应停用，见下） |
+| `.github/workflows/update.yml` | 自动更新：开市日 12 次/天，跑完提交并触发 Pages 重建 |
+| `CNAME` | GitHub Pages 自定义域名（`1.legaga.top`），**删了站点就回默认域名** |
+
+| 校验脚本 | 断言什么 |
+|---|---|
+| `_check_pf.py` | 逐条复算 `score_final / composite / pf / 位置因子`，并检查"10 元以下优先"排序与准入价 |
+| `_probe_links.js` | 在 Node 里 eval 页面真实 script + 真实 `data.json`：股票链接后缀、25 列表头三态排序、缺值沉底 |
+| `_probe_market.js` | 用假 `Date` 跑真 `marketNote()`：休市/未开盘/数据过期/正常 四档 9 个用例 |
+
+> `score_stock.py` / `call.py` 依赖已停用的 iFinD MCP（额度耗尽、`call()` 已删），
+> **现在跑不起来，也未入库**；查单只股票评分请直接用页面上的搜索框。
 
 ## 环境要求
 
@@ -204,6 +214,30 @@ t_factor = 换手因子（低位启动 ×1.07 / 首启放量 ×1.08 / 均线粘�
    - 体检工具：`python _audit_concepts.py` —— 把当前股票池所有原始板块名拉一遍，逐个标「通过/被哪条拦下」，产出 `_concept_audit.json`。2026-10-29 实测：原始 522 个 → 拦截 292 / 通过 230。
 2. **新闻催化验证**：龙头股近期资讯里，催化词必须出现在概念名 40 字以内，否则视为伪概念（解决"挂着比亚迪概念实际走机器人"的问题）。
 3. **影子概念合并**：某概念 ≥75% 的成员被一个更大的概念覆盖时，剔除小的那个。
+
+## 校验（改完必跑）
+
+三个脚本都是"真跑真断言"，不是打印出来扫一眼：
+
+```bash
+python update_data.py     # 先跑出数据
+python _check_pf.py       # 评分逐条复算 + 低价排序
+node _probe_links.js      # 股票链接后缀 + 25 列表头三态排序
+node _probe_market.js     # 休市提示四档 9 个用例
+```
+
+绿灯判据（任一红就是改坏了，别推）：
+
+| 脚本 | 必须看到 |
+|---|---|
+| `_check_pf.py` | `RESULT: PASS`，且"10元以下 10/10 只""超准入价：无" |
+| `_probe_links.js` | `PASS`，且 `表头 th=27 其中可排序=25` |
+| `_probe_market.js` | `PASS 9/9` |
+
+**为什么在 Node 里 eval 页面自己的 script，而不是另写一份逻辑**：
+另写一份测的就是副本，页面改了它也不会红。`_probe_links.js` 直接读 `index.html` 里的
+`<script>` 执行；`_probe_market.js` 从文件里把 `marketNote` 源码抽出来包成函数，
+再用假 `Date` 驱动 —— 测的一定是线上跑的那份代码。
 
 ## 每日维护
 
