@@ -373,10 +373,29 @@ def fetch_concepts(codes, pool, workers=8):
     # 风险提示类短语(此前涨幅较大)同理 —— 都不配进题材池。
     _fall = _re.compile(r"下跌|大跌|跌停|回调|下挫|走弱|调整")
     _risk = _re.compile(r"此前|涨幅较大|风险|警示|波动|异动|减持|质押")
+    # 概念利多强度信号(用户令 2026-10-30 00:21: 概念是否符合它/利多大不大, 看逻辑正文):
+    # 硬动作(中标/签订/试制完成/取得注册证…) = 真催化; 纯远景(尚处拓展阶段/占比极小/未产生) = 蹭概念
+    _strong = _re.compile(r"中标|签订|合同|订单|获批|取得|注册证|收购|试制完成|送样|揭幕|上线|开业|投产|交付|突破|首家|率先|荣获|独家|研发成功|批复|准产|揭牌|开通")
+    _weak = _re.compile(r"尚处|尚未|未产生|拓展阶段|研究阶段|筹备|拟建|规划中|探索|较小|影响有限|占比")
+
+    def _benefit(rsn, cs):
+        if not rsn:
+            return ""
+        s_n = len(_strong.findall(rsn))
+        if s_n >= 2:
+            return "强"
+        if s_n == 1:
+            return "中"
+        # 无硬动作, 但概念词在正文里有实质呼应(如羊字辈←生肖行情报道) → 至少中
+        if any(k in rsn for k in cs if len(k) >= 2):
+            return "中"
+        if _weak.search(rsn):
+            return "弱"
+        return "中"
 
     def _one(c):
         pc = pool[c]
-        cs, kwall, tag, rsn = [], "", "", ""
+        cs, kwall, tag, rsn, blv = [], "", "", "", ""
         # 1) 活题材: 异动解读(当日)
         try:
             a = F.fetch_ths_anomaly(c)
@@ -406,13 +425,15 @@ def fetch_concepts(codes, pool, workers=8):
             nb = F.norm_concept(extra)
             if nb and nb not in cs and not F.is_generic_concept(nb) and nb not in EXCLUDE_GLOBAL:
                 cs.append(nb)
-        return c, cs, kwall, tag, rsn
+        blv = _benefit(rsn, cs)
+        return c, cs, kwall, tag, rsn, blv
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        for c, cs, kwall, tag, rsn in ex.map(_one, codes):
+        for c, cs, kwall, tag, rsn, blv in ex.map(_one, codes):
             pc = pool[c]
             pc["concepts"] = cs
             pc["kw_all"] = kwall
+            pc["benefit_lv"] = blv
             pc["anomaly"] = {"tag": tag, "reason": rsn} if tag or rsn else None
 
 # 交易/指数属性 + 泛概念 + 年报/预增类伪概念(东财口径补充)
@@ -488,6 +509,10 @@ def add_concept_stats(stocks, pool):
     for x in stocks:
         # 全量题材串(THS 异动解读原样, 用户令 2026-10-30): 展示用, 与集群归属解耦
         x["concept_all"] = pool[x["code"]].get("kw_all") or ""
+        blv = pool[x["code"]].get("benefit_lv") or ""
+        x["benefit_lv"] = blv
+        # 利多强度系数(用户令 2026-10-30 00:21): 概念对它利多大不大, 看逻辑正文的硬动作信号
+        bm = {"强": 1.06, "弱": 0.9}.get(blv, 1.0)
         my = [cpt for cpt in pool[x["code"]].get("concepts", []) if cpt in hot_concepts]
         if not my:
             # 没进热门集群, 但概念列不该空着: 用它自己的第一个标签(同花顺/龙虎榜优先),
@@ -496,7 +521,7 @@ def add_concept_stats(stocks, pool):
             x["concept"] = alt[0] if alt else ""
             x["concept_pos"] = None
             x["is_leader"] = False
-            x["concept_factor"] = 1.0
+            x["concept_factor"] = round(bm, 3)
             continue
         my.sort(key=lambda cpt: -groups[cpt]["n"])
         cpt = my[0]
@@ -507,7 +532,7 @@ def add_concept_stats(stocks, pool):
         cluster_factor = min(1.0, 0.8 + 0.04 * groups[cpt]["n"])
         base = 1.0 if x["is_leader"] else (0.9 if (x["concept_pos"] or 99) <= 3 else 0.68)
         x["cluster_factor"] = round(cluster_factor, 3)
-        x["concept_factor"] = round(base * cluster_factor, 3)
+        x["concept_factor"] = round(base * cluster_factor * bm, 3)
     return stats[:8], g_counts
 
 def board_bonus(boards):
@@ -905,6 +930,7 @@ def main():
                "attn_growth": x.get("attn_growth"), "L": x.get("L"), "M": x.get("M"),
                "concept": x.get("concept"), "concept_all": x.get("concept_all"),
                "concept_pos": x.get("concept_pos"),
+               "benefit_lv": x.get("benefit_lv"),
                "is_leader": x.get("is_leader"), "concept_factor": x.get("concept_factor"),
                "t_factor": x.get("t_factor"), "launch": x.get("launch"),
                "swap_down": x.get("swap_down"), "turnover_ratio": x.get("turnover_ratio"),
