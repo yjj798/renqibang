@@ -299,6 +299,50 @@ def assemble(codes, pool, hist, today, frac):
         p["swap_down"] = (not limit_up) and chg < 0 and (t_ratio or 0) > 20
         if p["swap_down"]:
             t_factor *= 0.9
+        # 热度变化10日(用户令 2026-10-30 01:19: 「通过换手率看热度变化, 综合热度因子
+        # 出累计10日, 映射到概念」)。各维度归一到 [-1,1](正=升温)后取可用维度均值:
+        #   ① 换手10日比 = 今日换手(盘中折算) / 前10日均换手 —— K线缓存近似
+        #     (换手_i ≈ vol_i×close_i/今日流通市值, 股本短期不变), 永远可用, 主分量;
+        #   ② 人气排名10日变化(hist.heat, 排名降=升温);
+        #   ③ 热度值10日变化(hist.rate, 同花顺绝对热度);
+        #   ④ 观点10日变化(hist.vp)。
+        # ②③④随 hist 逐日累积自动加入(样本>=4日才用), 换手维度缺数据则整体置空。
+        rows_k = _get_kline(c, 16)
+        fm_y = p.get("float_mv")
+        turn10_ratio = None
+        if len(rows_k) >= 12 and fm_y and t_eff:
+            tr10 = [float(x["volume"]) * float(x["close"]) / (fm_y * 1e8) * 100
+                    for x in rows_k[-11:-1]]
+            t10 = sum(tr10) / len(tr10)
+            if t10 > 0:
+                turn10_ratio = round((t_eff / t10 - 1) * 100, 1)
+        p["turn10_ratio"] = turn10_ratio
+
+        def _h10_avg(kind, today_val, inverse):
+            ds = sorted(d for d in hist.get(kind, {}) if d < today)[-10:]
+            vals = [hist[kind][d][c] for d in ds
+                    if c in hist[kind][d] and hist[kind][d][c]]
+            if len(vals) < 4 or not today_val:
+                return None
+            avg = sum(vals) / len(vals)
+            if not avg:
+                return None
+            d = (avg - today_val) if inverse else (today_val - avg)
+            return max(-1.0, min(1.0, d / avg))
+
+        comps = []
+        if turn10_ratio is not None:
+            comps.append(max(-1.0, min(1.0, turn10_ratio / 100.0)))
+        c2 = _h10_avg("heat", h, True)                    # 排名降=升温
+        if c2 is not None:
+            comps.append(c2)
+        c3 = _h10_avg("rate", p.get("ths_heat"), False)   # 热度值升=升温
+        if c3 is not None:
+            comps.append(c3)
+        c4 = _h10_avg("vp", p.get("vp30"), False)         # 观点增多=升温
+        if c4 is not None:
+            comps.append(c4)
+        p["heat_chg10"] = round(100.0 * sum(comps) / len(comps), 1) if comps else None
         # 启动形态因子(以襄阳轴承10-22启动日为标杆):
         #   低位换手启动(5日均换手<=5%且今日放量>30%) +7% —— 起涨前换手率低
         #   首启放量(今日换手较5日均+50%以上且股价上涨) +8% —— 第一次启动换手率
@@ -376,6 +420,7 @@ def assemble(codes, pool, hist, today, frac):
             "boards": p.get("boards") or 0, "board_tag": p.get("board_tag") or "",
             "op_factor": p.get("op_factor", 1.0),
             "ths_heat": p.get("ths_heat"), "ths_heat_src": p.get("ths_heat_src"),
+            "turn10_ratio": p.get("turn10_ratio"), "heat_chg10": p.get("heat_chg10"),
             "vp30": p.get("vp30"), "vp_up": p.get("vp_up"), "vp_down": p.get("vp_down"),
             "vp_factor": p.get("vp_factor", 1.0),
             "lhb_org_net": (p.get("lhb") or {}).get("org_net") or 0,
@@ -581,6 +626,8 @@ def add_concept_stats(stocks, pool):
             g["heat"] += x.get("heat_rank") or 0
             g["members"].append((x.get("heat_rank") or 99999, x["name"]))
             g["_xs"].append(x)
+            if x.get("heat_chg10") is not None:
+                g.setdefault("_hchg", []).append(x["heat_chg10"])
             if x.get("heat_rank") and x["heat_rank"] < g["best_rank"]:
                 g["best_rank"] = x["heat_rank"]
                 g["leader"] = x["name"]
@@ -592,9 +639,12 @@ def add_concept_stats(stocks, pool):
         avg_chg = round(sum((pool[x["code"]].get("pop_chg") or 0) for x in v["_xs"]) / len(v["_xs"]), 1)
         strong = sum(1 for x in v["_xs"] if (x.get("chg") or 0) > 0 and (x.get("heat_growth") is None or x.get("heat_growth") >= -5))
         weak = sum(1 for x in v["_xs"] if (x.get("heat_growth") is None or x.get("heat_growth") < 0) and (x.get("chg") is None or x.get("chg") < 0))
+        # 概念热度10日变化 = 成员股综合热度变化均值(>=半数成员有数据才给, 宁缺勿编)
+        _hh = v.get("_hchg") or []
+        hchg = round(sum(_hh) / len(_hh), 1) if len(_hh) >= max(2, v["n"] // 2) else None
         stats.append({"concept": k, "n": v["n"], "heat": v["heat"], "best_rank": v["best_rank"],
                       "leader": v["leader"], "members": v["members"], "strong": strong, "weak": weak,
-                      "net": strong - weak, "limit_up": lu, "avg_chg": avg_chg})
+                      "net": strong - weak, "limit_up": lu, "avg_chg": avg_chg, "hchg": hchg})
     stats.sort(key=lambda g: (-g["n"], -g["heat"]))
     # 影子概念合并: 成员>=75%被更大概念覆盖 → 主线的工艺交叉影子, 剔除
     def _mem(g):
@@ -1050,6 +1100,7 @@ def main():
                "boards": x.get("boards"), "board_tag": x.get("board_tag"),
                "op_factor": x.get("op_factor"),
                "ths_heat": x.get("ths_heat"), "ths_heat_src": x.get("ths_heat_src"),
+               "turn10_ratio": x.get("turn10_ratio"), "heat_chg10": x.get("heat_chg10"),
                "vp30": x.get("vp30"), "vp_up": x.get("vp_up"), "vp_down": x.get("vp_down"),
                "vp_factor": x.get("vp_factor"),
                "lhb_org_net": x.get("lhb_org_net"),
