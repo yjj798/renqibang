@@ -360,14 +360,13 @@ def _fry_for(cpt):
 
 
 def fetch_concepts(codes, pool, workers=8):
-    """题材归属 = 同花顺热股解析「异动解读」keywordList(用户令 2026-10-29 23:29:
-    「页面有异动解读, 下面有概念名和炒作逻辑、羊字辈这些词, 这才是真正的炒作题材,
-    top100 每个股都有这个, 按这个才做题材风口的评测, 去掉原来的题材」)。
+    """题材归属 = 异动解读 keywordList ⊕ 原三源(东财F10 ∪ 同花顺concept_tag ∪ 55188龙虎榜topics)
+    —— 用户令(2026-10-30 00:09): 「题材不准, 题材叠加原来那套, 一个股多个题材, 避免判断失误」。
 
-    原三源体系(东财F10 ∪ 同花顺concept_tag ∪ 55188龙虎榜topics)当轮下线 ——
-    它们标的是"所属板块"(死标签), 异动解读标的是"当下在炒什么"(活题材)。
-    取数是 dq.10jqka 的路径式静态 txt, 无风控, 8路并发全池一遍。
-    财报类关键词(单季营收增长/扭亏这种每家都有)不算题材, 过滤掉。"""
+    异动解读是"今天在炒什么"的活题材(羊字辈/机器人轴承), 但只覆盖当日有异动的票且词形自由;
+    原三源是"票挂了什么板块"的死标签, 胜在稳定全覆盖。两套合并: 集群/风口评测在合并集上跑,
+    一只票可以同时挂多个题材; 异动解读的过滤(财报词/跌因/风险提示)只管它自己的关键词,
+    不动原三源(那些本来就是规范概念名)。"""
     import re as _re
     _fund = _re.compile(r"增长|扭亏|营收|净利|盈利|亏损|预增|预减|增速|业绩")
     # 下跌解读的关键词是"为什么跌"(如「元件板块下跌」), 不是题材风口;
@@ -376,37 +375,45 @@ def fetch_concepts(codes, pool, workers=8):
     _risk = _re.compile(r"此前|涨幅较大|风险|警示|波动|异动|减持|质押")
 
     def _one(c):
+        pc = pool[c]
+        cs, kwall, tag, rsn = [], "", "", ""
+        # 1) 活题材: 异动解读(当日)
         try:
-            return c, F.fetch_ths_anomaly(c)
+            a = F.fetch_ths_anomaly(c)
         except Exception:
-            return c, None
+            a = None
+        if a:
+            tag = a.get("tag") or ""
+            rsn = a.get("reason") or ""
+            kwall = "+".join(k.strip() for k in (a.get("keywords") or []) if k.strip())
+            if not _fall.search(tag):
+                for k in a.get("keywords") or []:
+                    nb = F.norm_concept(k)
+                    # 同一题材的引号形态(“羊”字辈 / 羊字辈)要并成一家, 否则集群被劈开
+                    if nb:
+                        nb = nb.replace("“", "").replace("”", "").replace('"', "").strip()
+                    if (nb and nb not in cs and not F.is_generic_concept(nb)
+                            and not _fund.search(nb) and not _fall.search(nb)
+                            and not _risk.search(nb)):
+                        cs.append(nb)
+        # 2) 死标签兜底: 同花顺 concept_tag ∪ 55188 龙虎榜 topics ∪ 东财 F10
+        extras = list(pc.get("ths_tags") or []) + list((pc.get("lhb") or {}).get("topics") or [])
+        try:
+            extras += list(F.fetch_concepts_em(c))
+        except Exception:
+            pass
+        for extra in extras:
+            nb = F.norm_concept(extra)
+            if nb and nb not in cs and not F.is_generic_concept(nb) and nb not in EXCLUDE_GLOBAL:
+                cs.append(nb)
+        return c, cs, kwall, tag, rsn
 
     with ThreadPoolExecutor(max_workers=workers) as ex:
-        for c, a in ex.map(_one, codes):
+        for c, cs, kwall, tag, rsn in ex.map(_one, codes):
             pc = pool[c]
-            if a:
-                tag = a.get("tag") or ""
-                kws = []
-                if not _fall.search(tag):
-                    for k in a.get("keywords") or []:
-                        nb = F.norm_concept(k)
-                        # 同一题材的引号形态(“羊”字辈 / 羊字辈)要并成一家, 否则集群被劈开
-                        if nb:
-                            nb = nb.replace("“", "").replace("”", "").replace('"', "").strip()
-                        if (nb and nb not in kws and not F.is_generic_concept(nb)
-                                and not _fund.search(nb) and not _fall.search(nb)
-                                and not _risk.search(nb)):
-                            kws.append(nb)
-                pc["concepts"] = kws
-                # 页面展示用全量题材串(用户令 2026-10-30 00:03): 机器人轴承+单季营收增长+“羊”字辈
-                # —— 财报词等过滤只作用于集群/风口统计, 个股题材串按 THS 原样给全
-                pc["kw_all"] = "+".join(k.strip() for k in (a.get("keywords") or []) if k.strip())
-                pc["anomaly"] = {"tag": tag, "date": a.get("date") or "",
-                                 "reason": a.get("reason") or ""}
-            else:
-                pc["concepts"] = []
-                pc["kw_all"] = ""
-                pc["anomaly"] = None
+            pc["concepts"] = cs
+            pc["kw_all"] = kwall
+            pc["anomaly"] = {"tag": tag, "reason": rsn} if tag or rsn else None
 
 # 交易/指数属性 + 泛概念 + 年报/预增类伪概念(东财口径补充)
 EXCLUDE_GLOBAL = {"融资融券","转融券标的","沪股通","深股通","同花顺漂亮100","MSCI中国",
