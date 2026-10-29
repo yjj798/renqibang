@@ -40,7 +40,12 @@ jobs:
         run: pip install --quiet requests
 
       - name: 取数并评分
-        run: python update_data.py
+        run: |
+          python update_data.py || {
+            echo "第一次失败（多为数据源瞬时限流），60 秒后重试一次"
+            sleep 60
+            python update_data.py
+          }
 
       - name: 数据完整性守卫（不合格就不许覆盖线上）
         run: |
