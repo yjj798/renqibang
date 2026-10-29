@@ -67,7 +67,7 @@ python3 -m http.server 8000
 | `add_concept_stats()` 跑三遍 | — | raw 算一次，sel 共用对象；heat 直接复用 raw 的统计 | 一遍 |
 | 新闻抓两遍（`validate_concept_logic` / `fetch_reasons`） | ~8s | `news()` 缓存 + `prefetch_news()` 并发预热 | ~2s |
 
-**三条不能改回去的约束**（改之前先读这段）：
+**四条不能改回去的约束**（改之前先读这段）：
 
 1. **`sel_stocks` 必须是 `raw_stocks` 里同一份 dict 的引用**，不能 `assemble()` 再生成一遍。
    否则 `apply_board_momentum()` 会对同一只票的概念系数乘两次。
@@ -76,6 +76,9 @@ python3 -m http.server 8000
 3. **`heat_stats` 必须复用 `concept_stats`**。原来为概念总榜另造了一份轻量对象（只有 heat_rank/chg/price），
    没有 `limit_up` / `heat_growth` ⇒ 概念总榜的「涨停」恒为 0、「净趋势」也算错
    （实测 机器人概念 net -1，真实是 +7）。合并后这两个数才恢复正确。
+4. **`index.html` 里的 `EMBEDDED=` 必须由 `inject_embedded()` 自动刷新**，不要手工贴。
+   前端第一行就是 `render(EMBEDDED)`，`data.json` 拉取成功后才覆盖 ⇒ 这个常量一陈旧，
+   打开页面第一眼就是旧榜（实测曾停在 17:20 快照：分数还是旧公式的 55.4、连板列全空）。
 
 ## 评分公式（方便你改参数）
 
