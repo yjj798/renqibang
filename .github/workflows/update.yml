@@ -1,0 +1,77 @@
+name: update-data
+
+# 数据自动更新：由 GitHub 的机器跑 python update_data.py，把 data.json / index.html / history.json
+# 提交回仓库，Pages 随即重建 —— 不需要本机开机。
+on:
+  schedule:
+    # cron 用 UTC，北京时间 = UTC+8（本机 TZ 由下面的 env 强制成 Asia/Shanghai）
+    # 10:05 / 12:05 / 15:05 / 16:35 四个时点：上午盘、午间、收盘后、收盘后补一次
+    - cron: '5 2 * * 1-5'
+    - cron: '5 4 * * 1-5'
+    - cron: '5 7 * * 1-5'
+    - cron: '35 8 * * 1-5'
+  workflow_dispatch:
+    inputs:
+      force:
+        description: '数据无变化时也强制提交（仅用于手动补推）'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      TZ: Asia/Shanghai     # 必须：elapsed_frac()/date.today() 都读本机时区，runner 默认 UTC 会把盘中等比算错
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: pip install --quiet requests
+
+      - name: 取数并评分
+        run: python update_data.py
+
+      - name: 数据完整性守卫（不合格就不许覆盖线上）
+        run: |
+          python - <<'PY'
+          import json, sys, datetime
+          d = json.load(open('data.json', encoding='utf-8'))
+          lb, sc = d.get('leaderboard') or [], d.get('scores') or []
+          problems = []
+          if len(lb) < 5:   problems.append('leaderboard 只有 %d 条' % len(lb))
+          if len(sc) < 50:  problems.append('scores 只有 %d 条' % len(sc))
+          if not d.get('updated_at'): problems.append('缺 updated_at')
+          if problems:
+              print('拒绝提交：' + '；'.join(problems))
+              print('多半是数据源在本 runner 上不可达或限流，线上保持原样。')
+              sys.exit(1)
+          print('OK leaderboard=%d scores=%d updated_at=%s' % (len(lb), len(sc), d['updated_at']))
+          PY
+
+      - name: 提交并推送
+        run: |
+          git config user.name  'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add data.json index.html history.json
+          if git diff --cached --quiet; then
+            if [ "${{ inputs.force }}" = "true" ]; then
+              git commit --allow-empty -m "data: $(date '+%Y-%m-%d %H:%M') 强制刷新"
+              git push
+            else
+              echo "数据无变化，跳过提交"
+            fi
+          else
+            git commit -m "data: $(date '+%Y-%m-%d %H:%M') 自动更新"
+            git push
+          fi
