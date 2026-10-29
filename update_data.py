@@ -582,14 +582,34 @@ def add_composite(stocks, total=5580):
         rescore(x)
 
 def fetch_reasons(lb, pool, after_close):
-    """上涨归因 = 同花顺「异动解读」本身(用户令 2026-10-29 23:29: 不用看F10和新闻,
-    异动解读的 tagName + 概念名就是官方提炼的炒作逻辑)。
-    reason = 短版(tag·题材串, 行内显示); reason_detail = 完整炒作逻辑(悬浮显示)。"""
+    """上涨逻辑 = 异动解读里概念下面那段编号炒作逻辑正文(用户令 2026-10-30 00:15:
+    「上涨逻辑是概念下面的这些字, 里面有同比增长/生肖行情这类厉害字」——
+    不是 tag·题材串, 那个和题材列重复)。
+    reason = 正文压缩行内版(编号点各取前段, 保留同比/中标/行情这类催化字眼);
+    reason_detail = 全文(悬浮 title 显示, 渲染端已有)。"""
+    import re as _re
+
+    def _condense(reason):
+        t = (reason or "").split("（免责声明")[0].strip()
+        # "1、xxx\n2、yyy" → 每点压到 ~40 字, 用；连成一行; 行内总长 ~110 字封顶
+        pts = [_re.sub(r"\s+", "", p) for p in _re.split(r"\n?\s*\d+、", t)]
+        pts = [p for p in pts if p]
+        if not pts:
+            return t.replace("\n", " ")[:110] + ("…" if len(t) > 110 else "")
+        out, used = [], 0
+        for p in pts:
+            piece = p[:40] + ("…" if len(p) > 40 else "")
+            if used + len(piece) > 110 and out:
+                out.append("…")
+                break
+            out.append(piece)
+            used += len(piece)
+        return "；".join(out)
+
     for x in lb:
         a = (pool.get(x["code"]) or {}).get("anomaly")
         if a:
-            kwall = x.get("concept_all") or "/".join((pool.get(x["code"]) or {}).get("concepts") or [])
-            x["reason"] = "·".join(v for v in (a.get("tag"), kwall) if v)
+            x["reason"] = _condense(a.get("reason"))
             x["reason_detail"] = a.get("reason") or ""
         else:
             x["reason"] = ""
