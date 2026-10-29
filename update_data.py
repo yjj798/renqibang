@@ -375,6 +375,7 @@ def assemble(codes, pool, hist, today, frac):
             "g_cross": g_cross, "g_accel": g_accel,
             "boards": p.get("boards") or 0, "board_tag": p.get("board_tag") or "",
             "op_factor": p.get("op_factor", 1.0),
+            "ths_heat": p.get("ths_heat"), "ths_heat_src": p.get("ths_heat_src"),
             "vp30": p.get("vp30"), "vp_up": p.get("vp_up"), "vp_down": p.get("vp_down"),
             "vp_factor": p.get("vp_factor", 1.0),
             "lhb_org_net": (p.get("lhb") or {}).get("org_net") or 0,
@@ -882,6 +883,8 @@ def main():
                            "ths_tags": []}
             pool[c][key] = v["rank"]
             pool[c]["ths_heat"] = v["heat"]
+            # hour/day 两榜热度值刻度差 ~10 倍(day 全日累计), 标来源防误读
+            pool[c]["ths_heat_src"] = "day" if key == "ths_day_order" else "hour"
             pool[c]["ths_tags"] = v["tags"]
             pool[c]["board_tag"] = v["ptag"]
             pool[c]["boards"] = v["boards"]
@@ -1046,6 +1049,7 @@ def main():
                "g_cross": x.get("g_cross"), "g_accel": x.get("g_accel"),
                "boards": x.get("boards"), "board_tag": x.get("board_tag"),
                "op_factor": x.get("op_factor"),
+               "ths_heat": x.get("ths_heat"), "ths_heat_src": x.get("ths_heat_src"),
                "vp30": x.get("vp30"), "vp_up": x.get("vp_up"), "vp_down": x.get("vp_down"),
                "vp_factor": x.get("vp_factor"),
                "lhb_org_net": x.get("lhb_org_net"),
