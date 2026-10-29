@@ -462,3 +462,39 @@ def fetch_ths_anomaly(code):
                 "tag": a.get("tagName") or "", "date": a.get("date") or ""}
     except Exception:
         return None
+
+
+_THS_VP_DAYS = 30
+
+
+def fetch_ths_viewpoints(code, days=_THS_VP_DAYS):
+    """同花顺热股解析页「大咖观点」计数 (chat.touzime.net viewpoint_count):
+    近 N 天每天投顾/机构发布的观点条数, 带 up_count/down_count 多空方向。
+
+    返回 {"vp30": 总条数, "vp_up": 看多, "vp_down": 看空} 或 None(无数据/请求失败)。
+    无风控, Python 直连即通。注意: 页面上「N位老师在线 / N人热聊中」面板是全站
+    固定营销数字(任取 4 只冷热不同票全部 25/2500), 不是每股真实数据, 勿用作因子。"""
+    mkt = _THS_MKT.get((code or "")[-2:].upper())
+    if not mkt:
+        return None
+    import time as _time
+    end = int(_time.time() * 1000)
+    start = end - days * 86400000
+    try:
+        r = requests.get("https://chat.touzime.net/open-api/chat/sidebar/hotspot/v1/viewpoint_count",
+                         params={"stock_code": code[:6], "stock_market": mkt,
+                                 "start_time": start, "end_time": end},
+                         headers={"User-Agent": UA["User-Agent"],
+                                  "Referer": "https://ms.10jqka.com.cn/"}, timeout=10)
+        r.raise_for_status()
+        j = r.json()
+        if j.get("status_code") != 0:
+            return None
+        lst = (j.get("data") or {}).get("list") or []
+        if not lst:
+            return {"vp30": 0, "vp_up": 0, "vp_down": 0}
+        return {"vp30": sum(e.get("count") or 0 for e in lst),
+                "vp_up": sum(e.get("up_count") or 0 for e in lst),
+                "vp_down": sum(e.get("down_count") or 0 for e in lst)}
+    except Exception:
+        return None
