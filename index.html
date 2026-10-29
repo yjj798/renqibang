@@ -16,10 +16,13 @@ h1{font-size:22px;text-align:center;margin-bottom:4px;letter-spacing:2px}
 .live-dot{width:7px;height:7px;border-radius:50%;background:var(--live);display:inline-block;margin-right:4px;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 h2{font-size:16px;margin:20px 0 10px;color:var(--blue);border-left:4px solid var(--blue);padding-left:8px}
-h2 .sub{font-size:12px;color:var(--dim);font-weight:400;margin-left:8px}
 table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
 th,td{padding:9px 10px;text-align:left;font-size:13px;border-bottom:1px solid var(--border);vertical-align:top;white-space:nowrap}
 th{background:#1c2330;color:var(--dim);font-weight:600;font-size:12px}
+th[data-sort]{cursor:pointer;-webkit-user-select:none;user-select:none}
+th[data-sort]:hover{color:var(--text)}
+th[data-sort].sorted{color:var(--gold)}
+th .sar{font-size:9px;margin-left:3px}
 tr:last-child td{border-bottom:none}
 tr:hover td{background:#1c2330}
 .num{font-variant-numeric:tabular-nums;font-family:Menlo,Consolas,monospace}
@@ -50,24 +53,24 @@ td .wrap-cell{white-space:normal;max-width:160px;display:inline-block}
 </div>
 <div id="sr"></div>
 
-<h2>💪 板块强度榜<span class="sub">55188 · 强度=主力攻击力度 · 左滑查看</span></h2>
+<h2>💪 板块强度榜</h2>
 <div class="twrap">
-<table class="wide" style="min-width:520px">
-<thead><tr><th>板块</th><th>涨跌</th><th>强度</th><th>主力净额</th></tr></thead>
+<table class="wide" id="bs_tbl" style="min-width:520px">
+<thead><tr><th data-sort="name" onclick="sortBS('name')">板块<span class="sar"></span></th><th data-sort="inc" onclick="sortBS('inc')">涨跌<span class="sar"></span></th><th data-sort="strength" onclick="sortBS('strength')">强度<span class="sar"></span></th><th data-sort="net" onclick="sortBS('net')">主力净额<span class="sar"></span></th></tr></thead>
 <tbody id="bs_rows"><tr><td colspan="4" class="loading">加载中…</td></tr></tbody>
 </table>
 </div>
 
 <h2>🏆 评分榜</h2>
-<table>
-<thead><tr><th>#</th><th>股票</th><th>评分</th><th>人气排名</th><th>热度增长</th><th>概念</th><th>换手启动</th><th>股价</th></tr></thead>
-<tbody id="lb_rows"><tr><td colspan="8" class="loading">加载中…</td></tr></tbody>
+<table id="lb_tbl">
+<thead><tr><th>#</th><th data-sort="name" onclick="sortLB('name')">股票<span class="sar"></span></th><th data-sort="score" onclick="sortLB('score')">评分<span class="sar"></span></th><th data-sort="rank" onclick="sortLB('rank')">人气排名<span class="sar"></span></th><th data-sort="growth" onclick="sortLB('growth')">热度增长<span class="sar"></span></th><th data-sort="concept" onclick="sortLB('concept')">概念<span class="sar"></span></th><th data-sort="board" onclick="sortLB('board')">连板<span class="sar"></span></th><th data-sort="turn" onclick="sortLB('turn')">换手启动<span class="sar"></span></th><th data-sort="price" onclick="sortLB('price')">股价<span class="sar"></span></th></tr></thead>
+<tbody id="lb_rows"><tr><td colspan="9" class="loading">加载中…</td></tr></tbody>
 </table>
 
-<h2>🧭 主线探测 · 概念总榜<span class="sub">热度榜100/关注度100 双口径 · 左滑查看全部</span></h2>
+<h2>🧭 主线探测 · 概念总榜</h2>
 <div class="twrap">
-<table class="wide">
-<thead><tr><th>概念</th><th>热度榜<br>今日</th><th>昨日</th><th>变化</th><th>关注度<br>今日</th><th>昨日</th><th>变化</th><th>齐升/三降</th><th>净趋势</th><th>涨停</th><th>板块动量</th><th>综合指数<br>10日</th><th>轨迹</th><th>龙头</th></tr></thead>
+<table class="wide" id="cpt_tbl">
+<thead><tr><th data-sort="cpt" onclick="sortCPT('cpt')">概念<span class="sar"></span></th><th data-sort="hn" onclick="sortCPT('hn')">热度榜<br>今日<span class="sar"></span></th><th data-sort="hprev" onclick="sortCPT('hprev')">昨日<span class="sar"></span></th><th data-sort="hdelta" onclick="sortCPT('hdelta')">变化<span class="sar"></span></th><th data-sort="an" onclick="sortCPT('an')">关注度<br>今日<span class="sar"></span></th><th data-sort="aprev" onclick="sortCPT('aprev')">昨日<span class="sar"></span></th><th data-sort="adelta" onclick="sortCPT('adelta')">变化<span class="sar"></span></th><th data-sort="sw" onclick="sortCPT('sw')">齐升/三降<span class="sar"></span></th><th data-sort="net" onclick="sortCPT('net')">净趋势<span class="sar"></span></th><th data-sort="lu" onclick="sortCPT('lu')">涨停<span class="sar"></span></th><th data-sort="mom" onclick="sortCPT('mom')">板块动量<span class="sar"></span></th><th data-sort="ci" onclick="sortCPT('ci')">综合指数<br>10日<span class="sar"></span></th><th>轨迹</th><th data-sort="leader" onclick="sortCPT('leader')">龙头<span class="sar"></span></th></tr></thead>
 <tbody id="cpt_rows"><tr><td colspan="14" class="loading">加载中…</td></tr></tbody>
 </table>
 </div>
@@ -77,15 +80,13 @@ EMBEDDED={"updated_at": "2026-10-29 17:20:56", "intraday": false, "leaderboard":
 
 // ---------- 个股链接（口径：E:\AI 长期记忆 2026-10-27「归因页股票代码/名称已加链接」）----------
 // 代码 → https://stockpage.10jqka.com.cn/{6位}      名称 → https://xuangutong.com.cn/stock/{6位}.{SUF}
-// SUF 取数据自带的交易所后缀（数据里已有 .SH/.SZ/.BJ 就直接用）；没有后缀才走前缀规则
-// 前缀规则：6/9→SH 先判、4/8/92→BJ、其余 SZ（92 分支实际不可达，为对齐原页口径原样保留）
+// 交易所后缀：选股通用 Yahoo 风格 —— 沪市 .SS、深市 .SZ、北交所 .BJ。
+// 不能直接透传数据自带后缀：数据源是通达信风格(.SH)，选股通规范写法是 .SS（.SH 也能打开，但不是它自己的写法）。
+// 前缀规则：920/4/8→BJ 先判，6/9→SS，其余 SZ。
 function _suf(code){
-  const s=String(code||"");
-  if(s.indexOf(".")>0) return s.split(".")[1].toUpperCase();
-  const c=s.padStart(6,"0"), h=c.charAt(0);
-  if(h==="6"||h==="9") return "SH";
-  if(c.slice(0,2)==="92") return "BJ";
-  if(h==="4"||h==="8") return "BJ";
+  const c=String(code||"").replace(/\D/g,"").padStart(6,"0"), h=c.charAt(0);
+  if(c.slice(0,3)==="920"||h==="4"||h==="8") return "BJ";
+  if(h==="6"||h==="9") return "SS";
   return "SZ";
 }
 function skName(name,code){
@@ -105,56 +106,122 @@ function buildNameMap(d){
 }
 function skByName(name){ return skName(name,(window.NAME2CODE||{})[name]); }
 
+// ---------- 表头点击排序 ----------
+// 三态：默认顺序 → 降序 ▼ → 升序 ▲ → 回到默认。排序只在已渲染的这批数据上做，不重新抓数。
+const SORTS={lb:{key:null,dir:0,src:[],dimmed:false},bs:{key:null,dir:0,src:[]},cpt:{key:null,dir:0,src:[]}};
+const UP_FIRST={name:1,concept:1,cpt:1,leader:1,rank:1};   // 这几列首次点击按升序(排名数字小=靠前)，其余降序
+function cmpVal(a,b,dir){
+  const ea=(a==null||a===''), eb=(b==null||b==='');
+  if(ea&&eb) return 0;
+  if(ea) return 1;            // 缺值永远沉底，不随升降序翻转
+  if(eb) return -1;
+  if(typeof a==='string'||typeof b==='string'){
+    return dir*String(a).localeCompare(String(b),'zh-Hans-CN');
+  }
+  return dir*(Number(a)-Number(b));
+}
+function sortBy(arr,f,dir){
+  if(!f||!dir) return arr.slice();
+  return arr.slice().sort((x,y)=>cmpVal(f(x),f(y),dir));
+}
+function cycleSort(st,k){
+  const first=UP_FIRST[k]?1:-1;
+  if(st.key!==k){st.key=k;st.dir=first;}
+  else if(st.dir===first){st.dir=-first;}
+  else {st.key=null;st.dir=0;}
+}
+function paintArrows(tid,st){
+  const ths=document.querySelectorAll('#'+tid+' th[data-sort]');
+  for(let i=0;i<ths.length;i++){
+    const th=ths[i], on=(th.getAttribute('data-sort')===st.key&&st.dir!==0);
+    if(on) th.classList.add('sorted'); else th.classList.remove('sorted');
+    const sp=th.querySelector('.sar');
+    if(sp) sp.textContent=on?(st.dir<0?'▼':'▲'):'';
+  }
+}
+function ddSpan(v){ return v==null?'<span class="dim">--</span>':(v>0?`<span class="up">+${v}</span>`:(v<0?`<span class="down">${v}</span>`:'0')); }
+
+// ===== 概念总榜 =====
+const CPTF={cpt:r=>(r.heat||r.attn).concept,
+  hn:r=>r.heat?r.heat.n:null, hprev:r=>r.heat?(r.heat.prev_n??null):null, hdelta:r=>r.heat?(r.heat.delta??null):null,
+  an:r=>r.attn?r.attn.n:null, aprev:r=>r.attn?(r.attn.prev_n??null):null, adelta:r=>r.attn?(r.attn.delta??null):null,
+  sw:r=>r.heat?(r.heat.strong??null):null, net:r=>r.heat?(r.heat.net??null):null, lu:r=>r.heat?(r.heat.limit_up??0):null,
+  mom:r=>r.heat?(r.heat.mom??null):null, ci:r=>r.heat?(r.heat.ci??null):null,
+  leader:r=>((r.heat?r.heat.leader:r.attn.leader)||null)};
+
 function renderConcepts(el,heat,attn,traj){
   const attnMap={}; (attn||[]).forEach(g=>attnMap[g.concept]=g);
-  const rows=(heat||[]).map(g=>{
-    const a=attnMap[g.concept];
-    const dd=v=>v==null?'<span class="dim">--</span>':(v>0?`<span class="up">+${v}</span>`:(v<0?`<span class="down">${v}</span>`:'0'));
-    const arr=(g.traj||[]).map(t=>t.net>0?'<span class="up">↑</span>':(t.net<0?'<span class="down">↓</span>':'<span class="dim">→</span>')).join('')||'<span class="dim">今日建档</span>';
-    const net=g.net>0?`<span class="up">+${g.net}</span>`:(g.net<0?`<span class="down">${g.net}</span>`:'0');
-    const tk=g.takeover?'<span class="tk">🔥接棒候选</span> ':'';
-    return `<tr><td><b>${g.concept}</b>${tk}</td>
-      <td class="num">${g.n}</td><td class="num dim">${g.prev_n??'--'}</td><td class="num">${dd(g.delta)}</td>
-      <td class="num">${a?a.n:'--'}</td><td class="num dim">${a&&a.prev_n!=null?a.prev_n:'--'}</td><td class="num">${a?dd(a.delta):'--'}</td>
-      <td class="num"><span class="up">${g.strong}</span>/<span class="down">${g.weak}</span></td>
-      <td class="num">${net}</td><td class="num">${g.limit_up??0}${g.lu_delta?'<span class="'+(g.lu_delta>0?'up':'down')+'">('+(g.lu_delta>0?'+':'')+g.lu_delta+')</span>':''}</td><td class="num ${g.mom>=0?'up':'down'}">${g.mom??'--'}</td><td class="num">${g.ci??'--'}</td><td>${arr}</td><td class="lead">${skByName(g.leader)}</td></tr>`;
-  });
-  (attn||[]).forEach(a=>{ if(!(heat||[]).some(g=>g.concept===a.concept)){
-    const dd=v=>v==null?'<span class="dim">--</span>':(v>0?`<span class="up">+${v}</span>`:(v<0?`<span class="down">${v}</span>`:'0'));
-    rows.push(`<tr><td><b>${a.concept}</b></td><td class="dim">--</td><td class="dim">--</td><td class="dim">--</td>
-      <td class="num">${a.n}</td><td class="num dim">${a.prev_n!=null?a.prev_n:'--'}</td><td class="num">${dd(a.delta)}</td>
-      <td class="dim">--</td><td class="dim">--</td><td class="dim">--</td><td class="dim">--</td><td class="dim">--</td><td class="lead">${skByName(a.leader)}</td></tr>`);
-  }});
-  el.innerHTML=rows.join('')||'<tr><td colspan="14" class="dim">暂无集群概念</td></tr>';
+  const src=[];
+  (heat||[]).forEach(g=>src.push({heat:g,attn:attnMap[g.concept]||null}));
+  (attn||[]).forEach(a=>{ if(!(heat||[]).some(g=>g.concept===a.concept)) src.push({heat:null,attn:a}); });
+  SORTS.cpt.src=src;
+  paintCPT();
 }
+function cptRow(r){
+  const g=r.heat, a=r.attn;
+  if(!g){
+    return `<tr><td><b>${a.concept}</b></td><td class="dim">--</td><td class="dim">--</td><td class="dim">--</td>
+      <td class="num">${a.n}</td><td class="num dim">${a.prev_n!=null?a.prev_n:'--'}</td><td class="num">${ddSpan(a.delta)}</td>
+      <td class="dim">--</td><td class="dim">--</td><td class="dim">--</td><td class="dim">--</td><td class="dim">--</td><td class="dim">--</td><td class="lead">${skByName(a.leader)}</td></tr>`;
+  }
+  const arr=(g.traj||[]).map(t=>t.net>0?'<span class="up">↑</span>':(t.net<0?'<span class="down">↓</span>':'<span class="dim">→</span>')).join('')||'<span class="dim">今日建档</span>';
+  const net=g.net>0?`<span class="up">+${g.net}</span>`:(g.net<0?`<span class="down">${g.net}</span>`:'0');
+  const tk=g.takeover?'<span class="tk">🔥接棒候选</span> ':'';
+  return `<tr><td><b>${g.concept}</b>${tk}</td>
+    <td class="num">${g.n}</td><td class="num dim">${g.prev_n??'--'}</td><td class="num">${ddSpan(g.delta)}</td>
+    <td class="num">${a?a.n:'--'}</td><td class="num dim">${a&&a.prev_n!=null?a.prev_n:'--'}</td><td class="num">${a?ddSpan(a.delta):'--'}</td>
+    <td class="num"><span class="up">${g.strong}</span>/<span class="down">${g.weak}</span></td>
+    <td class="num">${net}</td><td class="num">${g.limit_up??0}${g.lu_delta?'<span class="'+(g.lu_delta>0?'up':'down')+'">('+(g.lu_delta>0?'+':'')+g.lu_delta+')</span>':''}</td><td class="num ${g.mom>=0?'up':'down'}">${g.mom??'--'}</td><td class="num">${g.ci??'--'}</td><td>${arr}</td><td class="lead">${skByName(g.leader)}</td></tr>`;
+}
+function paintCPT(){
+  const st=SORTS.cpt, el=document.getElementById('cpt_rows'); if(!el) return;
+  const arr=sortBy(st.src,CPTF[st.key],st.dir);
+  el.innerHTML=arr.length?arr.map(x=>cptRow(x)).join(''):'<tr><td colspan="14" class="dim">暂无集群概念</td></tr>';
+  paintArrows('cpt_tbl',st);
+}
+function sortCPT(k){ cycleSort(SORTS.cpt,k); paintCPT(); }
 
-function renderLB(el,L,fb){
-  const row=(s,dimmed,i,first)=>{
-    const concept=(s.concept?`<span class="cpt">${s.concept}</span> <span class="${s.is_leader?'lead':'follow'}">${s.is_leader?'龙头':'概念内第'+(s.concept_pos||'?')+'位'}</span>`:'<span class="dim">--</span>')
-      +(s.reason?`<br><span class="cpt">📰上涨逻辑:${s.reason}</span>`:'')
-      +(s.limit_up?'<br><span style="color:var(--up)">🔴涨停难买</span>':'');
-    const turn=(s.turnover_ratio==null?'<span class="dim">--</span>':`<span class="num ${s.turnover_ratio>=0?'up':'down'}">${s.turnover_ratio>=0?'+':''}${s.turnover_ratio}%</span>`)
-      +(s.swap_down?'<br><span class="down">⚠️向下换手</span>':'')
-      +(s.launch?`<br><span class="cpt">🚀${s.launch}</span>`:'');
-    return `<tr${first?' class="r1"':''}${dimmed?' style="opacity:.55"':''}><td class="dim num">${i+1}</td>
+// ===== 评分榜 =====
+const LBF={name:s=>s.name||null, score:s=>(s.score_final??s.composite??null), rank:s=>(s.heat_rank??null),
+  growth:s=>(s.heat_growth??null), concept:s=>(s.concept||null), board:s=>(s.boards||null),
+  turn:s=>(s.turnover_ratio??null), price:s=>(s.price??null)};
+
+function lbRow(s,dimmed,i,first){
+  const concept=(s.concept?`<span class="cpt">${s.concept}</span> <span class="${s.is_leader?'lead':'follow'}">${s.is_leader?'龙头':'概念内第'+(s.concept_pos||'?')+'位'}</span>`:'<span class="dim">--</span>')
+    +(s.reason?`<br><span class="cpt">📰上涨逻辑:${s.reason}</span>`:'')
+    +(s.limit_up?'<br><span style="color:var(--up)">🔴涨停难买</span>':'');
+  const turn=(s.turnover_ratio==null?'<span class="dim">--</span>':`<span class="num ${s.turnover_ratio>=0?'up':'down'}">${s.turnover_ratio>=0?'+':''}${s.turnover_ratio}%</span>`)
+    +(s.swap_down?'<br><span class="down">⚠️向下换手</span>':'')
+    +(s.launch?`<br><span class="cpt">🚀${s.launch}</span>`:'');
+  const board=s.boards?`<span class="up">${s.board_tag||(s.boards+'板')}</span>`:'<span class="dim">--</span>';
+  return `<tr${first?' class="r1"':''}${dimmed?' style="opacity:.55"':''}><td class="dim num">${i+1}</td>
      <td><b>${skName(s.name,s.code)}</b></td>
      <td class="score num"${dimmed?' style="color:var(--dim)"':''}>${s.score_final??s.composite??'--'}</td>
      <td class="num">${s.heat_rank?('第'+s.heat_rank+'名'):'--'}</td>
      <td>${pct(s.heat_growth)}</td>
-     <td>${concept}</td><td>${turn}</td>
+     <td>${concept}</td><td>${board}</td><td>${turn}</td>
      <td class="dim num">${s.price!=null?"¥"+s.price.toFixed(2):'--'}</td></tr>`;
-  };
-  if(!L||!L.length){
-    if(fb&&fb.length){
-      el.innerHTML='<tr><td colspan="8" class="empty" style="padding:10px">今日暂无正分标的（全市场热度较5日均值回落）。<br>以下为<b>相对分参考榜</b>，按热度回落最小排序，仅供观察：</td></tr>'
-        +fb.map((s,i)=>row(s,true,i,false)).join('');
-    }else{
-      el.innerHTML='<tr><td colspan="8" class="empty">今日暂无正分标的：全市场热度较5日均值回落。收盘后自动重算。</td></tr>';
-    }
-    return;
-  }
-  el.innerHTML=L.map((s,i)=>row(s,false,i,i===0)).join("");
 }
+
+function renderLB(el,L,fb){
+  const st=SORTS.lb, hasL=!!(L&&L.length);
+  st.src=hasL?L.slice():((fb&&fb.length)?fb.slice():[]);
+  st.dimmed=!hasL&&!!(fb&&fb.length);
+  paintLB();
+}
+function paintLB(){
+  const st=SORTS.lb, el=document.getElementById('lb_rows'); if(!el) return;
+  if(!st.src.length){
+    el.innerHTML='<tr><td colspan="9" class="empty">今日暂无正分标的：全市场热度较5日均值回落。收盘后自动重算。</td></tr>';
+    paintArrows('lb_tbl',st); return;
+  }
+  const arr=sortBy(st.src,LBF[st.key],st.dir);
+  let html=st.dimmed?'<tr><td colspan="9" class="empty" style="padding:10px">今日暂无正分标的（全市场热度较5日均值回落）。<br>以下为<b>相对分参考榜</b>，按热度回落最小排序，仅供观察：</td></tr>':'';
+  for(let i=0;i<arr.length;i++) html+=lbRow(arr[i],st.dimmed,i,!st.dimmed&&i===0);
+  el.innerHTML=html;
+  paintArrows('lb_tbl',st);
+}
+function sortLB(k){ cycleSort(SORTS.lb,k); paintLB(); }
 
 function doSearch(){
   const q=(document.getElementById("q").value||"").trim();
@@ -164,34 +231,47 @@ function doSearch(){
   if(!hit){el.innerHTML='<div class="empty" style="border:1px solid var(--border);border-radius:10px;margin-bottom:14px">未找到「'+q+'」的评分记录（仅覆盖热度/关注度前100股票池，接口恢复后自动扩充）</div>';return}
   const r=(v,fix)=>v==null?'--':(fix!=null?Number(v).toFixed(fix):v);
   const rows=[
-    ['人气排名(全市场)','第'+r(hit.heat_rank)+'名',hit.heat_rank<=100?'排名进入前100，具备资金关注基础':'排名靠后，市场关注度有限'],
-    ['热度增长(vs 5日均)',r(hit.heat_growth)+'%',hit.heat_growth>0?'热度正在放量(动量分M>0)':'热度在退潮，动量为负'],
-    ['动量分 M',r(hit.M,3),hit.M>0?'增长越接近+100%分越高；≤0计0分':'负增长：当日热度不及5日均值'],
-    ['水平分 L(含上升空间)',r(hit.L,3),'排名越靠前分越高；但前15名内剩余上涨空间打折'],
-    ['概念','<span class="cpt">'+(hit.concept||'游离主线')+'</span>'+(hit.is_leader?' <b class="lead">龙头</b>':(hit.concept_pos?' 概念内第'+hit.concept_pos+'位':'')),'主线概念且前排加分；杂毛(概念内后排)系数0.68'],
-    ['概念系数',r(hit.concept_factor,3),'龙头1.0 / 前排0.9 / 杂毛0.68 × 集群规模因子'],
-    ['换手启动','<span class="cpt">'+(hit.launch||'--')+'</span>'+(hit.swap_down?' <span class="down">⚠️向下换手</span>':''),'低位启动+7%/首启放量+8%/均线粘合+5%；向下换手=高位派发警示'],
-    ['换手因子',r(hit.t_factor,3),'换手率较5日均越高且向上，分越高；涨停按1.0'],
-    ['价格因子',r(hit.pf,3),''],
-    ['🔴涨停难买','',(hit.limit_up?'今日涨停，一字/秒板可能买不进(只标注不降分)':'')],
-  ];
+    ['人气排名(全市场)','第'+r(hit.heat_rank)+'名'],
+    ['热度增长',r(hit.heat_growth)+'%'],
+    ['跨日 / 日内加速',r(hit.g_cross)+'% / '+(hit.g_accel==null?'--':r(hit.g_accel)+'%')],
+    ['连板','<span class="cpt">'+(hit.board_tag||'--')+'</span>'],
+    ['动量分 M',r(hit.M,3)],
+    ['水平分 L',r(hit.L,3)],
+    ['概念','<span class="cpt">'+(hit.concept||'游离主线')+'</span>'+(hit.is_leader?' <b class="lead">龙头</b>':(hit.concept_pos?' 概念内第'+hit.concept_pos+'位':''))],
+    ['概念系数',r(hit.concept_factor,3)],
+    ['换手启动','<span class="cpt">'+(hit.launch||'--')+'</span>'+(hit.swap_down?' <span class="down">⚠️向下换手</span>':'')],
+    ['换手因子',r(hit.t_factor,3)],
+    ['价格因子',r(hit.pf,3)],
+    ['位置(60日)',hit.pos60==null?'--':(hit.pos60*100).toFixed(0)+'%'],
+    ['涨停','<span class="up">今日涨停</span>'],
+  ].filter(x=>x[0]!=='涨停'||hit.limit_up);
   el.innerHTML='<div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:14px">'
    +'<div style="display:flex;align-items:baseline;gap:14px;margin-bottom:10px"><b style="font-size:17px">'+skName(hit.name,hit.code)+'</b>'
    +'<span style="color:var(--dim)">¥'+r(hit.price,2)+'</span>'
    +'<span class="score" style="font-size:20px">'+r(hit.score_final,1)+'分</span>'
    +(hit.score_final?'':'<span style="color:var(--dim);font-size:12px">无正分 · 相对分 '+r(hit.rel_score,1)+'</span>')
    +'</div><table style="border:none"><tbody>'
-   +rows.filter(x=>x[0]!=='🔴涨停难买'||x[2]).map(x=>'<tr><td style="border:none;color:var(--dim);width:130px">'+x[0]+'</td><td style="border:none" class="num">'+x[1]+'</td><td style="border:none;color:var(--dim);font-size:11px">'+x[2]+'</td></tr>').join('')
-   +'</tbody></table><div style="color:var(--dim);font-size:11px;margin-top:8px">综合分 = 100×√(L×M)×概念系数×换手因子；最终分 = 综合分×价格因子。负增长日综合分为0属正常退潮信号，看相对分排序。</div></div>';
+   +rows.map(x=>'<tr><td style="border:none;color:var(--dim);width:150px">'+x[0]+'</td><td style="border:none" class="num">'+x[1]+'</td></tr>').join('')
+   +'</tbody></table></div>';
 }
 
+// ===== 板块强度榜 =====
+const BSF={name:b=>b.name||null, inc:b=>(b.inc??null), strength:b=>(b.strength??null), net:b=>(b.main_net??null)};
 function renderBS(el,bs){
-  if(!bs||!bs.length){el.innerHTML='<tr><td colspan="4" class="dim">--</td></tr>';return}
-  el.innerHTML=bs.map(b=>`<tr><td><b>${b.name}</b></td>
+  SORTS.bs.src=(bs||[]).slice();
+  paintBS();
+}
+function paintBS(){
+  const st=SORTS.bs, el=document.getElementById('bs_rows'); if(!el) return;
+  if(!st.src.length){ el.innerHTML='<tr><td colspan="4" class="dim">--</td></tr>'; paintArrows('bs_tbl',st); return; }
+  const arr=sortBy(st.src,BSF[st.key],st.dir);
+  el.innerHTML=arr.map(b=>`<tr><td><b>${b.name}</b></td>
     <td class="num ${b.inc>=0?'up':'down'}">${b.inc>=0?'+':''}${(b.inc||0).toFixed(2)}%</td>
     <td class="num">${(b.strength||0).toFixed(0)}</td>
     <td class="num ${b.main_net>=0?'up':'down'}">${((b.main_net||0)/1e8).toFixed(2)}亿</td></tr>`).join('');
+  paintArrows('bs_tbl',st);
 }
+function sortBS(k){ cycleSort(SORTS.bs,k); paintBS(); }
 
 function render(d){
   if((!d.scores||!d.scores.length)&&!(d.leaderboard&&d.leaderboard.length)&&!(d.fallback&&d.fallback.length)){
