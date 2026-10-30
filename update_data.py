@@ -332,6 +332,12 @@ def assemble(codes, pool, hist, today, frac):
         t_ratio = round((t_eff / ta - 1) * 100, 1) if t_eff and ta else None
         chg = p.get("chg") or 0
         limit_up = chg >= 9.8 or chg >= 19.5
+        # 跌停判定(2026-10-30 用户令「东贝集团 跌停为什么还推荐」): 按板分档, 主板 -9.8%、
+        # 双创(30/68) -19.6% 才算跌停 —— 跌停 = 资金出逃/连板崩塌, 不是低吸位。
+        # 注意: 创业板 -14% 这种深跌不算跌停, 但 op_factor 仍按跌幅深档扣(0.78)。
+        _dl = 19.6 if c[:2] in ("30", "68") else 9.8
+        limit_down = chg <= -_dl
+        p["limit_down"] = limit_down
         # 换手启动因子: 放量最多+15%, 缩量-5%; 涨停一字板换手失真, 用热度排名补位(因子取1.0)
         t_factor = 1.0 if limit_up else (0.95 + 0.05 * max(0, min(2, (t_ratio or 0) / 100.0)))
         # 换手方向: 上涨放量=向上换手(健康); 下跌放量=向下换手(出货, 惩罚); 下跌缩量=止跌观察
@@ -423,7 +429,20 @@ def assemble(codes, pool, hist, today, frac):
         else:
             op = 0.72 + 0.36 * max(0.0, (lim - chg) / lim)
         if chg < 0:
-            op = 1.08
+            # 下跌票分档(2026-10-30 修: 原来「chg<0 一律 1.08」把深跌也当成最佳低吸位,
+            # 实测 601956 东贝集团 4天3板炸到跌停, 靠这个因子反而加分, 跌停仍 81 分进榜)。
+            # 现在只有 -2% 以内的小回调算低吸位, 跌幅越深越扣; 跌停直接 0.55。
+            dn = -chg
+            if limit_down:
+                op = 0.55
+            elif dn <= 2:
+                op = 1.08
+            elif dn <= 5:
+                op = 1.00
+            elif dn <= 7:
+                op = 0.90
+            else:
+                op = 0.78
         p["op_factor"] = op
         price = p.get("price")
         # 价格因子（用户令 2026-10-29 20:24：低价股容易成妖，10 元以下优先）
@@ -473,6 +492,7 @@ def assemble(codes, pool, hist, today, frac):
             "swap_down": p.get("swap_down", False),
             "launch": p.get("launch", ""),
             "limit_up": p.get("limit_up", False),
+            "limit_down": p.get("limit_down", False),
             "pf": p.get("pf"),
             "pos60": p.get("pos60"), "pos_factor": p.get("pos_factor", 1.0),
             "score_final": None,
@@ -1126,7 +1146,8 @@ def main():
     # 分桶而不是直接截断, 保证低价票不够时高价票能补位, 不会凑不满 10 只。
     _price_bucket = lambda x: 0 if (x.get("price") or 99) < PF_SWEET_PRICE else 1
     lb = sorted([x for x in _seen.values()
-                 if (x.get("score_final") or 0) > 0 and (x.get("price") or 99) < MAX_PRICE],
+                 if (x.get("score_final") or 0) > 0 and (x.get("price") or 99) < MAX_PRICE
+                 and not x.get("limit_down")],   # 2026-10-30 用户令: 当日跌停不进推荐榜(炸板出货, 不推)
                 key=lambda x: (_price_bucket(x), -x["score_final"]))[:10]
     # 新闻归因: 校正概念标签为真正的上涨原因
     lb = fetch_reasons(lb, {**pool, **hpool}, after_close)
@@ -1155,7 +1176,8 @@ def main():
                "is_leader": x.get("is_leader"), "concept_factor": x.get("concept_factor"),
                "t_factor": x.get("t_factor"), "launch": x.get("launch"),
                "swap_down": x.get("swap_down"), "turnover_ratio": x.get("turnover_ratio"),
-               "limit_up": x.get("limit_up"), "pf": x.get("pf"),
+               "limit_up": x.get("limit_up"), "limit_down": x.get("limit_down"),
+               "pf": x.get("pf"),
                "pos60": x.get("pos60"), "pos_factor": x.get("pos_factor"),
                "board_bonus": x.get("board_bonus"), "lhb_factor": x.get("lhb_factor"),
                "mv_factor": x.get("mv_factor"), "float_mv": x.get("float_mv"),
